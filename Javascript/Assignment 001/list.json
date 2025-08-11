@@ -1,0 +1,144 @@
+{
+  "MagicCards": [
+    {
+      "name": "Serra Angel",
+      "type": "Creature",
+      "color": "White",
+      "manaCost": "3WW",
+      "text": "Flying, vigilance"
+    },
+    {
+      "name": "Counterspell",
+      "type": "Instant",
+      "color": "Blue",
+      "manaCost": "UU",
+      "text": "Counter target spell."
+    },
+    {
+      "name": "Lightning Bolt",
+      "type": "Instant",
+      "color": "Red",
+      "manaCost": "R",
+      "text": "Deal 3 damage to any target."
+    },
+    {
+      "name": "Llanowar Elves",
+      "type": "Creature",
+      "color": "Green",
+      "manaCost": "G",
+      "text": "Tap: Add G."
+    },
+    {
+      "name": "Dark Ritual",
+      "type": "Instant",
+      "color": "Black",
+      "manaCost": "B",
+      "text": "Add BBB."
+    },
+    {
+      "name": "Shivan Dragon",
+      "type": "Creature",
+      "color": "Red",
+      "manaCost": "4RR",
+      "text": "Flying. R: Shivan Dragon gets +1/+0 until end of turn."
+    },
+    {
+      "name": "Wrath of God",
+      "type": "Sorcery",
+      "color": "White",
+      "manaCost": "2WW",
+      "text": "Destroy all creatures. They can't be regenerated."
+    },
+    {
+      "name": "Giant Growth",
+      "type": "Instant",
+      "color": "Green",
+      "manaCost": "G",
+      "text": "Target creature gets +3/+3 until end of turn."
+    },
+    {
+      "name": "Black Lotus",
+      "type": "Artifact",
+      "color": "Colorless",
+      "manaCost": "0",
+      "text": "Tap, Sacrifice Black Lotus: Add three mana of any one color."
+    },
+    {
+      "name": "Pacifism",
+      "type": "Enchantment",
+      "color": "White",
+      "manaCost": "1W",
+      "text": "Enchanted creature can't attack or block."
+    },
+    {
+      "name": "Sol Ring",
+      "type": "Artifact",
+      "color": "Colorless",
+      "manaCost": "1",
+      "text": "Tap: Add CC."
+    },
+    {
+      "name": "Thoughtseize",
+      "type": "Sorcery",
+      "color": "Black",
+      "manaCost": "B",
+      "text": "Target player reveals their hand. You choose a nonland card from it and that player discards it."
+    },
+    {
+      "name": "Island",
+      "type": "Land",
+      "color": "Colorless",
+      "manaCost": "",
+      "text": "Tap: Add U."
+    },
+    {
+      "name": "Forest",
+      "type": "Land",
+      "color": "Colorless",
+      "manaCost": "",
+      "text": "Tap: Add G."
+    },
+    {
+      "name": "Mountain",
+      "type": "Land",
+      "color": "Colorless",
+      "manaCost": "",
+      "text": "Tap: Add R."
+    },
+    {
+      "name": "Swamp",
+      "type": "Land",
+      "color": "Colorless",
+      "manaCost": "",
+      "text": "Tap: Add B."
+    },
+    {
+      "name": "Plains",
+      "type": "Land",
+      "color": "Colorless",
+      "manaCost": "",
+      "text": "Tap: Add W."
+    },
+    {
+      "name": "Disenchant",
+      "type": "Instant",
+      "color": "White",
+      "manaCost": "1W",
+      "text": "Destroy target artifact or enchantment."
+    },
+    {
+      "name": "Duress",
+      "type": "Sorcery",
+      "color": "Black",
+      "manaCost": "B",
+      "text": "Target opponent reveals their hand. You choose a noncreature, nonland card from it. That player discards that card."
+    },
+    {
+      "name": "Swords to Plowshares",
+      "type": "Instant",
+      "color": "White",
+      "manaCost": "W",
+      "text": "Exile target creature. Its controller gains life equal to its power."
+    }
+  ]
+}

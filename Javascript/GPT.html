@@ -1,0 +1,13 @@
+<div id="container">
+  <p class="text">Hello World!</p>
+</div>
+<button id="btn">Click me</button>
+
+<script>
+  const btn = document.getElementById('btn');
+  btn.addEventListener('click', () => {
+    const p = document.querySelector('.text');
+    p.textContent = 'Text changed!';
+    p.style.color = 'blue';
+  });
+</script>
