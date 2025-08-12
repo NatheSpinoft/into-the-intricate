@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <img src="mtgback.png" alt="MTG Card Back">
+        <h1>Magic the Gathering</h1>
+        <img src="mtgback.png" alt="MTG Card Back">
+    </div>
+
+    <div class="main-container">
+        <div class="side-nav">
+            <a href="index.html">Main page</a>
+            <a href="search.html">Search Cards</a>
+            <a href="#">Top cards</a>
+            <a href="#">Deck Builder</a>
+            <a href="#">Contact</a>
+        </div>
+
+        <div class="main-nav">
+            <fieldset>
+                <legend>Search</legend>
+
+                <label for="card-type">Card Type</label>
+                <select id="card-type" name="card-type">
+                    <option value="creature">Creature</option>
+                    <option value="artifact">Artifact</option>
+                    <option value="sorcery">Sorcery</option>
+                    <option value="enchantment">Enchantment</option>
+                    <option value="instant">Instant</option>
+                </select>
+                <button id="search"> Search</button>
+            </fieldset>
+            <h3> Search Results: </h3>
+            <p id="output"></p>
+        </div>
+    </div>
+
+    <div class="footer"></div>
+    <script>
+        function loadMTGCards() {
+            const selectedType = document.getElementById('card-type').value.toLowerCase();
+        
+            fetch('list.json')
+            .then(response => response.json())
+            .then(data => {
+                const outputDiv = document.getElementById('output');
+                let html = '';
+        
+                // Filter by type (case-insensitive match)
+                const filteredCards = data.cards.filter(card => 
+                    card.type.toLowerCase().includes(selectedType)
+                );
+        
+                if (filteredCards.length === 0) {
+                    html = `<p>No cards found for type: ${selectedType}</p>`;
+                } else {
+                    filteredCards.forEach(card => {
+                        html += `
+                            <p>
+                                <strong>Name:</strong> ${card.name}<br>
+                                <strong>Mana cost:</strong> ${card.manaCost}<br>
+                                <strong>Type:</strong> ${card.type}<br>
+                                <strong>Rarity:</strong> ${card.rarity}<br>
+                            </p>
+                            <hr>
+                        `;
+                    });
+                }
+        
+                outputDiv.innerHTML = html;
+            })
+            .catch(error => console.error('Error loading JSON', error));
+        }
+        
+        document.getElementById('search').addEventListener('click', loadMTGCards);
+        </script>
+        
+        
+
+</body>
+</html>
