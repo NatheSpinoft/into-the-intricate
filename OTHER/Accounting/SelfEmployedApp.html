@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Job Time & Tax Tracker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    html,body{font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji"}
+    .card{ @apply bg-white rounded-2xl shadow-lg border border-slate-100; }
+    .section-title{ @apply text-slate-700 font-semibold text-lg mb-3 flex items-center gap-2; }
+    .hint{ @apply text-xs text-slate-500; }
+    .pill{ @apply px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-700; }
+  </style>
+</head>
+<body class="bg-slate-50 min-h-screen">
+  <header class="sticky top-0 z-10 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b border-slate-200">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-2xl bg-slate-900 text-white grid place-items-center font-bold">JT</div>
+        <div>
+          <h1 class="text-2xl font-bold text-slate-800">Job Time & Tax Tracker</h1>
+          <p class="text-xs text-slate-500">Simple. Precise. Invoice-ready.</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="exportCsvBtn" class="px-4 py-2 rounded-xl bg-slate-900 text-white hover:opacity-90 transition">Export CSV</button>
+        <button id="clearAllBtn" class="px-4 py-2 rounded-xl bg-white border border-slate-300 text-slate-700 hover:bg-slate-50">Clear All</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-6 grid lg:grid-cols-3 gap-6">
+    <!-- Entry form -->
+    <section class="card lg:col-span-2 p-5">
+      <div class="flex items-start justify-between">
+        <h2 class="text-xl font-semibold text-slate-800">New Job Entry</h2>
+        <span class="pill">Autosaves to your browser</span>
+      </div>
+      <form id="jobForm" class="mt-4 grid md:grid-cols-2 gap-5">
+        <!-- Client & Job -->
+        <div class="md:col-span-2">
+          <h3 class="section-title">Client & Job Details</h3>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-slate-700">Client Name</label>
+              <input id="client" type="text" class="mt-1 w-full rounded-xl border-slate-300 focus:border-slate-900 focus:ring-slate-900" placeholder="Acme Co." required>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-slate-700">Job Title</label>
+              <input id="title" type="text" class="mt-1 w-full rounded-xl border-slate-300 focus:border-slate-900 focus:ring-slate-900" placeholder="Website Updates" required>
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-sm font-medium text-slate-700">Job Description</label>
+              <textarea id="description" class="mt-1 w-full rounded-xl border-slate-300 focus:border-slate-900 focus:ring-slate-900" rows="3" placeholder="Briefly describe the work performed…" required></textarea>
+              <p class="hint mt-1">Be specific: deliverables, scope, tools used. Helps you look legit on invoices.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Timing -->
+        <div class="md:col-span-2">
+          <h3 class="section-title">Timing</h3>
+          <div class="grid md:grid-cols-4 gap-4">
+            <div class="md:col-span-2">
+              <label class="block text-sm font-medium text-slate-700">Start (date & time)</label>
+              <input id="start" type="datetime-local" class="mt-1 w-full rounded-xl border-slate-300 focus:border-slate-900 focus:ring-slate-900" required>
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-sm font-medium text-slate-700">End (date & time)</label>
+              <input id="end" type="datetime-local" class="mt-1 w-full rounded-xl border-slate-300 focus:border-slate-900 focus:ring-slate-900" required>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-slate-700">Break (minutes)</label>
+              <input id="breakMins" type="number" min="0" step="1" class="mt-1 w-full rounded-xl border-slate-300 focus:border-slate-900 focus:ring-slate-900" value="0">
+              <p class="hint mt-1">Paid breaks? Set to 0. Unpaid? Put your actual break time.</p>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-slate-700">Hourly Rate (CAD)</label>
+              <input id="rate" type="number" min="0" step="0.01" class="mt-1 w-full rounded-xl border-slate-300 focus:border-slate-900 focus:ring-slate-900" placeholder="e.g., 65" required>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-slate-700">Billable Expenses (CAD)</label>
+              <input id="expenses" type="number" min="0" step="0.01" class="mt-1 w-full rounded-xl border-slate-300 focus:border-slate-900 focus:ring-slate-900" value="0">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-slate-700">Tax Set‑Aside Rate (%)</label>
+              <input id="taxRate" type="number" min="0" step="0.01" class="mt-1 w-full rounded-xl border-slate-300 focus:border-slate-900 focus:ring-slate-900" value="25">
+              <p class="hint mt-1">Simple rule-of-thumb. Adjust to your situation.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="md:col-span-2 flex items-center justify-end gap-3">
+          <button type="button" id="previewBtn" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 border border-slate-300 hover:bg-slate-200">Preview Totals</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-slate-900 text-white hover:opacity-90">Add to Log</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Live summary -->
+    <aside class="card p-5 h-fit sticky top-24">
+      <h3 class="text-xl font-semibold text-slate-800 mb-3">Summary</h3>
+      <dl id="summary" class="grid grid-cols-2 gap-3 text-sm">
+        <div class="col-span-2"><span class="text-slate-500">Nothing to show yet.</span></div>
+      </dl>
+    </aside>
+
+    <!-- Log table -->
+    <section class="card lg:col-span-3 p-5">
+      <div class="flex items-center justify-between">
+        <h2 class="text-xl font-semibold text-slate-800">Job Log</h2>
+        <div class="text-xs text-slate-500">Store: <span class="pill">LocalStorage</span></div>
+      </div>
+      <div class="mt-4 overflow-x-auto">
+        <table class="min-w-full text-sm">
+          <thead class="text-left text-slate-600 border-b">
+            <tr>
+              <th class="py-2 pr-4">Client</th>
+              <th class="py-2 pr-4">Job</th>
+              <th class="py-2 pr-4">Start → End</th>
+              <th class="py-2 pr-4">Days</th>
+              <th class="py-2 pr-4">Hours</th>
+              <th class="py-2 pr-4">Rate</th>
+              <th class="py-2 pr-4">Expenses</th>
+              <th class="py-2 pr-4">Subtotal</th>
+              <th class="py-2 pr-4">Set‑Aside</th>
+              <th class="py-2 pr-4">Total</th>
+              <th class="py-2 pr-2">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="logBody" class="align-top"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <template id="rowTemplate">
+    <tr class="border-b last:border-0">
+      <td class="py-3 pr-4 font-medium text-slate-800">{{client}}</td>
+      <td class="py-3 pr-4">
+        <div class="font-medium">{{title}}</div>
+        <div class="text-xs text-slate-500 max-w-[36ch] line-clamp-3">{{description}}</div>
+      </td>
+      <td class="py-3 pr-4 text-slate-600">{{start}} → {{end}}</td>
+      <td class="py-3 pr-4">{{days}}</td>
+      <td class="py-3 pr-4">{{hours}}</td>
+      <td class="py-3 pr-4">{{rate}}</td>
+      <td class="py-3 pr-4">{{expenses}}</td>
+      <td class="py-3 pr-4 font-medium">{{subtotal}}</td>
+      <td class="py-3 pr-4">{{setaside}}</td>
+      <td class="py-3 pr-4 font-semibold">{{total}}</td>
+      <td class="py-3 pr-2">
+        <button class="deleteBtn text-red-600 hover:underline">Delete</button>
+      </td>
+    </tr>
+  </template>
+
+  <script>
+    // === Utilities ===
+    const fmtCAD = new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD' });
+
+    function parseDT(v){
+      // Normalize datetime-local to Date in local tz
+      return v ? new Date(v) : null;
+    }
+
+    function msToHours(ms){
+      return Math.max(0, ms) / 3_600_000;
+    }
+
+    function compute({start, end, breakMins, rate, expenses, taxRate}){
+      const s = parseDT(start);
+      const e = parseDT(end);
+      const brMs = (Number(breakMins) || 0) * 60_000;
+      if(!s || !e) return null;
+      const rawMs = e - s - brMs;
+      const hours = Math.max(0, msToHours(rawMs));
+      const days = Math.max(1, Math.ceil((e - s) / 86_400_000)); // inclusive-ish days spanned
+      const rateNum = Number(rate) || 0;
+      const expensesNum = Number(expenses) || 0;
+      const labor = hours * rateNum;
+      const subtotal = labor + expensesNum;
+      const taxRt = (Number(taxRate) || 0) / 100;
+      const setAside = subtotal * taxRt;
+      const total = subtotal; // total invoice (pre-sales-tax). Set-aside is just earmarked.
+      return { hours, days, labor, subtotal, setAside, total };
+    }
+
+    function summarizeToHTML(calc){
+      if(!calc) return '<div class="col-span-2"><span class="text-slate-500">Fill in the form to preview totals.</span></div>';
+      return `
+        <div>
+          <dt class="text-slate-500">Days Spanned</dt>
+          <dd class="font-semibold">${calc.days}</dd>
+        </div>
+        <div>
+          <dt class="text-slate-500">Billable Hours</dt>
+          <dd class="font-semibold">${calc.hours.toFixed(2)}</dd>
+        </div>
+        <div>
+          <dt class="text-slate-500">Labor</dt>
+          <dd class="font-semibold">${fmtCAD.format(calc.labor)}</dd>
+        </div>
+        <div>
+          <dt class="text-slate-500">Subtotal (Labor + Expenses)</dt>
+          <dd class="font-semibold">${fmtCAD.format(calc.subtotal)}</dd>
+        </div>
+        <div>
+          <dt class="text-slate-500">Tax Set‑Aside</dt>
+          <dd class="font-semibold">${fmtCAD.format(calc.setAside)}</dd>
+        </div>
+        <div>
+          <dt class="text-slate-500">Total to Invoice</dt>
+          <dd class="font-semibold">${fmtCAD.format(calc.total)}</dd>
+        </div>
+      `;
+    }
+
+    function toNiceDT(d){
+      const dt = new Date(d);
+      return dt.toLocaleString();
+    }
+
+    function id(){
+      return crypto.randomUUID();
+    }
+
+    // === State ===
+    const STORAGE_KEY = 'jt_log_v1';
+    let entries = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+
+    function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(entries)); }
+
+    function render(){
+      const body = document.getElementById('logBody');
+      const tpl = document.getElementById('rowTemplate').innerHTML;
+      body.innerHTML = '';
+      for(const it of entries){
+        const rowHTML = tpl
+          .replace('{{client}}', escapeHTML(it.client))
+          .replace('{{title}}', escapeHTML(it.title))
+          .replace('{{description}}', escapeHTML(it.description))
+          .replace('{{start}}', escapeHTML(toNiceDT(it.start)))
+          .replace('{{end}}', escapeHTML(toNiceDT(it.end)))
+          .replace('{{days}}', String(it.days))
+          .replace('{{hours}}', Number(it.hours).toFixed(2))
+          .replace('{{rate}}', fmtCAD.format(it.rate))
+          .replace('{{expenses}}', fmtCAD.format(it.expenses))
+          .replace('{{subtotal}}', fmtCAD.format(it.subtotal))
+          .replace('{{setaside}}', fmtCAD.format(it.setAside))
+          .replace('{{total}}', fmtCAD.format(it.total));
+        const tr = document.createElement('tr');
+        tr.innerHTML = rowHTML;
+        const delBtn = tr.querySelector('.deleteBtn');
+        delBtn.addEventListener('click', () => {
+          if(confirm('Delete this entry?')){
+            entries = entries.filter(e => e.id !== it.id);
+            save();
+            render();
+          }
+        });
+        body.appendChild(tr);
+      }
+    }
+
+    function escapeHTML(str){
+      return String(str).replace(/[&<>"]+/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[s]));
+    }
+
+    function preview(){
+      const calc = compute({
+        start: document.getElementById('start').value,
+        end: document.getElementById('end').value,
+        breakMins: document.getElementById('breakMins').value,
+        rate: document.getElementById('rate').value,
+        expenses: document.getElementById('expenses').value,
+        taxRate: document.getElementById('taxRate').value,
+      });
+      document.getElementById('summary').innerHTML = summarizeToHTML(calc);
+    }
+
+    // === Events ===
+    document.getElementById('previewBtn').addEventListener('click', preview);
+    for(const idv of ['start','end','breakMins','rate','expenses','taxRate']){
+      document.getElementById(idv).addEventListener('input', preview);
+    }
+
+    document.getElementById('jobForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const client = document.getElementById('client').value.trim();
+      const title = document.getElementById('title').value.trim();
+      const description = document.getElementById('description').value.trim();
+      const start = document.getElementById('start').value;
+      const end = document.getElementById('end').value;
+      const breakMins = Number(document.getElementById('breakMins').value || 0);
+      const rate = Number(document.getElementById('rate').value || 0);
+      const expenses = Number(document.getElementById('expenses').value || 0);
+      const taxRate = Number(document.getElementById('taxRate').value || 0);
+
+      if(!client || !title || !description || !start || !end){
+        alert('Please fill in all required fields.');
+        return;
+      }
+
+      const calc = compute({start, end, breakMins, rate, expenses, taxRate});
+      if(!calc){ alert('Invalid dates.'); return; }
+
+      const entry = {
+        id: id(), client, title, description,
+        start, end, breakMins, rate, expenses, taxRate,
+        hours: Number(calc.hours.toFixed(2)),
+        days: calc.days,
+        subtotal: Number(calc.subtotal.toFixed(2)),
+        setAside: Number(calc.setAside.toFixed(2)),
+        total: Number(calc.total.toFixed(2)),
+        createdAt: new Date().toISOString(),
+      };
+      entries.unshift(entry);
+      save();
+      render();
+      (e.target).reset();
+      document.getElementById('summary').innerHTML = '<div class="col-span-2"><span class="text-slate-500">Saved. Add another when ready.</span></div>';
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    });
+
+    document.getElementById('exportCsvBtn').addEventListener('click', () => {
+      if(entries.length === 0){ alert('No entries to export.'); return; }
+      const headers = ['Client','Job Title','Description','Start','End','Break (min)','Days','Hours','Rate','Expenses','Subtotal','Tax Set‑Aside','Total','Tax Rate %'];
+      const rows = entries.map(e => [
+        e.client, e.title, e.description.replace(/\n/g,' '), toNiceDT(e.start), toNiceDT(e.end), e.breakMins,
+        e.days, e.hours, e.rate, e.expenses, e.subtotal, e.setAside, e.total, e.taxRate
+      ]);
+      const csv = [headers, ...rows].map(r => r.map(cell => `"${String(cell).replace(/"/g,'""')}"`).join(',')).join('\n');
+      const blob = new Blob([csv], {type:'text/csv'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = `job-log-${new Date().toISOString().slice(0,10)}.csv`;
+      document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
+
+    document.getElementById('clearAllBtn').addEventListener('click', () => {
+      if(confirm('Clear ALL entries? This cannot be undone.')){
+        entries = []; save(); render();
+      }
+    });
+
+    // Initial render
+    render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ontario Payroll Manager (Auto CPP/EI/Tax)</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow">
+    <div class="max-w-6xl mx-auto p-6">
+      <h1 class="text-3xl font-bold">Ontario Payroll Manager</h1>
+      <p class="opacity-90">Automatic CPP, EI & Income Tax. Holiday pay included. YTD-aware.</p>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto p-6 space-y-6">
+    <!-- Controls -->
+    <section class="bg-white rounded-2xl shadow p-4 flex items-center gap-2 flex-wrap">
+      <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg" onclick="addEmployee()">Add Employee</button>
+      <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg" onclick="calculateAll()">Calculate Payroll</button>
+      <button class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg" onclick="exportCSV()">Export CSV</button>
+      <div class="ml-auto text-sm text-gray-600">
+        <span class="font-semibold">Pay Frequency for New Employees:</span>
+        <select id="defaultFrequency" class="border rounded-lg px-2 py-1">
+          <option value="weekly">Weekly (52)</option>
+          <option value="biweekly" selected>Biweekly (26)</option>
+          <option value="semimonthly">Semi-monthly (24)</option>
+          <option value="monthly">Monthly (12)</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Employees list -->
+    <section>
+      <h2 class="text-xl font-semibold mb-3">Employees</h2>
+      <div id="employees" class="space-y-4"></div>
+    </section>
+
+    <!-- Results -->
+    <section class="bg-white rounded-2xl shadow p-4">
+      <div class="flex items-center justify-between border-b pb-3 mb-3">
+        <h2 class="text-xl font-semibold">Payroll Summary</h2>
+        <div class="text-sm text-gray-600">Figures rounded to cents</div>
+      </div>
+
+      <div id="totalsBar" class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-4">
+        <div class="p-3 rounded-xl bg-gray-50">
+          <div class="text-xs text-gray-500">Total Gross</div>
+          <div class="text-2xl font-bold" id="sumGross">$0.00</div>
+        </div>
+        <div class="p-3 rounded-xl bg-gray-50">
+          <div class="text-xs text-gray-500">Total Deductions</div>
+          <div class="text-2xl font-bold" id="sumDeductions">$0.00</div>
+        </div>
+        <div class="p-3 rounded-xl bg-gray-50">
+          <div class="text-xs text-gray-500">Total Net</div>
+          <div class="text-2xl font-bold text-green-700" id="sumNet">$0.00</div>
+        </div>
+        <div class="p-3 rounded-xl bg-gray-50">
+          <div class="text-xs text-gray-500">Employees</div>
+          <div class="text-2xl font-bold" id="empCount">0</div>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-sm">
+          <thead class="bg-gray-800 text-white">
+            <tr>
+              <th class="px-3 py-2 text-left">Employee</th>
+              <th class="px-3 py-2 text-right">Reg Hrs</th>
+              <th class="px-3 py-2 text-right">OT Hrs</th>
+              <th class="px-3 py-2 text-right">Rate</th>
+              <th class="px-3 py-2 text-right">Holiday</th>
+              <th class="px-3 py-2 text-right">Gross</th>
+              <th class="px-3 py-2 text-right">CPP</th>
+              <th class="px-3 py-2 text-right">EI</th>
+              <th class="px-3 py-2 text-right">Tax</th>
+              <th class="px-3 py-2 text-right">Net</th>
+              <th class="px-3 py-2">Freq</th>
+            </tr>
+          </thead>
+          <tbody id="resultsBody" class="bg-white divide-y"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script>
+/* =========================
+   YEAR PARAMETERS (UPDATE HERE EACH YEAR)
+   ========================= */
+const YEAR = 2025;
+
+// --- CPP (approx; CPP2 not included here) ---
+const CPP_RATE = 0.057;             // 5.7% (placeholder)
+const CPP_YBE = 3500;               // Basic exemption (annual)
+const CPP_YMPE = 72100;             // Year's Max Pensionable Earnings (placeholder)
+const CPP_MAX = (CPP_YMPE - CPP_YBE) * CPP_RATE; // Max employee CPP
+
+// --- EI ---
+const EI_RATE = 0.0163;             // 1.63% (placeholder)
+const EI_MIE  = 64000;              // Max insurable earnings (annual placeholder)
+const EI_MAX  = EI_MIE * EI_RATE;   // Max employee EI
+
+// --- Federal Tax (approx 2025 placeholders) ---
+const FED_BRACKETS = [
+  { upTo: 55867,  rate: 0.15 },
+  { upTo: 111733, rate: 0.205 },
+  { upTo: 173205, rate: 0.26 },
+  { upTo: 246752, rate: 0.29 },
+  { upTo: Infinity, rate: 0.33 }
+];
+const FED_BPA = 16100; // basic personal amount (approx)
+
+// --- Ontario Tax (approx 2025 placeholders) ---
+const ON_BRACKETS = [
+  { upTo: 51446,   rate: 0.0505 },
+  { upTo: 102894,  rate: 0.0915 },
+  { upTo: 150000,  rate: 0.1116 },
+  { upTo: 220000,  rate: 0.1216 },
+  { upTo: Infinity,rate: 0.1316 }
+];
+const ON_BPA = 12900; // approx
+
+// Pay frequency to periods per year
+const FREQ_PERIODS = { weekly: 52, biweekly: 26, semimonthly: 24, monthly: 12 };
+
+/* =========================
+   STORAGE & STATE
+   ========================= */
+function loadState() {
+  return JSON.parse(localStorage.getItem('employees_v2') || '[]');
+}
+function saveState(arr) {
+  localStorage.setItem('employees_v2', JSON.stringify(arr));
+}
+function addEmployee(emp) {
+  const list = document.getElementById('employees');
+  const freqDefault = document.getElementById('defaultFrequency').value;
+  const e = Object.assign({
+    id: crypto.randomUUID(),
+    name: '',
+    employeeId: '',
+    freq: freqDefault,
+    hourly: 0,
+    hours: 0,
+    holidayHours: 0,
+    // YTDs (persist across the year)
+    ytdEarnings: 0,
+    ytdCPP: 0,
+    ytdEI: 0,
+    ytdTax: 0
+  }, emp || {});
+  const state = loadState();
+  state.push(e); saveState(state);
+  renderEmployees();
+}
+function removeEmployee(id) {
+  const state = loadState().filter(x => x.id !== id);
+  saveState(state);
+  renderEmployees();
+  calculateAll();
+}
+function resetYTD(id) {
+  const state = loadState();
+  const emp = state.find(x => x.id === id);
+  if (emp) {
+    emp.ytdEarnings = 0; emp.ytdCPP = 0; emp.ytdEI = 0; emp.ytdTax = 0;
+    saveState(state); renderEmployees();
+  }
+}
+
+/* =========================
+   TAX HELPERS
+   ========================= */
+function calcProgressiveTax(annualIncome, brackets) {
+  let remaining = annualIncome, lastCap = 0, tax = 0;
+  for (const b of brackets) {
+    const span = Math.min(remaining, b.upTo - lastCap);
+    if (span <= 0) break;
+    tax += span * b.rate;
+    remaining -= span;
+    lastCap = b.upTo;
+  }
+  return tax;
+}
+function annualize(grossPerPeriod, freq) {
+  return grossPerPeriod * FREQ_PERIODS[freq];
+}
+function perPeriodFromAnnual(annualAmount, freq) {
+  return annualAmount / FREQ_PERIODS[freq];
+}
+
+/* =========================
+   CPP / EI (YTD-aware, capped)
+   ========================= */
+function calcCPPPerPeriod(emp, grossThisPeriod) {
+  // Prorate basic exemption by pay period
+  const periods = FREQ_PERIODS[emp.freq];
+  const periodExemption = CPP_YBE / periods;
+  const pensionablePeriod = Math.max(0, grossThisPeriod - periodExemption);
+  let desired = pensionablePeriod * CPP_RATE;
+
+  // Cap to remaining annual room
+  const room = Math.max(0, CPP_MAX - emp.ytdCPP);
+  return Math.min(desired, room);
+}
+function calcEIPerPeriod(emp, grossThisPeriod) {
+  // EI calculated until max insurable earnings reached
+  const annualGrossAssumed = emp.ytdEarnings + grossThisPeriod;
+  const roomEarnings = Math.max(0, EI_MIE - emp.ytdEarnings);
+  const insurableThisPeriod = Math.min(grossThisPeriod, roomEarnings);
+  const desired = insurableThisPeriod * EI_RATE;
+
+  const room = Math.max(0, EI_MAX - emp.ytdEI);
+  return Math.min(desired, room);
+}
+
+/* =========================
+   INCOME TAX (with BPA credits, YTD-aware)
+   ========================= */
+function calcIncomeTaxWithholding(emp, grossThisPeriod) {
+  // Annualize expected income based on this period’s gross
+  const periods = FREQ_PERIODS[emp.freq];
+  const projectedAnnual = (emp.ytdEarnings + grossThisPeriod) * (periods / Math.max(1, (emp._periodsSoFar || 0) + 1));
+  // Compute rough federal & provincial annual tax
+  const fed = calcProgressiveTax(Math.max(0, projectedAnnual - FED_BPA), FED_BRACKETS);
+  const ont = calcProgressiveTax(Math.max(0, projectedAnnual - ON_BPA), ON_BRACKETS);
+  const totalAnnual = Math.max(0, fed + ont);
+
+  const perPeriodTarget = totalAnnual / periods;
+  // Withholding = per-period target minus already withheld YTD (spread evenly concept)
+  const withheldYTD = emp.ytdTax || 0;
+  const periodsPassed = emp._periodsSoFar || 0;
+  const targetYTD = perPeriodTarget * (periodsPassed + 1);
+  const thisWithholding = Math.max(0, targetYTD - withheldYTD);
+
+  return thisWithholding;
+}
+
+/* =========================
+   HOLIDAY PAY (Ontario-style approximation)
+   ========================= */
+function calcHolidayPay(hours, rate, holidayHours, regularPay, overtimePay) {
+  // Approximation: average hourly (excluding premium beyond base) * holiday hours
+  const totalHours = Math.max(1, hours);
+  const avgHourly = (regularPay + overtimePay) / totalHours; // includes OT earnings in average; refine if needed
+  return holidayHours * avgHourly;
+}
+
+/* =========================
+   UI RENDER
+   ========================= */
+function renderEmployees() {
+  const wrap = document.getElementById('employees');
+  wrap.innerHTML = '';
+  const state = loadState();
+
+  state.forEach(emp => {
+    const card = document.createElement('div');
+    card.className = 'bg-white rounded-2xl shadow p-4';
+
+    card.innerHTML = `
+      <div class="flex items-center justify-between border-b pb-2 mb-3">
+        <div class="font-semibold text-lg">${emp.name || 'New Employee'}</div>
+        <div class="flex gap-2">
+          <button class="text-xs bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded" data-act="reset">Reset YTD</button>
+          <button class="text-xs bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded" data-act="remove">Remove</button>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4">
+        <!-- Employee Info -->
+        <div>
+          <h3 class="text-sm font-semibold text-gray-700 mb-2">Employee Info</h3>
+          <label class="block text-xs text-gray-600">Name</label>
+          <input data-bind="name" value="${emp.name}" class="w-full border rounded-lg px-2 py-1 mb-2" placeholder="Jane Smith"/>
+          <label class="block text-xs text-gray-600">Employee ID</label>
+          <input data-bind="employeeId" value="${emp.employeeId}" class="w-full border rounded-lg px-2 py-1" placeholder="E-001"/>
+        </div>
+
+        <!-- Earnings -->
+        <div>
+          <h3 class="text-sm font-semibold text-gray-700 mb-2">Work Hours & Rate</h3>
+          <label class="block text-xs text-gray-600">Hourly Rate ($)</label>
+          <input type="number" step="0.01" data-bind="hourly" value="${emp.hourly}" class="w-full border rounded-lg px-2 py-1 mb-2"/>
+          <label class="block text-xs text-gray-600">Hours Worked</label>
+          <input type="number" step="0.01" data-bind="hours" value="${emp.hours}" class="w-full border rounded-lg px-2 py-1 mb-2"/>
+          <label class="block text-xs text-gray-600">Holiday Hours</label>
+          <input type="number" step="0.01" data-bind="holidayHours" value="${emp.holidayHours}" class="w-full border rounded-lg px-2 py-1"/>
+        </div>
+
+        <!-- Pay Settings & YTD -->
+        <div>
+          <h3 class="text-sm font-semibold text-gray-700 mb-2">Pay Settings & YTD</h3>
+          <label class="block text-xs text-gray-600">Pay Frequency</label>
+          <select data-bind="freq" class="w-full border rounded-lg px-2 py-1 mb-2">
+            <option value="weekly" ${emp.freq==='weekly'?'selected':''}>Weekly (52)</option>
+            <option value="biweekly" ${emp.freq==='biweekly'?'selected':''}>Biweekly (26)</option>
+            <option value="semimonthly" ${emp.freq==='semimonthly'?'selected':''}>Semi-monthly (24)</option>
+            <option value="monthly" ${emp.freq==='monthly'?'selected':''}>Monthly (12)</option>
+          </select>
+
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div>
+              <div class="text-gray-500">YTD Earnings</div>
+              <div class="font-mono">$${(emp.ytdEarnings||0).toFixed(2)}</div>
+            </div>
+            <div>
+              <div class="text-gray-500">YTD Income Tax</div>
+              <div class="font-mono">$${(emp.ytdTax||0).toFixed(2)}</div>
+            </div>
+            <div>
+              <div class="text-gray-500">YTD CPP</div>
+              <div class="font-mono">$${(emp.ytdCPP||0).toFixed(2)}</div>
+            </div>
+            <div>
+              <div class="text-gray-500">YTD EI</div>
+              <div class="font-mono">$${(emp.ytdEI||0).toFixed(2)}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // wire events
+    card.querySelectorAll('[data-bind]').forEach(inp => {
+      inp.addEventListener('input', () => {
+        const field = inp.getAttribute('data-bind');
+        const st = loadState();
+        const obj = st.find(x => x.id === emp.id);
+        if (!obj) return;
+        let val = inp.value;
+        if (['hourly','hours','holidayHours'].includes(field)) val = parseFloat(val || '0');
+        obj[field] = val;
+        saveState(st);
+      });
+    });
+    card.querySelector('[data-act="remove"]').addEventListener('click', () => removeEmployee(emp.id));
+    card.querySelector('[data-act="reset"]').addEventListener('click', () => resetYTD(emp.id));
+
+    wrap.appendChild(card);
+  });
+}
+
+/* =========================
+   PAYROLL CALC
+   ========================= */
+function calcOne(emp) {
+  // count how many periods have been processed for annualization guidance
+  emp._periodsSoFar = (emp._periodsSoFar || 0) + 1;
+
+  const hours = Number(emp.hours) || 0;
+  const rate  = Number(emp.hourly) || 0;
+  const holidayHrs = Number(emp.holidayHours) || 0;
+
+  const regHours = Math.min(44, hours);
+  const otHours  = Math.max(0, hours - 44);
+  const regPay   = regHours * rate;
+  const otPay    = otHours * rate * 1.5;
+  const holidayPay = calcHolidayPay(hours, rate, holidayHrs, regPay, otPay);
+
+  const gross = regPay + otPay + holidayPay;
+
+  const cpp = calcCPPPerPeriod(emp, gross);
+  const ei  = calcEIPerPeriod(emp, gross);
+  const tax = calcIncomeTaxWithholding(emp, gross);
+
+  const deductions = cpp + ei + tax;
+  const net = Math.max(0, gross - deductions);
+
+  // Update YTDs
+  emp.ytdEarnings = (emp.ytdEarnings || 0) + gross;
+  emp.ytdCPP      = (emp.ytdCPP || 0) + cpp;
+  emp.ytdEI       = (emp.ytdEI || 0) + ei;
+  emp.ytdTax      = (emp.ytdTax || 0) + tax;
+
+  return {
+    name: emp.name || '(Unnamed)',
+    regHours, otHours,
+    rate, holidayHrs,
+    gross, cpp, ei, tax, net,
+    freq: emp.freq
+  };
+}
+
+function calculateAll() {
+  const tbody = document.getElementById('resultsBody');
+  tbody.innerHTML = '';
+
+  const state = loadState();
+  let sumGross=0, sumDed=0, sumNet=0;
+
+  // calculate and update state (including YTD)
+  const rows = state.map(emp => {
+    const res = calcOne(emp);
+    sumGross += res.gross;
+    sumDed   += (res.cpp + res.ei + res.tax);
+    sumNet   += res.net;
+    return res;
+  });
+  saveState(state); // persist updated YTDs
+
+  // render table
+  rows.forEach(r => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="px-3 py-2 whitespace-nowrap">${r.name}</td>
+      <td class="px-3 py-2 text-right">${r.regHours.toFixed(2)}</td>
+      <td class="px-3 py-2 text-right">${r.otHours.toFixed(2)}</td>
+      <td class="px-3 py-2 text-right">${r.rate.toFixed(2)}</td>
+      <td class="px-3 py-2 text-right">${r.holidayHrs.toFixed(2)}</td>
+      <td class="px-3 py-2 text-right">${r.gross.toFixed(2)}</td>
+      <td class="px-3 py-2 text-right">${r.cpp.toFixed(2)}</td>
+      <td class="px-3 py-2 text-right">${r.ei.toFixed(2)}</td>
+      <td class="px-3 py-2 text-right">${r.tax.toFixed(2)}</td>
+      <td class="px-3 py-2 text-right font-semibold">${r.net.toFixed(2)}</td>
+      <td class="px-3 py-2">${r.freq}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // totals bar
+  document.getElementById('sumGross').textContent = `$${sumGross.toFixed(2)}`;
+  document.getElementById('sumDeductions').textContent = `$${sumDed.toFixed(2)}`;
+  document.getElementById('sumNet').textContent = `$${sumNet.toFixed(2)}`;
+  document.getElementById('empCount').textContent = String(rows.length);
+}
+
+/* =========================
+   EXPORT
+   ========================= */
+function exportCSV() {
+  const header = [
+    'Employee','RegHours','OTHours','Rate','HolidayHours',
+    'Gross','CPP','EI','IncomeTax','Net','Frequency'
+  ];
+  let csv = header.join(',') + '\r\n';
+
+  // We need current rows; do a dry calculation without altering YTD.
+  const state = loadState().map(e => ({...e}));
+  const rows = state.map(emp => {
+    // shadow copy without incrementing periods
+    const hours = Number(emp.hours)||0, rate=Number(emp.hourly)||0, holidayHrs=Number(emp.holidayHours)||0;
+    const regH = Math.min(44,hours), otH = Math.max(0,hours-44);
+    const regPay = regH*rate, otPay=otH*rate*1.5;
+    const holidayPay = calcHolidayPay(hours, rate, holidayHrs, regPay, otPay);
+    const gross = regPay+otPay+holidayPay;
+    const cpp = Math.min(calcCPPPerPeriod(emp, gross), Math.max(0, CPP_MAX - (emp.ytdCPP||0)));
+    const ei  = Math.min(calcEIPerPeriod(emp, gross), Math.max(0, EI_MAX - (emp.ytdEI||0)));
+    const tax = calcIncomeTaxWithholding(emp, gross);
+    const net = Math.max(0, gross - (cpp+ei+tax));
+    return {name: emp.name||'(Unnamed)', regH, otH, rate, holidayHrs, gross, cpp, ei, tax, net, freq: emp.freq};
+  });
+
+  rows.forEach(r=>{
+    csv += [
+      r.name, r.regH.toFixed(2), r.otH.toFixed(2), r.rate.toFixed(2),
+      r.holidayHrs.toFixed(2), r.gross.toFixed(2), r.cpp.toFixed(2),
+      r.ei.toFixed(2), r.tax.toFixed(2), r.net.toFixed(2), r.freq
+    ].join(',') + '\r\n';
+  });
+
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'payroll.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+/* =========================
+   INIT
+   ========================= */
+(function init(){
+  renderEmployees();
+  if (loadState().length === 0) addEmployee(); // start with one card
+})();
+  </script>
+</body>
+</html>

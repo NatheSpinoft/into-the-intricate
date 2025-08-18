@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Input Tax Credits Form</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+
+  <div class="max-w-5xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+    <h1 class="text-2xl font-bold mb-6 text-center">Input Tax Credit Entry</h1>
+
+    <form id="itcForm" class="space-y-4">
+
+      <div>
+        <label class="block font-medium mb-1" for="vendor">Vendor Name</label>
+        <input class="w-full border border-gray-300 rounded px-3 py-2" type="text" id="vendor" required>
+      </div>
+
+      <div>
+        <label class="block font-medium mb-1" for="date">Invoice Date</label>
+        <input class="w-full border border-gray-300 rounded px-3 py-2" type="date" id="date" required>
+      </div>
+
+      <div>
+        <label class="block font-medium mb-1" for="invoice">Invoice Number</label>
+        <input class="w-full border border-gray-300 rounded px-3 py-2" type="text" id="invoice" required>
+      </div>
+
+      <div>
+        <label class="block font-medium mb-1" for="amount">Amount (Before Tax)</label>
+        <input class="w-full border border-gray-300 rounded px-3 py-2" type="number" id="amount" step="0.01" required>
+      </div>
+
+      <div>
+        <span class="block font-medium mb-1">Province Adjustment</span>
+        <div class="flex gap-4">
+          <label class="flex items-center gap-2">
+            <input type="checkbox" class="province-tax" value="5"> Ontario (5% GST)
+          </label>
+          <label class="flex items-center gap-2">
+            <input type="checkbox" class="province-tax" value="13"> Quebec (13% QST)
+          </label>
+          <label class="flex items-center gap-2">
+            <input type="checkbox" class="province-tax" value="15"> Nova Scotia (15% HST)
+          </label>
+        </div>
+      </div>
+
+      <div>
+        <label class="block font-medium mb-1" for="itc">Calculated Input Tax Credit</label>
+        <input class="w-full border border-gray-300 rounded px-3 py-2 bg-gray-100" type="number" id="itc" step="0.01" readonly>
+      </div>
+
+      <div class="flex gap-4">
+        <button type="submit" class="flex-1 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">
+          Add Entry
+        </button>
+        <button type="button" id="exportCSV" class="flex-1 bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700">
+          Export CSV
+        </button>
+      </div>
+    </form>
+
+    <!-- Table for entries -->
+    <div class="mt-8 overflow-x-auto">
+      <h2 class="text-xl font-semibold mb-2">ITC Entries</h2>
+      <table class="min-w-full bg-white border border-gray-300">
+        <thead class="bg-gray-200">
+          <tr>
+            <th class="border px-3 py-2">Vendor</th>
+            <th class="border px-3 py-2">Date</th>
+            <th class="border px-3 py-2">Invoice #</th>
+            <th class="border px-3 py-2">Amount</th>
+            <th class="border px-3 py-2">Province Tax</th>
+            <th class="border px-3 py-2">ITC</th>
+            <th class="border px-3 py-2">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="entriesTableBody">
+          <!-- Entries go here -->
+        </tbody>
+        <tfoot>
+          <tr class="bg-gray-100 font-bold">
+            <td class="border px-3 py-2 text-right" colspan="5">Total ITC</td>
+            <td class="border px-3 py-2" id="totalITC">0.00</td>
+            <td class="border px-3 py-2"></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('itcForm');
+    const amount = document.getElementById('amount');
+    const itc = document.getElementById('itc');
+    const provinceCheckboxes = document.querySelectorAll('.province-tax');
+    const tableBody = document.getElementById('entriesTableBody');
+    const totalITCField = document.getElementById('totalITC');
+    const exportCSVButton = document.getElementById('exportCSV');
+
+    let entries = JSON.parse(localStorage.getItem('itcEntries')) || [];
+
+    function calculateITC() {
+      let amt = parseFloat(amount.value) || 0;
+      let rate = 0;
+      provinceCheckboxes.forEach(box => { if(box.checked) rate += parseFloat(box.value); });
+      itc.value = (amt * rate / 100).toFixed(2);
+    }
+
+    function updateTable() {
+      tableBody.innerHTML = '';
+      let total = 0;
+      entries.forEach((entry, index) => {
+        total += parseFloat(entry.itc);
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td class="border px-3 py-2">${entry.vendor}</td>
+          <td class="border px-3 py-2">${entry.date}</td>
+          <td class="border px-3 py-2">${entry.invoice}</td>
+          <td class="border px-3 py-2">${entry.amount}</td>
+          <td class="border px-3 py-2">${entry.provinces}</td>
+          <td class="border px-3 py-2">${entry.itc}</td>
+          <td class="border px-3 py-2 flex gap-2">
+            <button class="bg-yellow-500 text-white px-2 py-1 rounded" onclick="editEntry(${index})">Edit</button>
+            <button class="bg-red-500 text-white px-2 py-1 rounded" onclick="deleteEntry(${index})">Delete</button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+      totalITCField.textContent = total.toFixed(2);
+    }
+
+    function saveEntries() {
+      localStorage.setItem('itcEntries', JSON.stringify(entries));
+    }
+
+    function deleteEntry(index) {
+      entries.splice(index, 1);
+      saveEntries();
+      updateTable();
+    }
+
+    function editEntry(index) {
+      const entry = entries[index];
+      document.getElementById('vendor').value = entry.vendor;
+      document.getElementById('date').value = entry.date;
+      document.getElementById('invoice').value = entry.invoice;
+      amount.value = entry.amount;
+      provinceCheckboxes.forEach(box => box.checked = entry.provinces.split(', ').includes(box.parentElement.textContent.trim()));
+      calculateITC();
+      entries.splice(index, 1); // remove old entry before saving edited
+      saveEntries();
+      updateTable();
+    }
+
+    function exportCSV() {
+      let csvContent = "data:text/csv;charset=utf-8,";
+      csvContent += "Vendor,Date,Invoice,Amount,Province Tax,ITC\n";
+      entries.forEach(entry => {
+        csvContent += `${entry.vendor},${entry.date},${entry.invoice},${entry.amount},${entry.provinces},${entry.itc}\n`;
+      });
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "itc_entries.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    amount.addEventListener('input', calculateITC);
+    provinceCheckboxes.forEach(box => box.addEventListener('change', calculateITC));
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      let provinces = [];
+      provinceCheckboxes.forEach(box => { if(box.checked) provinces.push(box.parentElement.textContent.trim()); });
+
+      const newEntry = {
+        vendor: document.getElementById('vendor').value,
+        date: document.getElementById('date').value,
+        invoice: document.getElementById('invoice').value,
+        amount: amount.value,
+        provinces: provinces.join(', '),
+        itc: itc.value
+      };
+
+      entries.push(newEntry);
+      saveEntries();
+      updateTable();
+      form.reset();
+      itc.value = '';
+    });
+
+    exportCSVButton.addEventListener('click', exportCSV);
+
+    // Load from localStorage on page load
+    updateTable();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Professional Financial Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  body { font-family: 'Roboto', sans-serif; }
+  thead th { background: linear-gradient(to right, #4f46e5, #3b82f6); color: white; padding: 12px; text-align: left; }
+  tbody tr:hover { background-color: #e0e7ff; transition: 0.2s; }
+  .modal-bg { background: rgba(0,0,0,0.6); }
+  .collapsible { cursor: pointer; }
+  .nested { display: none; padding-left: 1rem; }
+</style>
+</head>
+<body class="bg-gray-100 p-6">
+
+<div class="max-w-7xl mx-auto">
+  <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Professional Financial Dashboard</h1>
+
+  <div class="flex justify-between mb-4">
+    <div class="flex space-x-2">
+      <button id="addAccountBtn" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Add Account</button>
+      <input type="text" id="searchInput" placeholder="Search ledger..." class="px-3 py-2 border rounded">
+    </div>
+    <button id="exportCSV" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Export CSV</button>
+  </div>
+
+  <!-- General Ledger Table -->
+  <div class="overflow-x-auto shadow-lg rounded bg-white mb-8">
+    <table class="min-w-full">
+      <thead>
+        <tr>
+          <th>Account Number</th>
+          <th>Account Name</th>
+          <th>Type</th>
+          <th>Balance</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="ledgerBody"></tbody>
+    </table>
+  </div>
+
+  <!-- Financial Statements -->
+  <div class="grid grid-cols-2 gap-6 mb-8">
+    <div class="bg-white p-4 rounded shadow">
+      <h2 class="text-xl font-bold mb-2">Balance Sheet</h2>
+      <h3 class="font-semibold">Assets</h3>
+      <ul id="assetsList" class="list-disc pl-5 mb-2"></ul>
+      <p class="font-bold">Total Assets: $<span id="totalAssets">0.00</span></p>
+
+      <h3 class="font-semibold mt-4">Liabilities & Equity</h3>
+      <ul id="liabilitiesList" class="list-disc pl-5 mb-2"></ul>
+      <ul id="equityList" class="list-disc pl-5 mb-2"></ul>
+      <p class="font-bold">Total Liabilities & Equity: $<span id="totalLiabilitiesEquity">0.00</span></p>
+    </div>
+
+    <div class="bg-white p-4 rounded shadow">
+      <h2 class="text-xl font-bold mb-2">Income Statement</h2>
+      <h3 class="font-semibold">Revenue</h3>
+      <ul id="revenueList" class="list-disc pl-5 mb-2"></ul>
+      <h3 class="font-semibold mt-2">Expenses</h3>
+      <ul id="expenseList" class="list-disc pl-5 mb-2"></ul>
+      <p class="font-bold">Net Income: $<span id="netIncome">0.00</span></p>
+      <p class="font-bold mt-2">Retained Earnings (Auto-Calculated): $<span id="retainedEarnings">0.00</span></p>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="grid grid-cols-2 gap-6">
+    <div class="bg-white p-4 rounded shadow">
+      <h2 class="text-xl font-bold mb-2">Assets vs Liabilities & Equity</h2>
+      <canvas id="balanceChart" height="200"></canvas>
+    </div>
+    <div class="bg-white p-4 rounded shadow">
+      <h2 class="text-xl font-bold mb-2">Revenue vs Expenses</h2>
+      <canvas id="incomeChart" height="200"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for Adding Account -->
+<div id="accountModal" class="fixed inset-0 hidden items-center justify-center modal-bg">
+  <div class="bg-white p-6 rounded-lg w-96 shadow-lg">
+    <h2 class="text-xl font-bold mb-4">Add/Edit Account</h2>
+    <form id="accountForm" class="space-y-4">
+      <div>
+        <label class="block font-medium">Account Number</label>
+        <input type="text" id="accountNumber" class="w-full border rounded px-3 py-2" required>
+      </div>
+      <div>
+        <label class="block font-medium">Account Name</label>
+        <input type="text" id="accountName" class="w-full border rounded px-3 py-2" required>
+      </div>
+      <div>
+        <label class="block font-medium">Type</label>
+        <select id="accountType" class="w-full border rounded px-3 py-2">
+          <option value="Asset">Asset</option>
+          <option value="Liability">Liability</option>
+          <option value="Equity">Equity</option>
+          <option value="Revenue">Revenue</option>
+          <option value="Expense">Expense</option>
+        </select>
+      </div>
+      <div>
+        <label class="block font-medium">Balance</label>
+        <input type="number" id="accountBalance" class="w-full border rounded px-3 py-2" value="0" required>
+      </div>
+      <div class="flex justify-end space-x-2">
+        <button type="button" id="closeModal" class="px-4 py-2 bg-gray-400 rounded hover:bg-gray-500 text-white">Cancel</button>
+        <button type="submit" class="px-4 py-2 bg-green-600 rounded hover:bg-green-700 text-white">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+const ledgerBody = document.getElementById('ledgerBody');
+const addAccountBtn = document.getElementById('addAccountBtn');
+const accountModal = document.getElementById('accountModal');
+const closeModal = document.getElementById('closeModal');
+const accountForm = document.getElementById('accountForm');
+const searchInput = document.getElementById('searchInput');
+
+const assetsList = document.getElementById('assetsList');
+const liabilitiesList = document.getElementById('liabilitiesList');
+const equityList = document.getElementById('equityList');
+const revenueList = document.getElementById('revenueList');
+const expenseList = document.getElementById('expenseList');
+const totalAssetsEl = document.getElementById('totalAssets');
+const totalLiabilitiesEquityEl = document.getElementById('totalLiabilitiesEquity');
+const netIncomeEl = document.getElementById('netIncome');
+const retainedEarningsEl = document.getElementById('retainedEarnings');
+
+let accounts = [
+  { number: '1000', name: 'Cash', type: 'Asset', balance: 15000, category: 'Current' },
+  { number: '1100', name: 'Accounts Receivable', type: 'Asset', balance: 5000, category: 'Current' },
+  { number: '1200', name: 'Equipment', type: 'Asset', balance: 12000, category: 'Non-Current' },
+  { number: '2000', name: 'Accounts Payable', type: 'Liability', balance: 4000, category: 'Current' },
+  { number: '2100', name: 'Long-Term Debt', type: 'Liability', balance: 8000, category: 'Non-Current' },
+  { number: '3000', name: 'Owner’s Equity', type: 'Equity', balance: 16000 },
+  { number: '4000', name: 'Sales Revenue', type: 'Revenue', balance: 25000 },
+  { number: '5000', name: 'Rent Expense', type: 'Expense', balance: 5000 },
+  { number: '5100', name: 'Utilities Expense', type: 'Expense', balance: 2000 }
+];
+
+// Render Ledger
+function renderAccounts(filter='') {
+  ledgerBody.innerHTML = '';
+  accounts.filter(acc => acc.name.toLowerCase().includes(filter) || acc.number.includes(filter) || acc.type.toLowerCase().includes(filter))
+          .forEach((acc, idx) => {
+    ledgerBody.innerHTML += `
+      <tr>
+        <td class="px-4 py-2">${acc.number}</td>
+        <td class="px-4 py-2">${acc.name}${acc.category ? ' ('+acc.category+')' : ''}</td>
+        <td class="px-4 py-2">${acc.type}</td>
+        <td class="px-4 py-2">$${acc.balance.toFixed(2)}</td>
+        <td class="px-4 py-2 space-x-2">
+          <button onclick="editAccount(${idx})" class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600">Edit</button>
+          <button onclick="deleteAccount(${idx})" class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600">Delete</button>
+        </td>
+      </tr>
+    `;
+  });
+  renderFinancials();
+}
+
+// Render Financial Statements & Charts
+let balanceChart, incomeChart;
+function renderFinancials() {
+  assetsList.innerHTML = '';
+  liabilitiesList.innerHTML = '';
+  equityList.innerHTML = '';
+  revenueList.innerHTML = '';
+  expenseList.innerHTML = '';
+
+  let totalAssets = 0, totalLiabilitiesEquity = 0, totalRevenue = 0, totalExpenses = 0;
+
+  const assetsCurrent = accounts.filter(a=>a.type==='Asset' && a.category==='Current');
+  const assetsNonCurrent = accounts.filter(a=>a.type==='Asset' && a.category==='Non-Current');
+  const liabilitiesCurrent = accounts.filter(a=>a.type==='Liability' && a.category==='Current');
+  const liabilitiesNonCurrent = accounts.filter(a=>a.type==='Liability' && a.category==='Non-Current');
+
+  function listWithCategory(list, container) {
+    if(list.length>0){
+      container.innerHTML += `<li class="collapsible font-semibold">${list[0].type} (${list[0].category})</li>`;
+      list.forEach(acc => {
+        container.innerHTML += `<li class="nested">${acc.name}: $${acc.balance.toFixed(2)}</li>`;
+      });
+    }
+  }
+
+  [...assetsCurrent,...assetsNonCurrent].forEach(acc => { assetsList.innerHTML += `<li>${acc.name} (${acc.category}): $${acc.balance.toFixed(2)}</li>`; totalAssets += acc.balance; });
+  [...liabilitiesCurrent,...liabilitiesNonCurrent].forEach(acc => { liabilitiesList.innerHTML += `<li>${acc.name} (${acc.category}): $${acc.balance.toFixed(2)}</li>`; totalLiabilitiesEquity += acc.balance; });
+
+  accounts.filter(a=>a.type==='Equity').forEach(acc => { equityList.innerHTML += `<li>${acc.name}: $${acc.balance.toFixed(2)}</li>`; totalLiabilitiesEquity += acc.balance; });
+  accounts.filter(a=>a.type==='Revenue').forEach(acc => { revenueList.innerHTML += `<li>${acc.name}: $${acc.balance.toFixed(2)}</li>`; totalRevenue += acc.balance; });
+  accounts.filter(a=>a.type==='Expense').forEach(acc => { expenseList.innerHTML += `<li>${acc.name}: $${acc.balance.toFixed(2)}</li>`; totalExpenses += acc.balance; });
+
+  const netIncome = totalRevenue - totalExpenses;
+  const retainedEarnings = accounts.filter(a=>a.type==='Equity').reduce((sum,a)=>sum+a.balance,0) + netIncome;
+
+  totalAssetsEl.innerText = totalAssets.toFixed(2);
+  totalLiabilitiesEquityEl.innerText = totalLiabilitiesEquity.toFixed(2);
+  netIncomeEl.innerText = netIncome.toFixed(2);
+  retainedEarningsEl.innerText = retainedEarnings.toFixed(2);
+
+  // Charts
+  const ctxBalance = document.getElementById('balanceChart').getContext('2d');
+  const ctxIncome = document.getElementById('incomeChart').getContext('2d');
+
+  if(balanceChart) balanceChart.destroy();
+  balanceChart = new Chart(ctxBalance, {
+    type: 'doughnut',
+    data: { labels: ['Assets', 'Liabilities & Equity'], datasets: [{ data: [totalAssets, totalLiabilitiesEquity], backgroundColor: ['#4f46e5','#3b82f6'] }] }
+  });
+
+  if(incomeChart) incomeChart.destroy();
+  incomeChart = new Chart(ctxIncome, {
+    type: 'doughnut',
+    data: { labels: ['Revenue', 'Expenses'], datasets: [{ data: [totalRevenue, totalExpenses], backgroundColor: ['#10b981','#f59e0b'] }] }
+  });
+}
+
+// CRUD + Modal
+addAccountBtn.addEventListener('click', () => accountModal.classList.remove('hidden'));
+closeModal.addEventListener('click', () => accountModal.classList.add('hidden'));
+
+accountForm.addEventListener('submit', e=>{
+  e.preventDefault();
+  const idx = accountForm.dataset.editIdx;
+  const newAcc = {
+    number: document.getElementById('accountNumber').value,
+    name: document.getElementById('accountName').value,
+    type: document.getElementById('accountType').value,
+    balance: parseFloat(document.getElementById('accountBalance').value),
+    category: document.getElementById('accountType').value==='Asset'||document.getElementById('accountType').value==='Liability'?prompt("Category (Current/Non-Current)","Current"):''
+  };
+  if(idx!==undefined){
+    accounts[idx] = newAcc;
+    delete accountForm.dataset.editIdx;
+  } else accounts.push(newAcc);
+  renderAccounts();
+  accountForm.reset();
+  accountModal.classList.add('hidden');
+});
+
+function deleteAccount(idx){ if(confirm('Are you sure?')){ accounts.splice(idx,1); renderAccounts(); } }
+function editAccount(idx){
+  const acc = accounts[idx];
+  document.getElementById('accountNumber').value = acc.number;
+  document.getElementById('accountName').value = acc.name;
+  document.getElementById('accountType').value = acc.type;
+  document.getElementById('accountBalance').value = acc.balance;
+  accountForm.dataset.editIdx = idx;
+  accountModal.classList.remove('hidden');
+}
+
+// Search
+searchInput.addEventListener('input',()=>renderAccounts(searchInput.value.toLowerCase()));
+
+// CSV Export
+document.getElementById('exportCSV').addEventListener('click', ()=>{
+  let csvContent = "data:text/csv;charset=utf-8,Account Number,Account Name,Type,Category,Balance\n";
+  accounts.forEach(acc => { csvContent += `${acc.number},${acc.name},${acc.type},${acc.category||''},${acc.balance}\n`; });
+  const link = document.createElement("a"); link.setAttribute("href", encodeURI(csvContent)); link.setAttribute("download","financial_dashboard.csv"); document.body.appendChild(link); link.click(); document.body.removeChild(link);
+});
+
+renderAccounts();
+</script>
+</body>
+</html>
