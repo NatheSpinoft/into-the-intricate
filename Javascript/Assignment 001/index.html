@@ -23,52 +23,7 @@
         <div class = "main-nav">
 
         </div>
-            <script>
-            const selectCategory = document.querySelector('select[name="category"]');
-            const outputDiv = document.querySelector('.output');
-            const searchBtn = document.querySelector('.btn-search');
-
-            let cards = []; // will hold fetched cards
-
-            // Fetch JSON once on page load
-            fetch('list.json')
-                .then(response => {
-                if (!response.ok) throw new Error('Failed to load JSON');
-                return response.json();
-                })
-                .then(data => {
-                cards = data.MagicCards;
-                outputDiv.innerHTML = "<p>Please select a category and hit Search.</p>";
-                })
-                .catch(err => {
-                outputDiv.innerHTML = `<p style="color:red;">Error loading card data: ${err.message}</p>`;
-                });
-
-            function displayCards(cardsToDisplay) {
-                if(cardsToDisplay.length === 0){
-                outputDiv.innerHTML = "<p>No cards found in this category.</p>";
-                return;
-                }
-
-                const html = cardsToDisplay.map(card => `
-                <div class="card">
-                    <h4>${card.name} <small>(${card.manaCost || '-'})</small></h4>
-                    <p><strong>Type:</strong> ${card.type} | <strong>Color:</strong> ${card.color}</p>
-                    <p>${card.text}</p>
-                </div>
-                `).join('');
-
-                outputDiv.innerHTML = html;
-            }
-
-            function filterCards() {
-                const selected = selectCategory.value.toLowerCase();
-                const filtered = cards.filter(card => card.type.toLowerCase() === selected);
-                displayCards(filtered);
-            }
-
-            searchBtn.addEventListener('click', filterCards);
-            </script>
+            
     </div>
     <div class="footer">
 

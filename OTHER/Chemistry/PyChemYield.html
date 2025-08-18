@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fancy Chemistry Yield Calculator</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.11.1/brython.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f4f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .calculator {
+            background: #ffffff;
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 500px;
+        }
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        label {
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 6px;
+            margin: 5px 0 15px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        .results {
+            background: antiquewhite;
+            border-radius: 10px;
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            width: 100%;
+        }
+        .csv-btn {
+            background: #27ae60;
+        }
+        .csv-btn:hover {
+            background: #1e8449;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        table, th, td {
+            border: 1px solid #95a5a6;
+        }
+        th, td {
+            padding: 6px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body onload="brython()">
+
+<div class="calculator">
+    <h2>Dynamic Yield Calculator</h2>
+
+    <label>Reactant Mass (g): </label>
+    <input type="number" id="reactant-mass" step="any">
+
+    <label>Reactant Molar Mass (g/mol): </label>
+    <input type="number" id="reactant-molar" step="any">
+
+    <label>Stoichiometric Coefficient (product/reactant): </label>
+    <input type="number" id="stoichiometry" step="any" value="1">
+
+    <label>Actual Product Mass (g): </label>
+    <input type="number" id="actual-mass" step="any">
+
+    <button id="calc-btn">Calculate Percent Yield</button>
+    <button id="csv-btn" class="csv-btn">Save to CSV</button>
+
+    <div class="results">
+        <table id="results-table">
+            <tr>
+                <th>Reactant Mass (g)</th>
+                <th>Molar Mass (g/mol)</th>
+                <th>Stoich Ratio</th>
+                <th>Actual Mass (g)</th>
+                <th>Theoretical Yield (g)</th>
+                <th>% Yield</th>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script type="text/python">
+from browser import document, alert, window
+
+# Store all calculations
+calculations = []
+
+def calculate_yield(event=None):
+    try:
+        react_mass = float(document["reactant-mass"].value)
+        react_molar = float(document["reactant-molar"].value)
+        stoich = float(document["stoichiometry"].value)
+        actual_mass = float(document["actual-mass"].value)
+        
+        if react_molar == 0:
+            alert("Molar mass cannot be zero.")
+            return
+        
+        # Calculate theoretical yield
+        moles_reactant = react_mass / react_molar
+        theoretical_yield = moles_reactant * stoich * react_molar
+        percent_yield = (actual_mass / theoretical_yield) * 100
+        
+        # Add to table
+        row = f"""
+        <tr>
+            <td>{react_mass:.2f}</td>
+            <td>{react_molar:.2f}</td>
+            <td>{stoich:.2f}</td>
+            <td>{actual_mass:.2f}</td>
+            <td>{theoretical_yield:.2f}</td>
+            <td>{percent_yield:.2f}</td>
+        </tr>
+        """
+        document["results-table"].innerHTML += row
+        
+        # Store in calculations list
+        calculations.append([react_mass, react_molar, stoich, actual_mass, theoretical_yield, percent_yield])
+        
+    except ValueError:
+        alert("Please enter valid numbers.")
+    except ZeroDivisionError:
+        alert("Cannot divide by zero.")
+
+def save_csv(event=None):
+    if not calculations:
+        alert("No data to save.")
+        return
+    
+    # Convert to CSV format
+    csv_content = "Reactant Mass,Molar Mass,Stoichiometry,Actual Mass,Theoretical Yield,Percent Yield\n"
+    for row in calculations:
+        csv_content += ",".join(f"{val:.2f}" for val in row) + "\n"
+    
+    # Create downloadable CSV
+    blob = window.Blob.new([csv_content], { "type": "text/csv" })
+    url = window.URL.createObjectURL(blob)
+    
+    a = document.createElement("a")
+    a.href = url
+    a.download = "yield_data.csv"
+    a.click()
+    window.URL.revokeObjectURL(url)
+
+# Bind buttons
+document["calc-btn"].bind("click", calculate_yield)
+document["csv-btn"].bind("click", save_csv)
+
+</script>
+
+</body>
+</html>
