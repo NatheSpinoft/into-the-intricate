@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Budget vs Actual</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6 font-sans">
+
+<h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Budget vs Actual with Disposable Income</h1>
+
+<div class="overflow-x-auto">
+<table id="budgetTable" class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+    <thead class="bg-green-500 text-white">
+        <tr>
+            <th class="py-3 px-4 text-center">Category</th>
+            <th class="py-3 px-4 text-center">Budgeted ($)</th>
+            <th class="py-3 px-4 text-center">Actual ($)</th>
+            <th class="py-3 px-4 text-center">Difference ($)</th>
+            <th class="py-3 px-4 text-center">Remove</th>
+        </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200" id="budgetBody">
+        <!-- Rows added dynamically -->
+    </tbody>
+    <tfoot class="bg-gray-200 font-semibold">
+        <tr>
+            <td class="py-3 px-4 text-center">Total</td>
+            <td id="totalBudget" class="py-3 px-4 text-center">0</td>
+            <td id="totalActual" class="py-3 px-4 text-center">0</td>
+            <td id="totalDiff" class="py-3 px-4 text-center">0</td>
+            <td class="py-3 px-4 text-center"></td>
+        </tr>
+    </tfoot>
+</table>
+</div>
+
+<div class="flex justify-center mt-4 space-x-2">
+    <input type="text" id="newCategory" placeholder="New Category" class="border rounded px-2 py-1 w-40">
+    <button class="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold py-2 px-4 rounded shadow" onclick="addRow()">Add Category</button>
+</div>
+
+<div id="summary" class="bg-white shadow-md rounded-lg mt-6 p-4 text-center space-y-3">
+    <div>Take-Home Pay: $<input type="number" id="takeHome" class="border rounded px-2 py-1 w-32 text-right" value="0" oninput="calculateDifferences()"></div>
+    <div>Disposable Income: $<span id="disposableIncome">0</span></div>
+    <div>Actual Savings: $<span id="actualSavings">0</span></div>
+</div>
+
+<div class="text-center mt-6 space-x-4">
+    <button class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded shadow" onclick="calculateDifferences()">Recalculate</button>
+    <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded shadow" onclick="exportCSV()">Export CSV</button>
+</div>
+
+<script>
+const defaultCategories = ['Rent', 'Groceries', 'Utilities', 'Transportation', 'Insurance', 'Healthcare', 'Entertainment', 'Savings', 'Miscellaneous'];
+
+function createRow(category) {
+    const tbody = document.getElementById('budgetBody');
+    const tr = document.createElement('tr');
+    tr.className = "hover:bg-gray-50";
+
+    tr.innerHTML = `
+        <td class="text-center py-2 px-4">${category}</td>
+        <td class="text-center py-2 px-4"><input type="number" class="budget border rounded px-2 py-1 w-24 text-right" value="0" oninput="calculateDifferences()"></td>
+        <td class="text-center py-2 px-4"><input type="number" class="actual border rounded px-2 py-1 w-24 text-right" value="0" oninput="calculateDifferences()"></td>
+        <td class="diff text-center py-2 px-4">0</td>
+        <td class="text-center py-2 px-4"><button class="text-red-500 hover:text-red-700 font-bold" onclick="removeRow(this)">X</button></td>
+    `;
+    tbody.appendChild(tr);
+}
+
+function addRow() {
+    const category = document.getElementById('newCategory').value.trim();
+    if(category) {
+        createRow(category);
+        document.getElementById('newCategory').value = '';
+    }
+}
+
+function removeRow(button) {
+    button.closest('tr').remove();
+    calculateDifferences();
+}
+
+function calculateDifferences() {
+    const budgets = document.querySelectorAll('.budget');
+    const actuals = document.querySelectorAll('.actual');
+    const diffs = document.querySelectorAll('.diff');
+
+    let totalBudget = 0;
+    let totalActual = 0;
+
+    budgets.forEach((budgetInput, i) => {
+        const budget = parseFloat(budgetInput.value) || 0;
+        const actual = parseFloat(actuals[i].value) || 0;
+        const diff = actual - budget;
+
+        diffs[i].textContent = diff.toFixed(2);
+        diffs[i].classList.remove('text-red-500','text-green-500','font-bold');
+        if(diff > 0) diffs[i].classList.add('text-red-500','font-bold');
+        else diffs[i].classList.add('text-green-500','font-bold');
+
+        totalBudget += budget;
+        totalActual += actual;
+    });
+
+    const totalDiff = totalActual - totalBudget;
+    const totalDiffEl = document.getElementById('totalDiff');
+    document.getElementById('totalBudget').textContent = totalBudget.toFixed(2);
+    document.getElementById('totalActual').textContent = totalActual.toFixed(2);
+    totalDiffEl.textContent = totalDiff.toFixed(2);
+    totalDiffEl.classList.remove('text-red-500','text-green-500','font-bold');
+    if(totalDiff > 0) totalDiffEl.classList.add('text-red-500','font-bold');
+    else totalDiffEl.classList.add('text-green-500','font-bold');
+
+    const takeHome = parseFloat(document.getElementById('takeHome').value) || 0;
+    const disposable = takeHome - totalActual;
+    document.getElementById('disposableIncome').textContent = disposable.toFixed(2);
+
+    const savingsRow = Array.from(document.querySelectorAll('#budgetBody tr')).find(row => row.cells[0].textContent === 'Savings');
+    const actualSavings = savingsRow ? parseFloat(savingsRow.querySelector('.actual').value) || 0 : 0;
+    document.getElementById('actualSavings').textContent = actualSavings.toFixed(2);
+}
+
+function exportCSV() {
+    const table = document.getElementById('budgetTable');
+    let csvContent = '';
+    for (let row of table.rows) {
+        let rowData = [];
+        for (let cell of row.cells) {
+            rowData.push(cell.querySelector('input') ? cell.querySelector('input').value : cell.textContent);
+        }
+        csvContent += rowData.join(',') + '\n';
+    }
+    csvContent += `Take-Home Pay,${document.getElementById('takeHome').value}\n`;
+    csvContent += `Disposable Income,${document.getElementById('disposableIncome').textContent}\n`;
+    csvContent += `Actual Savings,${document.getElementById('actualSavings').textContent}\n`;
+
+    const blob = new Blob([csvContent], {type: 'text/csv'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'budget_vs_actual.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+// Initialize default rows
+defaultCategories.forEach(cat => createRow(cat));
+calculateDifferences();
+</script>
+
+</body>
+</html>
