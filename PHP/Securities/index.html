@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple Site</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 50px; }
+  form { max-width: 300px; }
+  label { display: block; margin-top: 10px; }
+  input, textarea { width: 100%; padding: 8px; margin-top: 5px; }
+  button { margin-top: 10px; padding: 10px 20px; }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+
+<h1>Contact Us</h1>
+<form id="contactForm" action="submit.php" method="POST">
+  <label>Name:
+    <input type="text" name="name" required>
+  </label>
+
+  <label>Email:
+    <input type="email" name="email" required>
+  </label>
+
+  <label>Message:
+    <textarea name="message" rows="4" required></textarea>
+  </label>
+
+  <!-- Honeypot field (hidden) -->
+  <label class="hidden">Website:
+    <input type="text" name="website">
+  </label>
+
+  <!-- Simple math captcha -->
+  <label>Solve: <span id="num1"></span> + <span id="num2"></span> = 
+    <input type="number" id="captchaAnswer" required>
+  </label>
+
+  <button type="submit">Send</button>
+</form>
+
+<script>
+  // Generate simple math captcha
+  const num1 = Math.floor(Math.random() * 10);
+  const num2 = Math.floor(Math.random() * 10);
+  document.getElementById('num1').textContent = num1;
+  document.getElementById('num2').textContent = num2;
+
+  document.getElementById('contactForm').addEventListener('submit', function(e){
+    const answer = parseInt(document.getElementById('captchaAnswer').value);
+    if(answer !== num1 + num2){
+      e.preventDefault();
+      alert('Captcha incorrect! Please try again.');
+    }
+  });
+</script>
+
+</body>
+</html>
