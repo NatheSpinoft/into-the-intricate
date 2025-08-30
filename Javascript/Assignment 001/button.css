@@ -36,6 +36,7 @@ body{
             margin-top: 5px;
         }
         .side-nav ul li a{
+            font-size: 14px;
         }
     
     .main-nav{
@@ -43,14 +44,16 @@ body{
         width: 90%;
         min-height: 800px;
         max-height: fit-content;
-        box-shadow: 5px 5px 5px lightslategray inset;
+        box-shadow: 5px 5px 5px 5px lightslategray inset;
         
     }
     fieldset {
+        margin-left: 5px;
+        margin-top: 5px;
         display: flex;
         align-items: center; /* vertical align */
         gap: 10px;           /* space between dropdown and button */
-        border: 1px solid #ccc; /* optional: to keep the fieldset visible */
+        border: 3px solid #ccc; /* optional: to keep the fieldset visible */
         padding: 10px;
         }
     .main-nav h3,
@@ -60,8 +63,8 @@ body{
     }
 
     .btn-search {
-        width:50px;
-        height: 20px;
+        width: 50px;
+        height:20px;
         
     }
 /*########################################################################### */
