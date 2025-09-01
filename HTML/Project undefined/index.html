@@ -1,52 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The title of the document</title>
-    <link rel="stylesheet" href="header.css">
-    <link rel="stylesheet" href="menu-selection.css">
-    <link rel="stylesheet" href="darkness.css">
-    <link rel="stylesheet" href="columns.css">
-    <link rel="stylesheet" href="social-media.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Fancy Title</title>
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="header.css">
+  <link rel="stylesheet" href="menu-selection.css">
+  <link rel="stylesheet" href="darkness.css">
+  <link rel="stylesheet" href="columns.css">
+  <link rel="stylesheet" href="social-media.css">
+  <link rel="stylesheet" href="blogs/blog.css">
+  
+  <style>
+    /* Ensure iframe fills the column and has no scrollbars */
+    .blog-frame {
+      width: 100%;
+      border: none;
+      overflow: hidden;
+    }
+    
+    /* Ensure body/html fill height for layout */
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
 
+    /* Make blog column fill height */
+    .blog-content {
+      height: 100%;
+    }
+  </style>
 </head>
 <body>
-    <div class="header">
-        <img src="assets/android.svg">
-        <H1>The Fancy Title</H1>
-    </div>
-    <div class="menu-selection">
+  <div class="header">
+      <img src="assets/android.svg">
+      <h1>The Fancy Title</h1>
+  </div>
+
+  <div class="menu-selection">
+      <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">Blogs</a></li>
+          <li><a href="#">About</a></li>
+      </ul>
+  </div>
+
+  <div class="darkness"></div>
+
+  <div class="container">
+    <div class="column blog-links">
+        <h2>Blogs</h2>
         <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Projects</a></li>
-            <li><a href="#">Blogs</a></li>
-            <li><a href="#">About</a></li>
+            <li><a href="blogs/blog-be-bored.html" target="blogFrame">The Value of Boredom</a></li>
+            <!-- Add more blog links here -->
         </ul>
     </div>
-    <div class="darkness">
+
+    <div class="column blog-content">
+        <iframe id="blogFrame" name="blogFrame" class="blog-frame"></iframe>
     </div>
-    <div class="container">
-        <div class="column">Column 2</div>
-        <div class="column">Column 3</div>
-        <div class="column">Column 4</div>
-        <div class="column">Column 5</div>
-        <div class="column">Column 6</div>
-        <div class="column">Column 7</div>
-        <div class="column">Column 8</div>
-        <div class="column">Column 9</div>
-        <div class="column">
-            <div class="social-media"> 
-                <p><strong>Social Media</strong></p>
-                <div class="group-apps">
-                       <a href="http://www.google.com"><img src="assets/facebook.svg"></a>
-                       <a href="http://www.yahoo.com"><img src="assets/github.svg"></a>
-                       <a href="http://www.duckduckgo.com"><img src="assets/linkedin.svg"></a>
-                        <a href="http://www.bing.com"><img src="assets/twitter-x.svg"></a>
-                </div>
+
+    <div class="column">Column 4</div>
+    <div class="column">Column 5</div>
+    <div class="column">Column 6</div>
+    <div class="column">Column 7</div>
+    <div class="column">Column 8</div>
+    <div class="column">Column 9</div>
+
+    <div class="column">
+        <div class="social-media"> 
+            <p><strong>Social Media</strong></p>
+            <div class="group-apps">
+                <a href="http://www.google.com"><img src="assets/facebook.svg"></a>
+                <a href="http://www.yahoo.com"><img src="assets/github.svg"></a>
+                <a href="http://www.duckduckgo.com"><img src="assets/linkedin.svg"></a>
+                <a href="http://www.bing.com"><img src="assets/twitter-x.svg"></a>
             </div>
         </div>
     </div>
+  </div>
 
+  <script>
+    function resizeIframe() {
+      const iframe = document.getElementById('blogFrame');
+      const doc = iframe.contentDocument || iframe.contentWindow.document;
+      if (doc) {
+          const minHeight = 300;
+          const maxHeight = 1500; // adjust if content is very long
+          const newHeight = Math.min(maxHeight, Math.max(minHeight, doc.body.scrollHeight));
+          iframe.style.height = newHeight + 'px';
+      }
+    }
+
+    const iframe = document.getElementById('blogFrame');
+    iframe.addEventListener('load', resizeIframe);
+    window.addEventListener('resize', resizeIframe);
+  </script>
 </body>
 </html>

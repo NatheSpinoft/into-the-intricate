@@ -1,3 +1,7 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
 .container {
     display: grid;
     grid-template-columns: 1fr 3fr 1fr; /* flexible ratio 1:3:1 */
@@ -5,6 +9,13 @@
     background-color: antiquewhite;
     padding: 10px;                        /* optional padding */
     box-sizing: border-box;               /* ensures padding doesn’t break layout */
+    align-items: stretch; /* makes all columns same height */
+    height: calc(100vh - 150px);
+
+}
+
+.column{
+    height: 100%;
 }
 
 @media (max-width: 768px) {

@@ -1,0 +1,45 @@
+/* Style for iframe to fill the column neatly */
+.blog-content {
+    width: 100%;         /* fill the column */
+}
+.blog-frame {
+    width: 100%;         /* fill the parent div */
+    height: 100%;
+    border: none;
+
+}
+
+.blog-links ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.blog-links li {
+    margin: 0.5rem 0;
+}
+
+.blog-links a {
+    text-decoration: none;
+    color: #0066cc;
+}
+
+.blog-links a:hover {
+    text-decoration: underline;
+}
+
+.blog-links a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.blog-links a:hover {
+    text-decoration: underline;
+}
+
+.blog-content {
+    grid-column: 2 / 4; /* spans columns 2 and 3 */
+}
+
+article {
+    max-width: 100%;   /* prevent article from overflowing horizontally */
+}
