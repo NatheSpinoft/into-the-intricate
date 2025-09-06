@@ -1,3 +1,12 @@
+<?php
+$config = include 'config.php'; // Load the API key
+include 'weather.php';
+
+// Pass BOTH arguments: city name and config
+$weather = getWeather("Ottawa,CA", $config); 
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,7 +101,32 @@
     </div>
     </div>
     <div class="column">Column 8</div>
-    <div class="column">Column 9</div>
+    <div class="column">
+<div class="weather-column">
+    <h3>Weather in <?php echo htmlspecialchars($weather['city']); ?></h3>
+    <p><strong>Temperature:</strong> 
+        <?php 
+            echo is_numeric($weather['tempC']) ? round($weather['tempC']) . "°C / " . round($weather['tempF']) . "°F" : "N/A"; 
+        ?>
+    </p>
+    <p><strong>Condition:</strong> 
+        <?php 
+            echo !empty($weather['condition']) ? ucfirst($weather['condition']) : "N/A"; 
+        ?>
+    </p>
+    <p><strong>Humidity:</strong> 
+        <?php 
+            echo is_numeric($weather['humidity']) ? $weather['humidity'] . "%" : "N/A"; 
+        ?>
+    </p>
+    <p><strong>Wind Speed:</strong> 
+        <?php 
+            echo is_numeric($weather['windSpeed']) ? $weather['windSpeed'] . " m/s" : "N/A"; 
+        ?>
+    </p>
+</div>
+
+    </div>
 
     <div class="column">
         <div class="social-media"> 
