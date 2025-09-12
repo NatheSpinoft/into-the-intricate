@@ -89,16 +89,7 @@ $weather = getWeather("Ottawa,CA", $config);
     </div>
 
     <div class="column">
-        <div class="social-media"> 
-          <br>
-            <p><strong> Social Media</strong></p>
-            <div class="group-apps">
-                <a id="left" href="http://www.google.com"><img src="assets/facebook.svg"></a>
-                <a id="left" href="http://www.yahoo.com"><img src="assets/github.svg"></a>
-                <a id="left" href="http://www.duckduckgo.com"><img src="assets/linkedin.svg"></a>
-                <a id="left" href="http://www.bing.com"><img src="assets/twitter-x.svg"></a>
-            </div>
-        </div>
+        <?php include 'social-media.php'; ?>
     </div>
   </div>
 
