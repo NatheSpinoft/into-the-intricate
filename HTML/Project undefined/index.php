@@ -40,16 +40,9 @@ $weather = getWeather("Ottawa,CA", $config);
 
   <div class="container">
     
-    <div class="column blog-links">
-        <h2>Blogs</h2>
-         <div class="project-card">
-        <ul>
-            <li><a href="blogs/blog-be-bored.html" target="blogFrame">The Hidden Value of Being Bored</a></li>
-            <li><a href="blogs/blog-vm-docker.html" target="blogFrame">Virtual Machines vs Docker</a></li>
-            <li><a href="blogs/Blog-best-api-for-backend.html" target="blogFrame">Understanding APIs</a></li>
-            <!-- Add more blog links here -->
-        </ul>
-        </div>
+    <div class="column">
+        <?php include 'Blogs-medium.php'
+        ?>
     </div>
 
     <div class="column blog-content">
