@@ -51,9 +51,10 @@ $weather = getWeather("Ottawa,CA", $config);
     <div class="container">
 
         <!-- Blog Links Column -->
-        <?php include 'Blogs-medium.php'
-        ?>
-
+        <div class="column">
+            <?php include 'Blogs-medium.php'
+            ?>
+        </div>
         <!-- Blog Content Column -->
         <div class="column blog-content">
             <iframe id="blogFrame" name="blogFrame" class="blog-frame" src="blogs/blog-home.html"></iframe>
