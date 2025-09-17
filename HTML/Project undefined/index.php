@@ -41,7 +41,7 @@ $weather = getWeather("Ottawa,CA", $config);
   <div class="container">
     
     <div class="column">
-        <?php include 'Blogs-medium.php'
+        <?php include './phpfiles/Blogs-medium.php'
         ?>
     </div>
 
@@ -82,7 +82,7 @@ $weather = getWeather("Ottawa,CA", $config);
     </div>
 
     <div class="column">
-        <?php include 'social-media.php'; ?>
+        <?php include './phpfiles/social-media.php'; ?>
     </div>
   </div>
 
