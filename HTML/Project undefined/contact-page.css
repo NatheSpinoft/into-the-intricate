@@ -1,0 +1,81 @@
+.contact-form {
+    grid-column: 1 / -1;
+
+}
+
+.contact-form fieldset{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contact-form label {
+    display: flex;
+    flex-direction: column; /* put input under label text */
+}
+
+
+.contact-form input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+
+}
+.contact-form .name-row {
+    display: flex;
+    gap: 10px; /* space between first and last name */
+}
+
+.row-box {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+}
+
+.contact-form .subject-input {
+    width: 200%;
+    max-width: 365px; /* or use a specific width in px */
+    box-sizing: border-box;
+}
+
+#message-count {
+    margin-top: 5px;
+    font-size: 0.9em;
+    color: #555;
+}
+
+button {
+    background-color: rgb(118, 118, 237);
+    color: white; /* make text readable */
+    border: none; /* cleaner look */
+    border-radius: 8px; /* slightly less round for modern look */
+    padding: 10px 20px; /* better sizing */
+    margin-top: 10px;
+    cursor: pointer; /* pointer on hover */
+    font-size: 1em;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Hover effect */
+button:hover {
+    background-color: rgb(90, 90, 220);
+    transform: scale(1.01); /* subtle grow on hover */
+}
+
+/* Active effect (when clicked) */
+button:active {
+    background-color: rgb(70, 70, 200);
+    transform: scale(0.98); /* slight shrink on click */
+}
+
+
+@media (max-width: 600px) {
+    .contact-form .name-row {
+        flex-direction: column; /* stack first/last name vertically */
+    }
+    button {
+    width: 100%; /* full width on small screens */
+    margin-left: 0;
+}
+}
