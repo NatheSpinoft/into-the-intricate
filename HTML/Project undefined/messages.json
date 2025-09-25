@@ -1,0 +1,23 @@
+[
+    {
+        "first_name": "Stefan",
+        "last_name": "Pinto",
+        "subject": "Hello",
+        "message": "This is a test",
+        "timestamp": "2025-09-25 19:55:36"
+    },
+    {
+        "first_name": "stefan",
+        "last_name": "pinto",
+        "subject": "Understanding the difference",
+        "message": "Boop",
+        "timestamp": "2025-09-25 20:00:24"
+    },
+    {
+        "first_name": "John",
+        "last_name": "Smith",
+        "subject": "Bond",
+        "message": "James, Bond",
+        "timestamp": "2025-09-25 20:02:37"
+    }
+]

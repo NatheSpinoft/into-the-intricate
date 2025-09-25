@@ -2,6 +2,7 @@
 $config = include 'config.php'; // Load the API key
 include 'weather.php';
 
+
 // Pass BOTH arguments: city name and config
 $weather = getWeather("Ottawa,CA", $config); 
 ?>
@@ -61,10 +62,12 @@ $weather = getWeather("Ottawa,CA", $config);
             </p>
             </div>
         </div>
+        <!-- Fontact FORM COLUMN -->
         <div class="column contact-form">
             <div class="project-card">
                 <fieldset>
                 <legend><h1>Contact Form</h1></legend>
+                <form method="POST" action="save-message.php">
                 <div class="name-row">
                     <div class="row-box">
                         <label for="fname">First Name:</label>
@@ -75,13 +78,16 @@ $weather = getWeather("Ottawa,CA", $config);
                         <input type="text" id="lname" name="lname">
                     </div>
                 </div>
-                    <label for="subject">Subject:</label>
-                    <input type="text" id="subject" name="subject" class="subject-input">
-                    <label for="message">Message:</label>
-                    <textarea id="message" name="message" rows="5" cols="50"></textarea>
-                    <div id="message-count">Characters remaining: 5000</div>
+
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject" name="subject" class="subject-input">
+
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="5" cols="50" maxlength="5000" required></textarea>
+                <div id="message-count">Characters remaining: 5000</div>
                     
-                    <button>Submit</button>
+                <button>Submit</button>
+                </form>
                 </fieldset>
 
             </div>
