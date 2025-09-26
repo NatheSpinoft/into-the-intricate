@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Helper Hub</title>
+<style>
+  /* Reset & base styles */
+  * { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', sans-serif; }
+  body { background: #f5f5f5; color: #333; }
+  
+  header { background: #4a90e2; color: #fff; padding: 20px 40px; display: flex; align-items: center; justify-content: space-between; }
+  header h1 { font-size: 1.8rem; }
+  nav a { color: #fff; margin-left: 20px; text-decoration: none; font-weight: bold; }
+
+  main { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+  section { background: #fff; border-radius: 10px; padding: 30px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+  section h2 { margin-bottom: 20px; color: #4a90e2; }
+
+  input[type=text], input[type=submit], button { padding: 10px 15px; font-size: 1rem; border-radius: 5px; border: 1px solid #ccc; }
+  input[type=text] { width: 70%; margin-right: 10px; }
+  input[type=submit], button { cursor: pointer; background: #4a90e2; color: #fff; border: none; transition: background 0.3s; }
+  input[type=submit]:hover, button:hover { background: #357ab8; }
+
+  #job-results, #chat-responses { margin-top: 20px; }
+  .job-card, .chat-card { background: #f0f4f8; padding: 15px; border-radius: 5px; margin-bottom: 10px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>AI Helper Hub</h1>
+  <nav>
+    <a href="#jobs">Job Search</a>
+    <a href="#chat">Ask AI</a>
+  </nav>
+</header>
+
+<main>
+  <!-- Job Search Section -->
+  <section id="jobs">
+    <h2>Search for Jobs</h2>
+    <form id="job-form">
+      <input type="text" id="job-query" placeholder="Job title or keywords">
+      <input type="submit" value="Search Jobs">
+    </form>
+    <div id="job-results">
+      <!-- Job results will appear here -->
+    </div>
+  </section>
+
+  <!-- Chat AI Section -->
+  <section id="chat">
+    <h2>Ask AI</h2>
+    <form id="chat-form">
+      <input type="text" id="chat-input" placeholder="Ask a question">
+      <button type="submit">Ask</button>
+    </form>
+    <div id="chat-responses">
+      <!-- Chat responses will appear here -->
+    </div>
+  </section>
+</main>
+
+<script>
+  // Dummy Job Search
+  document.getElementById('job-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const query = document.getElementById('job-query').value;
+    const results = document.getElementById('job-results');
+    results.innerHTML = ''; // clear previous
+
+    // Mock jobs
+    for (let i = 1; i <= 5; i++) {
+      const job = document.createElement('div');
+      job.className = 'job-card';
+      job.innerHTML = `<strong>${query} Job #${i}</strong><br>Company XYZ<br><a href="#">View Details</a>`;
+      results.appendChild(job);
+    }
+  });
+
+  // Dummy AI Chat
+  document.getElementById('chat-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const question = document.getElementById('chat-input').value;
+    const responses = document.getElementById('chat-responses');
+    
+    const chatCard = document.createElement('div');
+    chatCard.className = 'chat-card';
+    chatCard.innerHTML = `<strong>You asked:</strong> ${question}<br><strong>AI says:</strong> This is a sample AI response.`;
+    responses.appendChild(chatCard);
+
+    document.getElementById('chat-input').value = '';
+  });
+</script>
+
+</body>
+</html>

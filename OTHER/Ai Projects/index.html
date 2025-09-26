@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Job Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800">
+
+<!-- Header -->
+<header class="bg-blue-600 text-white shadow">
+  <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
+    <h1 class="text-2xl font-bold">AI Job Dashboard</h1>
+    <nav class="space-x-4">
+      <a href="#jobs" class="hover:underline">Job Search</a>
+      <a href="#chat" class="hover:underline">Ask AI</a>
+      <a href="#saved" class="hover:underline">Saved Jobs</a>
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto p-6 space-y-6">
+
+  <!-- Job Search -->
+  <section id="jobs" class="bg-white rounded-xl shadow p-6">
+    <h2 class="text-xl font-semibold text-blue-600 mb-4">Search for Jobs</h2>
+    <form id="job-form" class="flex flex-col sm:flex-row gap-4">
+      <input type="text" id="job-query" placeholder="Job title or keywords"
+        class="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+      <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+        Search
+      </button>
+    </form>
+    
+    <div id="job-tabs" class="mt-4 hidden">
+      <div class="flex space-x-4 border-b mb-2">
+        <button class="tab-btn px-3 py-2 text-blue-600 font-medium border-b-2 border-blue-600" data-tab="linkedin">LinkedIn</button>
+        <button class="tab-btn px-3 py-2 text-gray-600 hover:text-blue-600" data-tab="indeed">Indeed</button>
+        <button class="tab-btn px-3 py-2 text-gray-600 hover:text-blue-600" data-tab="jobbank" data-tab>Job Bank</button>
+      </div>
+      <div class="tab-content" id="linkedin"></div>
+      <div class="tab-content hidden" id="indeed"></div>
+      <div class="tab-content hidden" id="jobbank"></div>
+    </div>
+  </section>
+
+  <!-- Saved Jobs -->
+  <section id="saved" class="bg-white rounded-xl shadow p-6">
+    <h2 class="text-xl font-semibold text-blue-600 mb-4">Saved Jobs</h2>
+    <div id="saved-jobs" class="space-y-2"></div>
+  </section>
+
+  <!-- AI Chat -->
+  <section id="chat" class="bg-white rounded-xl shadow p-6">
+    <h2 class="text-xl font-semibold text-blue-600 mb-4">Ask AI</h2>
+    <form id="chat-form" class="flex flex-col sm:flex-row gap-4">
+      <input type="text" id="chat-input" placeholder="Ask a question"
+        class="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+      <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+        Ask
+      </button>
+    </form>
+    <button id="toggle-chat-history" class="mt-2 text-sm text-blue-600 hover:underline">Toggle History</button>
+    <div id="chat-responses" class="mt-4 space-y-2 max-h-96 overflow-y-auto"></div>
+  </section>
+
+</main>
+
+<script>
+  // ------------------------------
+  // Job Search
+  // ------------------------------
+  const jobTabs = document.getElementById('job-tabs');
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab-content');
+  const savedJobsDiv = document.getElementById('saved-jobs');
+  let savedJobs = [];
+
+  document.getElementById('job-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const query = document.getElementById('job-query').value.trim();
+    if(!query) return;
+    jobTabs.classList.remove('hidden');
+
+    const encoded = encodeURIComponent(query);
+    const linkedinDiv = document.getElementById('linkedin');
+    const indeedDiv = document.getElementById('indeed');
+    const jobbankDiv = document.getElementById('jobbank');
+
+    linkedinDiv.innerHTML = `<ul class="space-y-2 list-disc list-inside text-blue-600">
+      <li><a href="https://www.linkedin.com/jobs/search/?keywords=${encoded}&location=Ottawa%2C%20ON" target="_blank" class="hover:underline">LinkedIn Jobs</a>
+        <button class="ml-2 px-2 py-1 bg-green-500 text-white rounded-sm" onclick="saveJob('LinkedIn: ${query}', 'https://www.linkedin.com/jobs/search/?keywords=${encoded}&location=Ottawa%2C%20ON')">Save</button></li>
+    </ul>`;
+    indeedDiv.innerHTML = `<ul class="space-y-2 list-disc list-inside text-blue-600">
+      <li><a href="https://ca.indeed.com/jobs?q=${encoded}&l=Ottawa%2C+ON" target="_blank" class="hover:underline">Indeed Jobs</a>
+        <button class="ml-2 px-2 py-1 bg-green-500 text-white rounded-sm" onclick="saveJob('Indeed: ${query}', 'https://ca.indeed.com/jobs?q=${encoded}&l=Ottawa%2C+ON')">Save</button></li>
+    </ul>`;
+    jobbankDiv.innerHTML = `<ul class="space-y-2 list-disc list-inside text-blue-600">
+      <li><a href="https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=${encoded}&locationstring=Ottawa" target="_blank" class="hover:underline">Job Bank Jobs</a>
+        <button class="ml-2 px-2 py-1 bg-green-500 text-white rounded-sm" onclick="saveJob('Job Bank: ${query}', 'https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=${encoded}&locationstring=Ottawa')">Save</button></li>
+    </ul>`;
+  });
+
+  tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabButtons.forEach(b => b.classList.remove('border-b-2','border-blue-600','text-blue-600'));
+      tabButtons.forEach(b => b.classList.add('text-gray-600'));
+      btn.classList.add('border-b-2','border-blue-600','text-blue-600');
+
+      tabContents.forEach(tc => tc.classList.add('hidden'));
+      document.getElementById(btn.dataset.tab).classList.remove('hidden');
+    });
+  });
+
+  function saveJob(title, link){
+    savedJobs.push({title, link});
+    renderSavedJobs();
+  }
+
+  function renderSavedJobs(){
+    savedJobsDiv.innerHTML = savedJobs.map(job => 
+      `<div class="p-2 bg-gray-100 rounded shadow-sm flex justify-between items-center">
+        <a href="${job.link}" target="_blank" class="text-blue-600 hover:underline">${job.title}</a>
+        <button class="px-2 py-1 bg-red-500 text-white rounded-sm" onclick="deleteJob('${job.title}')">Remove</button>
+      </div>`).join('');
+  }
+
+  function deleteJob(title){
+    savedJobs = savedJobs.filter(j => j.title !== title);
+    renderSavedJobs();
+  }
+
+  // ------------------------------
+  // AI Chat
+  // ------------------------------
+  const chatResponses = document.getElementById('chat-responses');
+  const chatHistoryVisible = true;
+
+  document.getElementById('chat-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    const question = document.getElementById('chat-input').value.trim();
+    if(!question) return;
+
+    const card = document.createElement('div');
+    card.className = 'p-4 bg-gray-100 rounded-lg shadow-sm';
+    card.innerHTML = `<p class="font-semibold">You asked:</p><p>${question}</p><p class="text-gray-500 mt-2">Loading AI response...</p>`;
+    chatResponses.prepend(card);
+
+    try {
+      const data = await fakeAIResponse(question); // Replace with your backend endpoint
+      card.innerHTML = `<p class="font-semibold">You asked:</p><p>${question}</p>
+                        <p class="font-semibold mt-2">AI says:</p><p>${data.answer}</p>`;
+    } catch(err) {
+      card.innerHTML += `<p class="text-red-500 mt-2">Error: ${err}</p>`;
+    }
+
+    document.getElementById('chat-input').value = '';
+  });
+
+  document.getElementById('toggle-chat-history').addEventListener('click', () => {
+    chatResponses.classList.toggle('hidden');
+  });
+
+  // Fake AI response
+  function fakeAIResponse(question){
+    return new Promise(res => {
+      setTimeout(() => res({answer: "This is a simulated AI response for: " + question}), 800);
+    });
+  }
+
+</script>
+</body>
+</html>
