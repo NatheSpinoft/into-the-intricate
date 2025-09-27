@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brick Oven Pizza</title>
+<style>
+  /* Reset & base */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Georgia', serif;
+    background: url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHJpY2slMjBicmlja3xlbnwwfHx8fDE2OTc4NTUwNTg&ixlib=rb-4.0.3&q=80&w=1920') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+  }
+
+header {
+    background: rgba(40, 20, 0, 0.5); /* semi-transparent dark overlay */
+    backdrop-filter: blur(8px);       /* frosted glass effect */
+    -webkit-backdrop-filter: blur(8px); /* Safari support */
+    padding: 30px 0;
+    text-align: center;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3); /* subtle border for definition */
+}
+
+  header h1 {
+    font-family: 'Brush Script MT', cursive;
+    font-size: 3em;
+    color: #ffcb74;
+    text-shadow: 2px 2px 4px #000;
+  }
+
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 15px;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: #ffcb74;
+    font-weight: bold;
+    font-size: 1.1em;
+    transition: color 0.3s;
+  }
+
+  nav a:hover {
+    color: #fff;
+  }
+
+  main {
+    padding: 60px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .section-title {
+    font-size: 2.5em;
+    margin-bottom: 40px;
+    color: #ffcb74;
+    text-shadow: 1px 1px 3px #000;
+  }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 35px;
+    width: 100%;
+    max-width: 1200px;
+  }
+
+  .menu-card {
+    background: rgba(255, 248, 230, 0.9);
+    border: 2px solid #8b3e2f;
+    border-radius: 10px;
+    box-shadow: 5px 10px 25px rgba(0,0,0,0.5);
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+  }
+
+  .menu-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+
+  .menu-card span {
+    padding: 15px 10px;
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #8b3e2f;
+    text-align: center;
+  }
+
+  .menu-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 10px 20px 35px rgba(0,0,0,0.6);
+    z-index: 5;
+  }
+
+  footer {
+    margin-top: 60px;
+    background: rgba(40, 20, 0, 0.9);
+    text-align: center;
+    padding: 25px 0;
+    font-size: 0.9em;
+    color: #ffcb74;
+  }
+
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Brick Oven Pizza</h1>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Menu</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </nav>
+</header>
+
+<main>
+  <h2 class="section-title">Our Signature Pizzas</h2>
+  <div class="menu-grid">
+    <div class="menu-card">
+      <img src="https://picsum.photos/id/237/400/300" alt="Margherita">
+      <span>Margherita</span>
+    </div>
+    <div class="menu-card">
+      <img src="https://picsum.photos/id/238/400/300" alt="Pepperoni">
+      <span>Pepperoni</span>
+    </div>
+    <div class="menu-card">
+      <img src="https://picsum.photos/id/239/400/300" alt="Vegetarian">
+      <span>Vegetarian</span>
+    </div>
+    <div class="menu-card">
+      <img src="https://picsum.photos/id/240/400/300" alt="BBQ Chicken">
+      <span>BBQ Chicken</span>
+    </div>
+    <div class="menu-card">
+      <img src="https://picsum.photos/id/241/400/300" alt="Four Cheese">
+      <span>Four Cheese</span>
+    </div>
+  </div>
+</main>
+
+<footer>
+  &copy; 2025 Brick Oven Pizza | 789 Brick Lane, Italy | Phone: (555) 789-1234
+</footer>
+
+</body>
+</html>

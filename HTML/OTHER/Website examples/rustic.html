@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Rustica Pizzeria</title>
+<style>
+  /* Reset */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Georgia', serif;
+    background: url('https://images.unsplash.com/photo-1601924582975-0faad87cb0aa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8d29vZCUyMGJhY2tncm91bmR8fHx8fDE2OTc4NDA4ODg&ixlib=rb-4.0.3&q=80&w=1920') no-repeat center center fixed;
+    background-size: cover;
+    color: #3e2e1c;
+  }
+
+  header {
+    background: rgba(255, 235, 200, 0.9);
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+  }
+
+  header h1 {
+    font-family: 'Brush Script MT', cursive;
+    font-size: 3em;
+    color: #b3411c;
+    text-shadow: 1px 1px 2px #fff;
+  }
+
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: #3e2e1c;
+    transition: color 0.3s;
+  }
+
+  nav a:hover {
+    color: #b3411c;
+  }
+
+  main {
+    padding: 50px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .menu-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    max-width: 1200px;
+  }
+
+  .menu-card {
+    width: 200px;
+    background: #fff8f0;
+    border: 2px solid #b3411c;
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+  }
+
+  .menu-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-bottom: 2px solid #b3411c;
+  }
+
+  .menu-card span {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 1.1em;
+  }
+
+  .menu-card:hover {
+    transform: translateY(-10px) scale(1.05) rotate(-1deg);
+    box-shadow: 10px 10px 25px rgba(0,0,0,0.5);
+    z-index: 5;
+  }
+
+  footer {
+    margin-top: 50px;
+    background: rgba(255, 235, 200, 0.9);
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9em;
+    color: #3e2e1c;
+  }
+
+  /* Rustic accent - Polaroid tilt effect */
+  .menu-card:nth-child(odd) { transform: rotate(-2deg); }
+  .menu-card:nth-child(even) { transform: rotate(2deg); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>La Rustica Pizzeria</h1>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Menu</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </nav>
+</header>
+
+<main>
+  <h2 style="margin-bottom:30px;">Our Signature Pizzas</h2>
+  <div class="menu-section">
+    <div class="menu-card">
+      <img src="https://picsum.photos/id/237/200/150" alt="Margherita Pizza">
+      <span>Margherita</span>
+    </div>
+    <div class="menu-card">
+      <img src="https://picsum.photos/id/238/200/150" alt="Pepperoni Pizza">
+      <span>Pepperoni</span>
+    </div>
+    <div class="menu-card">
+      <img src="https://picsum.photos/id/239/200/150" alt="Vegetarian Pizza">
+      <span>Vegetarian</span>
+    </div>
+    <div class="menu-card">
+      <img src="https://picsum.photos/id/240/200/150" alt="BBQ Chicken Pizza">
+      <span>BBQ Chicken</span>
+    </div>
+  </div>
+</main>
+
+<footer>
+  &copy; 2025 La Rustica Pizzeria | 123 Rustic St, Italy | Phone: (555) 123-4567
+</footer>
+
+</body>
+</html>

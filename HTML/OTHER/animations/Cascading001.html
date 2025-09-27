@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Project Cards — Cascading Layout</title>
+  <style>
+    :root{
+      --bg: #f4f7fb;
+      --card-bg: #ffffff;
+      --accent: #3b82f6;
+      --muted: #6b7280;
+      --shadow: 0 8px 24px rgba(15,23,42,0.08);
+      --card-w: 280px;
+      --card-h: 360px;
+    }
+
+    /* Page baseline */
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg,var(--bg), #eef3fb 60%);
+      color:#111827;
+      -webkit-font-smoothing:antialiased;
+      padding:40px 24px;
+      box-sizing:border-box;
+    }
+
+    h1{font-size:20px; margin:0 0 18px 0; font-weight:600}
+    p.lead{margin:0 0 24px 0; color:var(--muted)}
+
+    /* Wrapper that contains the cascading cards */
+    .projects-wrap{
+      width:min(980px, 95%);
+      height:460px;
+      margin:0 auto;
+      position:relative; /* cards will be absolutely positioned inside */
+      background: linear-gradient(135deg, rgba(59,130,246,0.04), rgba(99,102,241,0.02));
+      border-radius:16px;
+      padding:28px;
+      box-shadow: var(--shadow);
+      overflow:visible;
+    }
+
+    /* Title area (inside wrapper) */
+    .projects-header{
+      position:relative;
+      z-index:10;
+      pointer-events:none;
+    }
+
+    /* Card styles */
+    .cards{
+      position:relative; /* stacking context */
+      height:100%;
+    }
+
+    .card{
+      position:absolute;
+      width:var(--card-w);
+      height:var(--card-h);
+      background:var(--card-bg);
+      border-radius:12px;
+      box-shadow: var(--shadow);
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+      transition:transform .28s cubic-bezier(.2,.9,.3,1), box-shadow .2s;
+      cursor:pointer;
+    }
+
+    .card:hover{
+      transform: translateY(-8px) scale(1.02);
+      box-shadow:0 18px 40px rgba(15,23,42,0.12);
+      z-index:99 !important;
+    }
+
+    /* Cascade placement: top-right -> bottom-left */
+    .card:nth-child(1){ top:18px; right:18px; transform: rotate(-4deg) scale(1); z-index:3; }
+    .card:nth-child(2){ top:110px; right:160px; transform: rotate(-2deg) scale(.985); z-index:2; }
+    .card:nth-child(3){ top:210px; right:300px; transform: rotate(0deg) scale(.96); z-index:1; }
+
+    /* Content inside card */
+    .card .thumb{
+      height:140px;
+      background-size:cover;
+      background-position:center;
+      flex:0 0 140px;
+    }
+    .card .content{
+      padding:14px 16px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      flex:1 1 auto;
+    }
+    .card h3{margin:0; font-size:16px}
+    .card p{margin:0; color:var(--muted); font-size:14px}
+    .card .meta{margin-top:auto; display:flex; justify-content:space-between; align-items:center}
+    .tag{font-size:12px; color:var(--accent); font-weight:600}
+    .btn{padding:8px 12px; border-radius:8px; border:none; background:transparent; font-weight:600; color:var(--accent); cursor:pointer}
+
+    /* Responsive tweaks: when container is too narrow, stack the cards with smaller offsets */
+    @media (max-width:900px){
+      :root{--card-w:240px; --card-h:320px}
+      .projects-wrap{height:420px}
+      .card:nth-child(1){ top:12px; right:12px; }
+      .card:nth-child(2){ top:100px; right:120px; }
+      .card:nth-child(3){ top:200px; right:240px; }
+    }
+
+    @media (max-width:640px){
+      /* On phones, fall back to a vertical stack centered */
+      .projects-wrap{height:auto; padding:20px 12px 32px;}
+      .card{position:relative; width:100%; max-width:420px; margin:18px auto; transform:none !important; right:auto; left:auto}
+      .card:hover{transform:none; box-shadow:var(--shadow)}
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="projects-wrap">
+      <div class="projects-header">
+        <h1>Latest Projects</h1>
+        <p class="lead">A compact cascade from top-right to bottom-left — neat, practical, and easy to tweak.</p>
+      </div>
+
+      <div class="cards" aria-hidden="false">
+        <article class="card" role="article" aria-label="Project Alpha">
+          <div class="thumb" style="background-image:url('https://picsum.photos/seed/a/640/360')"></div>
+          <div class="content">
+            <h3>Project Alpha</h3>
+            <p>Small single-page app demonstrating data visualization and export features.</p>
+            <div class="meta">
+              <span class="tag">Web • Visualization</span>
+              <button class="btn">View</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" role="article" aria-label="Project Beta">
+          <div class="thumb" style="background-image:url('https://picsum.photos/seed/b/640/360')"></div>
+          <div class="content">
+            <h3>Project Beta</h3>
+            <p>A lightweight backend + admin UI for managing user-submitted content.</p>
+            <div class="meta">
+              <span class="tag">API • Admin</span>
+              <button class="btn">Demo</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" role="article" aria-label="Project Gamma">
+          <div class="thumb" style="background-image:url('https://picsum.photos/seed/c/640/360')"></div>
+          <div class="content">
+            <h3>Project Gamma</h3>
+            <p>Mobile-first PWA with offline-first data sync and push notifications.</p>
+            <div class="meta">
+              <span class="tag">PWA • Offline</span>
+              <button class="btn">Explore</button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </main>
+</body>
+</html>

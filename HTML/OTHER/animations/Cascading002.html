@@ -1,0 +1,73 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cascading cards</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        background-color: aquamarine;
+    }
+    .project-wrap {
+        position: relative;
+        width: 400px;
+        height: 400px;
+        margin: 40px auto;
+
+    }
+    .project-card {
+        position: absolute;
+        width: 120px;
+        height: 180px;
+        padding: 10px;
+        background-color: white;
+        border-radius: 9px;;
+        border: 1px solid black;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: transform 0.3s;
+    }
+
+    .project-card img{
+        width: 120px;
+        height: 160px;
+        border-radius: 10px;
+        border: 2px solid black;
+        margin-bottom: 10px;
+
+    }
+
+    .project-card:nth-child(1) {top: 0; left: 0; z-index:3 }
+    .project-card:nth-child(2) {top: 100px; left: 100px; z-index:2 }
+    .project-card:nth-child(3) {top: 200px; left: 200px; z-index:1 }
+
+    .project-card:hover {
+        transform: translateY(-10px) scale(1.05);
+        z-index: 5;
+    }
+
+</style>
+<body>
+    <h1>Testing Grounds</h1>
+    <div class="project-wrap">
+        <div class="project-card">
+            <img src="https://picsum.photos/id/237/200/300"></a>
+            <span> Test 1</span>
+        </div>
+        <div class="project-card">
+            <img src="https://picsum.photos/id/237/200/300"></a>
+            <span> Test 2</span>
+        </div>
+        <div class="project-card">
+            <img src="https://picsum.photos/id/237/200/300"></a>
+            <span> Test 3</span>
+        </div>
+    </div>
+</body>
+</html>
