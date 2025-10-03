@@ -1,3 +1,4 @@
+/* Menu Wrap Container */
 
 
 body {
@@ -55,36 +56,51 @@ nav ul li a:hover {
     background-color: #585858;;
 }
 
+.menu-wrap {
+    width: auto;
+    height: auto;
+    display: grid;
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); 
+    gap: 29px;
 
-/* ----------------------------- Text-rght ---------------------------- */
-.text-right{
-    margin-top: 150px;
-    margin-right: 50px;
-    height: 700px;
-    width: 40%;
-}
-/* ----------------------------- Footers ---------------------------- */
-footer{
-    position: fixed;      /* keeps it on screen */
-    bottom: 0;            /* pin to bottom */
-    left: 0;
-    width: 100%;          /* full width */
-    background-color: #000;
-    color: white;
-    text-align: center;
-    padding: 5px;
-    z-index: 1000;        /* stays above other content */
 }
 
-/* -------------------------------------------MEDIA--------------------------------------------------*/
-@media (max-width: 820px) {
-/*------------------------------------------- Images - Left----------------------------------------- */
-
-/* ----------------------------- Text-rght ---------------------------- */
-.text-right{
+.menu-card{
     margin-top: 20px;
-    margin-right: 30px;
-    height: 300px;
-    width: 38%;
+    width: 190px;
+    height: 250px;
+    background-color: aliceblue;
+    border-radius: 20px;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
 }
+
+.menu-card img{
+    align-self: center;
+    margin-top: 10px;
+    border-radius: 20px;
+}
+
+.menu-info {
+    display: flex;
+    justify-content: space-between; /* span left, p right */
+    width: 90%;                    /* fill the card width */
+    padding: 0 10px;                /* optional spacing */
+    margin-top: 10px;
+    align-items: center;            /* vertically center if p is taller */
+}
+
+.menu-info span {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #333;
+}
+
+.menu-info p {
+    margin: 0;
+    font-size: 0.95em;
+    color: #555;
 }
