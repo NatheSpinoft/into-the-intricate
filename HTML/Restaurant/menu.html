@@ -66,25 +66,134 @@
     <div class="menu-card">
         <img src="https://picsum.photos/id/1084/160/200" width="160" height="200" alt="Dish 6">
         <p>Classic Margherita pizza with fresh mozzarella, tomato sauce, and basil.</p>
-        <div class="menu-info">
-            <span>Margherita Pizza</span><p>$14.50</p>
-        </div>
+            <div class="menu-info">
+                <span>Margherita Pizza</span><p>$14.50</p>
+            </div>
     </div>
 
     <div class="menu-card">
         <img src="https://picsum.photos/id/1082/160/200" width="160" height="200" alt="Dish 7">
         <p>Caesar salad with crisp romaine, parmesan, croutons, and Caesar dressing.</p>
-        <div class="menu-info">
-            <span>Caesar Salad</span><p>$12.00</p>
+            <div class="menu-info">
+                <span>Caesar Salad</span><p>$12.00</p>
+            </div>
         </div>
     </div>
-</div>
 
         <!-- Optional Text Section -->
-        <div class="text-right">
+        <div class="text-selection">
             <h2>Our Menu</h2>
-            <p>Explore our chef’s special dishes crafted with fresh ingredients daily. Each dish is made to delight your senses and leave you craving more!</p>
+            <p>Explore our chef's special dishes crafted with fresh ingredients daily. Each dish is made to delight your senses and leave you craving more!</p>
+ <!--         Toggling for drinks          -->
+            <div class="menu-category" onclick="toggleMenu('drinks')">Drinks</div>
+ <!--         Toggling for drinks          -->
+                <div class="menu-items" id="drinks">
+                    <div class="menu-item">
+                        <div>
+                            <div class="item-name">Pepsi (bottle)</div>
+                            <div class="item-description">500ml bottle</div>
+                        </div>
+                            <div class="item-price">$2.49</div>
+                    </div>
+                    <div class="menu-item">
+                        <div>
+                            <div class="item-name">Pepsi (Can)</div>
+                            <div class="item-description">355ml can</div>
+                        </div>
+                            <div class="item-price">$1.29</div>
+                    </div>
+                    <div class="menu-item">
+                        <div>
+                            <div class="item-name">7up (Can)</div>
+                            <div class="item-description">500ml bottle</div>
+                        </div>
+                            <div class="item-price">$2.49</div>
+                    </div>
+                    <div class="menu-item">
+                        <div>
+                            <div class="item-name">7up (Can)</div>
+                            <div class="item-description">355ml can</div>
+                        </div>
+                            <div class="item-price">$1.29</div>
+                    </div>
+                    <div class="menu-item">
+                        <div>
+                            <div class="item-name">Dr. Pepper (bottle)</div>
+                            <div class="item-description">500ml can</div>
+                        </div>
+                            <div class="item-price">$2.49</div>
+                    </div>
+                    <div class="menu-item">
+                        <div>
+                            <div class="item-name">Dr. Pepper (Can)</div>
+                            <div class="item-description">355ml can</div>
+                        </div>
+                            <div class="item-price">$1.29</div>
+                    </div>
+                </div>
+ <!--         Toggling for Plates          -->
+            <div class="menu-category" onclick="toggleMenu('plates')">Plates</div>
+ <!--         Toggling for Plates          -->
+                <div class="menu-items" id="plates">
+                    <div class="menu-item">
+                        <div>
+                            <div class="item-name">Chicken and fries</div>
+                        <div class="item-description">Quarter chicken breast with fries and a small lettuce, tomato, breadcrumbs salad with olive oil and garlic</div>
+                        </div>
+                            <div class="item-price">$7.49</div>
+                    </div>
+                    <div class="menu-item">
+                        <div>
+                            <div class="item-name">Chicken and rice</div>
+                        <div class="item-description">Quarter chicken breast with rice and a small lettuce, tomato, breadcrumbs salad with olive oil and garlic</div>
+                        </div>
+                           <div class="item-price">$6.49</div>
+                    </div>
+                    <div class="menu-item">
+                        <div>
+                            <div class="item-name">Chicken legs and fries</div>
+                        <div class="item-description">2 chicken legs with fries and a small lettuce, tomato, breadcrumbs salad with olive oil and garlic</div>
+                        </div>
+                            <div class="item-price">$7.49</div>
+                    </div>
+                    <div class="menu-item">
+                        <div>
+                            <div class="item-name">Chicken legs and rice</div>
+                            <div class="item-description">2 chicken legs with rice and a small lettuce, tomato, breadcrumbs salad with olive oil and garlic</div>
+                        </div>
+                            <div class="item-price">$6.29</div>
+                    </div>
+                    <div class="menu-item">
+                        <div>
+                            <div class="item-name">Burger and fries</div>
+                            <div class="item-description">Well-done burger with fries and a small lettuce, tomato, breadcrumbs salad with olive oil and garlic</div>
+                        </div>
+                            <div class="item-price">$7.49</div>
+                    </div>
+                    <div class="menu-item">
+                        <div>
+                            <div class="item-name">Mac and Cheese Special</div>
+                            <div class="item-description">Cheddar, mozzarella, and garnished herbs on pasta</div>
+                        </div>
+                            <div class="item-price">$7.29</div>
+                    </div>
+                </div>
         </div>
+    <div class="space"></div>
     </main>
+    <footer>
+        <p>&copy; 2025 The Fancy Restaurant. All rights reserved.</p>
+    </footer>
+
+<script>
+  function toggleMenu(id) {
+    const menu = document.getElementById(id);
+    const isOpen = menu.classList.contains('open');
+    // Close all menus first
+    document.querySelectorAll('.menu-items').forEach(m => m.classList.remove('open'));
+    // Open only the selected one
+    if (!isOpen) menu.classList.add('open');
+  }
+</script>
 </body>
 </html>

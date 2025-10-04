@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Restaurant Menu</title>
+<style>
+  body {
+    font-family: "Segoe UI", sans-serif;
+    margin: 0;
+    background: #fafafa;
+    padding: 20px;
+  }
+
+  .menu-category {
+    background: #2c3e50;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: background 0.3s;
+  }
+
+  .menu-category:hover {
+    background: #34495e;
+  }
+
+  .menu-items {
+    display: none;
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+
+  .menu-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .menu-item:last-child {
+    border-bottom: none;
+  }
+
+  .item-name {
+    font-weight: bold;
+    color: #2c3e50;
+  }
+
+  .item-description {
+    font-size: 0.9em;
+    color: #555;
+  }
+
+  .item-price {
+    color: #27ae60;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+
+  /* Optional smooth slide effect */
+  .menu-items.open {
+    display: block;
+    animation: slideDown 0.3s ease;
+  }
+
+  @keyframes slideDown {
+    from {opacity: 0; transform: translateY(-10px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+</style>
+</head>
+<body>
+
+<h1>Greek on Wheels Style Menu</h1>
+
+<div class="menu-category" onclick="toggleMenu('pitas')">Pitas</div>
+<div class="menu-items" id="pitas">
+  <div class="menu-item">
+    <div>
+      <div class="item-name">Chicken Souvlaki Pita</div>
+      <div class="item-description">Grilled chicken, tzatziki, tomato, and onion wrapped in pita.</div>
+    </div>
+    <div class="item-price">$9.99</div>
+  </div>
+  <div class="menu-item">
+    <div>
+      <div class="item-name">Gyro Pita</div>
+      <div class="item-description">Traditional beef and lamb gyro with tzatziki and veggies.</div>
+    </div>
+    <div class="item-price">$10.49</div>
+  </div>
+</div>
+
+<div class="menu-category" onclick="toggleMenu('plates')">Plates</div>
+<div class="menu-items" id="plates">
+  <div class="menu-item">
+    <div>
+      <div class="item-name">Chicken Souvlaki Plate</div>
+      <div class="item-description">Served with rice, potatoes, salad, and tzatziki.</div>
+    </div>
+    <div class="item-price">$15.99</div>
+  </div>
+  <div class="menu-item">
+    <div>
+      <div class="item-name">Lamb Plate</div>
+      <div class="item-description">Tender lamb with lemon potatoes and Greek salad.</div>
+    </div>
+    <div class="item-price">$17.49</div>
+  </div>
+</div>
+
+<div class="menu-category" onclick="toggleMenu('drinks')">Drinks</div>
+<div class="menu-items" id="drinks">
+  <div class="menu-item">
+    <div>
+      <div class="item-name">Pepsi</div>
+      <div class="item-description">Classic cola refreshment.</div>
+    </div>
+    <div class="item-price">$2.49</div>
+  </div>
+  <div class="menu-item">
+    <div>
+      <div class="item-name">Bottled Water</div>
+      <div class="item-description">Fresh and cold, because hydration matters.</div>
+    </div>
+    <div class="item-price">$1.99</div>
+  </div>
+</div>
+
+<script>
+  function toggleMenu(id) {
+    const menu = document.getElementById(id);
+    const isOpen = menu.classList.contains('open');
+    // Close all menus first
+    document.querySelectorAll('.menu-items').forEach(m => m.classList.remove('open'));
+    // Open only the selected one
+    if (!isOpen) menu.classList.add('open');
+  }
+</script>
+
+</body>
+</html>
