@@ -85,7 +85,8 @@ main {
 .reservation input[type="tel"],
 .reservation input[type="date"],
 .reservation input[type="time"],
-.reservation input[type="number"] {
+.reservation input[type="number"],
+.reservation select {
     width: 100%;
     padding: 8px;
     margin-top: 5px;

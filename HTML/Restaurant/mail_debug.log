@@ -1,0 +1,176 @@
+2025-10-09 21:11:50 [2] SERVER -> CLIENT: 220 smtp.mail.yahoo.com ESMTP ready
+
+2025-10-09 21:11:50 [1] CLIENT -> SERVER: EHLO localhost
+
+2025-10-09 21:11:50 [2] SERVER -> CLIENT: 250-hermes--production-bf1-798569fcb9-59njm Hello localhost [70.52.162.173])
+250-PIPELINING
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-SIZE 41697280
+250 STARTTLS
+
+2025-10-09 21:11:50 [1] CLIENT -> SERVER: STARTTLS
+
+2025-10-09 21:11:50 [2] SERVER -> CLIENT: 220 2.0.0 Ready to start TLS
+
+2025-10-09 21:11:50 [1] CLIENT -> SERVER: EHLO localhost
+
+2025-10-09 21:11:50 [2] SERVER -> CLIENT: 250-hermes--production-bf1-798569fcb9-59njm Hello localhost [70.52.162.173])
+250-PIPELINING
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-SIZE 41697280
+250 AUTH PLAIN LOGIN XOAUTH2 OAUTHBEARER
+
+2025-10-09 21:11:50 [1] CLIENT -> SERVER: AUTH LOGIN
+
+2025-10-09 21:11:50 [2] SERVER -> CLIENT: 334 VXNlcm5hbWU6
+
+2025-10-09 21:11:50 [1] CLIENT -> SERVER: [credentials hidden]
+2025-10-09 21:11:50 [2] SERVER -> CLIENT: 334 UGFzc3dvcmQ6
+
+2025-10-09 21:11:50 [1] CLIENT -> SERVER: [credentials hidden]
+2025-10-09 21:11:50 [2] SERVER -> CLIENT: 235 2.7.0 Authentication successful
+
+2025-10-09 21:11:50 [1] CLIENT -> SERVER: MAIL FROM:<stefannstuff@yahoo.com>
+
+2025-10-09 21:11:50 [2] SERVER -> CLIENT: 250 2.1.0 Sender <stefannstuff@yahoo.com> OK
+
+2025-10-09 21:11:50 [1] CLIENT -> SERVER: RCPT TO:<stefannstuff@yahoo.com>
+
+2025-10-09 21:11:50 [2] SERVER -> CLIENT: 250 2.1.5 Recipient <stefannstuff@yahoo.com> OK
+
+2025-10-09 21:11:50 [1] CLIENT -> SERVER: DATA
+
+2025-10-09 21:11:50 [2] SERVER -> CLIENT: 354 Ok Send data ending with <CRLF>.<CRLF>
+
+2025-10-09 21:11:50 [1] CLIENT -> SERVER: Date: Thu, 9 Oct 2025 21:11:50 +0000
+
+2025-10-09 21:11:51 [1] CLIENT -> SERVER: To: stefannstuff@yahoo.com
+
+2025-10-09 21:11:51 [1] CLIENT -> SERVER: From: Restaurant Name <stefannstuff@yahoo.com>
+
+2025-10-09 21:11:51 [1] CLIENT -> SERVER: Subject: New Reservation from Stefan Pinto
+
+2025-10-09 21:11:51 [1] CLIENT -> SERVER: Message-ID: <LyysWcOwBMx3Fyl9JUOpo9LCyI8wGMnt8HBXnZxKyc@localhost>
+
+2025-10-09 21:11:51 [1] CLIENT -> SERVER: X-Mailer: PHPMailer 6.11.1 (https://github.com/PHPMailer/PHPMailer)
+
+2025-10-09 21:11:51 [1] CLIENT -> SERVER: MIME-Version: 1.0
+
+2025-10-09 21:11:51 [1] CLIENT -> SERVER: Content-Type: text/html; charset=iso-8859-1
+
+2025-10-09 21:11:51 [1] CLIENT -> SERVER: 
+
+2025-10-09 21:11:51 [1] CLIENT -> SERVER: 
+
+2025-10-09 21:11:51 [1] CLIENT -> SERVER:             <h3>New Reservation</h3>
+
+2025-10-09 21:11:51 [1] CLIENT -> SERVER:             <p><strong>Name:</strong> Stefan Pinto</p>
+
+2025-10-09 21:11:51 [1] CLIENT -> SERVER:             <p><strong>Email:</strong> stefpin@gmail.com</p>
+
+2025-10-09 21:11:51 [1] CLIENT -> SERVER:             <p><strong>Phone:</strong> 6133220000</p>
+
+2025-10-09 21:11:51 [1] CLIENT -> SERVER:             <p><strong>Date:</strong> 2024-08-07</p>
+
+2025-10-09 21:11:51 [1] CLIENT -> SERVER:             <p><strong>Time:</strong> 12:30</p>
+
+2025-10-09 21:11:51 [1] CLIENT -> SERVER:             <p><strong>Guests:</strong> 1</p>
+
+2025-10-09 21:11:51 [1] CLIENT -> SERVER:         
+
+2025-10-09 21:11:51 [1] CLIENT -> SERVER: 
+
+2025-10-09 21:11:51 [1] CLIENT -> SERVER: .
+
+2025-10-09 21:11:51 [2] SERVER -> CLIENT: 250 OK , completed
+
+2025-10-09 21:11:51 [1] CLIENT -> SERVER: QUIT
+
+2025-10-09 21:11:51 [2] SERVER -> CLIENT: 221 Service Closing transmission
+
+2025-10-09 21:11:51 [2] SERVER -> CLIENT: 220 smtp.mail.yahoo.com ESMTP ready
+
+2025-10-09 21:11:51 [1] CLIENT -> SERVER: EHLO localhost
+
+2025-10-09 21:11:51 [2] SERVER -> CLIENT: 250-hermes--production-bf1-798569fcb9-s29z7 Hello localhost [70.52.162.173])
+250-PIPELINING
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-SIZE 41697280
+250 STARTTLS
+
+2025-10-09 21:11:51 [1] CLIENT -> SERVER: STARTTLS
+
+2025-10-09 21:11:51 [2] SERVER -> CLIENT: 220 2.0.0 Ready to start TLS
+
+2025-10-09 21:11:51 [1] CLIENT -> SERVER: EHLO localhost
+
+2025-10-09 21:11:52 [2] SERVER -> CLIENT: 250-hermes--production-bf1-798569fcb9-s29z7 Hello localhost [70.52.162.173])
+250-PIPELINING
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-SIZE 41697280
+250 AUTH PLAIN LOGIN XOAUTH2 OAUTHBEARER
+
+2025-10-09 21:11:52 [1] CLIENT -> SERVER: AUTH LOGIN
+
+2025-10-09 21:11:52 [2] SERVER -> CLIENT: 334 VXNlcm5hbWU6
+
+2025-10-09 21:11:52 [1] CLIENT -> SERVER: [credentials hidden]
+2025-10-09 21:11:52 [2] SERVER -> CLIENT: 334 UGFzc3dvcmQ6
+
+2025-10-09 21:11:52 [1] CLIENT -> SERVER: [credentials hidden]
+2025-10-09 21:11:52 [2] SERVER -> CLIENT: 235 2.7.0 Authentication successful
+
+2025-10-09 21:11:52 [1] CLIENT -> SERVER: MAIL FROM:<stefannstuff@yahoo.com>
+
+2025-10-09 21:11:52 [2] SERVER -> CLIENT: 250 2.1.0 Sender <stefannstuff@yahoo.com> OK
+
+2025-10-09 21:11:52 [1] CLIENT -> SERVER: RCPT TO:<stefpin@gmail.com>
+
+2025-10-09 21:11:52 [2] SERVER -> CLIENT: 250 2.1.5 Recipient <stefpin@gmail.com> OK
+
+2025-10-09 21:11:52 [1] CLIENT -> SERVER: DATA
+
+2025-10-09 21:11:52 [2] SERVER -> CLIENT: 354 Ok Send data ending with <CRLF>.<CRLF>
+
+2025-10-09 21:11:52 [1] CLIENT -> SERVER: Date: Thu, 9 Oct 2025 21:11:51 +0000
+
+2025-10-09 21:11:52 [1] CLIENT -> SERVER: To: stefpin@gmail.com
+
+2025-10-09 21:11:52 [1] CLIENT -> SERVER: From: Restaurant Name <stefannstuff@yahoo.com>
+
+2025-10-09 21:11:52 [1] CLIENT -> SERVER: Subject: Reservation Confirmation
+
+2025-10-09 21:11:52 [1] CLIENT -> SERVER: Message-ID: <iZTXKxbLOCqJsaS49bSB1wdB8wfZEOFnsqbloNGQ@localhost>
+
+2025-10-09 21:11:52 [1] CLIENT -> SERVER: X-Mailer: PHPMailer 6.11.1 (https://github.com/PHPMailer/PHPMailer)
+
+2025-10-09 21:11:52 [1] CLIENT -> SERVER: MIME-Version: 1.0
+
+2025-10-09 21:11:52 [1] CLIENT -> SERVER: Content-Type: text/html; charset=iso-8859-1
+
+2025-10-09 21:11:52 [1] CLIENT -> SERVER: 
+
+2025-10-09 21:11:52 [1] CLIENT -> SERVER: 
+
+2025-10-09 21:11:52 [1] CLIENT -> SERVER:             <p>Hello Stefan,</p>
+
+2025-10-09 21:11:52 [1] CLIENT -> SERVER:             <p>Your reservation for <strong>2024-08-07 at 12:30</strong> has been received. Thank you!</p>
+
+2025-10-09 21:11:52 [1] CLIENT -> SERVER:             <p>We look forward to seeing you at The Fancy Restaurant.</p>
+
+2025-10-09 21:11:52 [1] CLIENT -> SERVER:         
+
+2025-10-09 21:11:52 [1] CLIENT -> SERVER: 
+
+2025-10-09 21:11:52 [1] CLIENT -> SERVER: .
+
+2025-10-09 21:11:53 [2] SERVER -> CLIENT: 250 OK , completed
+
+2025-10-09 21:11:53 [1] CLIENT -> SERVER: QUIT
+
+2025-10-09 21:11:53 [2] SERVER -> CLIENT: 221 Service Closing transmission
+

@@ -51,8 +51,23 @@ $showMessage = isset($_GET['success']) ? true : false;
                 <input type="date" id="date" name="date" required> <br><br>
 
                 <label for="time">Reservation Time:</label> <br>
-                <input type="time" id="time" name="time" required> <br><br>
-
+                <select id="time" name="time" required>
+                        <option value="">-- Select a Time--</option>
+                            
+                            <option value="12:30">2:30 PM</option>
+                            <option value="15:00">3:00 PM</option>
+                            <option value="15:30">3:30 PM</option>
+                            <option value="16:00">4:00 PM</option>
+                            <option value="16:30">4:30 PM</option>
+                            <option value="17:00">5:00 PM</option>
+                            <option value="17:30">5:30 PM</option>
+                            <option value="18:00">6:00 PM</option>
+                            <option value="18:30">6:30 PM</option>
+                            <option value="19:00">7:00 PM</option>
+                            <option value="19:30">7:30 PM</option>
+                            <option value="20:00">8:00 PM</option>
+                            <option value="20:30">8:30 PM</option>
+                        </select><br><br>
                 <label for="guests">Number of Guests:</label> <br>
                 <input type="number" id="guests" name="guests" min="1" max="20" required> <br><br>
 
