@@ -1,2 +1,6 @@
+# .gitignore
+# Ignore the following
 
 PHPMailer/
+config.local.php
+mail_debug.log
