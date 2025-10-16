@@ -1,11 +1,14 @@
 <?php
 $config = include 'config.php'; // Load the API key
 include 'weather.php';
+include 'github.php'; // Include GitHub functions
+include 'giphy.php'; // Include Giphy functions
 
 // Pass BOTH arguments: city name and config
 $weather = getWeather("Ottawa,CA", $config); 
+$githubRepos = fetchGitHubRepos("NatheSpinoft", 5); // Replace with your GitHub username
+$gifUrl = fetchRandomProgrammingGif($config['giphy_api_key']);
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -61,8 +64,11 @@ $weather = getWeather("Ottawa,CA", $config);
     </div>
 
     </div>
-    <div class="column">Column 5</div>
-    <div class="column">Column 6</div>
+    <div class="column">column 5
+    </div>
+    <div class="column">
+        <?php renderGitHubColumn($githubRepos);?>
+    </div>
     <div class="column project-category">
           <h2>AI / ML</h2>
     <div class="project-card">
@@ -74,7 +80,7 @@ $weather = getWeather("Ottawa,CA", $config);
         <p>Simple AI chatbot using Python and NLTK.</p>
     </div>
     </div>
-    <div class="column">Column 8</div>
+    <div class="column"><?php renderGiphySidebar($gifUrl); ?></div>
     <div class="column">
         <?php
         renderWeatherColumn($weather);

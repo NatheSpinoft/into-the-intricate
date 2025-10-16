@@ -98,3 +98,11 @@ html, body {
         height: auto;         /* height can adjust dynamically */
     }
 }
+
+/* ---------------------------GIPHY ------------------------- */
+.giphy-gif {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 8px;
+}
