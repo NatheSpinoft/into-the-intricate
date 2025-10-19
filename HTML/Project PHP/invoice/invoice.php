@@ -39,15 +39,19 @@ if (!isset($_SESSION['username'])) {
     </div>
 
     <div class="main">
-        <h1>Create Invoice</h1>
+        
 
         <form class="invoice-form" method="POST" action="add_invoice.php">
-    <label>Date:
-        <input type="date" name="invoice_date" required>
-    </label>
-    <label>Company:
-        <input type="text" name="company" placeholder="Company Name" required>
-    </label>
+            <h1>Create Invoice</h1>
+            <div class="invoice-header">
+                <label>Date:
+                    <input type="date" name="invoice_date" required>
+                </label>
+                <label>Company:
+                    <input type="text" name="company" placeholder="Company Name" required>
+                </label>
+            </div>
+
 
     <h3>Items</h3>
     <table class="invoice-items" id="invoice-items">
@@ -58,6 +62,7 @@ if (!isset($_SESSION['username'])) {
             <th>Price</th>
             <th>Tax Type</th>
             <th>Total</th>
+            <th>Action</th> <!-- new column -->
         </tr>
     </thead>
     <tbody>
@@ -75,6 +80,7 @@ if (!isset($_SESSION['username'])) {
                 </select>
             </td>
             <td class="row-total">0.00</td>
+            <td><button type="button" class="remove-item">Remove</button></td> <!-- new button -->
         </tr>
     </tbody>
     <tfoot>
@@ -100,74 +106,9 @@ if (!isset($_SESSION['username'])) {
     <button type="submit">Save Invoice</button>
 </form>
 
-<script>
-function addItem() {
-    const tableBody = document.getElementById('invoice-items').querySelector('tbody');
-    const newRow = document.createElement('tr');
-    newRow.innerHTML = `
-        <td><input type="text" name="description[]" required></td>
-        <td><input type="number" name="qty[]" min="1" value="1" required></td>
-        <td><input type="number" name="price[]" step="0.01" min="0" required></td>
-        <td>
-            <select name="tax_type[]">
-                <option value="0">None</option>
-                <option value="HST">HST</option>
-                <option value="PST">PST</option>
-                <option value="QST">QST</option>
-                <option value="GST">GST</option>
-            </select>
-        </td>
-        <td class="row-total">0.00</td>
-    `;
-    tableBody.appendChild(newRow);
-    attachListeners(newRow);
-    updateTotals();
-}
+<script src="../assets/js/invoice.js"></script>
 
 
-// Attach listeners to a row
-function attachListeners(row) {
-    const inputs = row.querySelectorAll('input, select'); // include select now
-    inputs.forEach(input => {
-        input.addEventListener('input', updateTotals);
-        input.addEventListener('change', updateTotals);
-    });
-}
-
-// Initial listener attachment
-document.querySelectorAll('#invoice-items tbody tr').forEach(attachListeners);
-
-function updateTotals() {
-    let grandTotal = 0;
-
-    document.querySelectorAll('#invoice-items tbody tr').forEach(row => {
-        const qty = parseFloat(row.querySelector('input[name="qty[]"]').value) || 0;
-        const price = parseFloat(row.querySelector('input[name="price[]"]').value) || 0;
-        const taxType = row.querySelector('select[name="tax_type[]"]').value;
-
-        let total = qty * price;
-
-        // Map tax types to percentages
-        let taxRate = 0;
-        switch(taxType) {
-            case "HST": taxRate = 0.13; break;
-            case "PST": taxRate = 0.08; break;
-            case "QST": taxRate = 0.09975; break;
-            case "GST": taxRate = 0.05; break;
-            default: taxRate = 0; break; // "None"
-        }
-
-        total *= (1 + taxRate);
-        row.querySelector('.row-total').textContent = total.toFixed(2);
-        grandTotal += total;
-    });
-
-    document.getElementById('grand-total').textContent = grandTotal.toFixed(2);
-}
-// Ensure initial rows are tracked
-document.querySelectorAll('#invoice-items tbody tr').forEach(attachListeners);
-
-</script>
 
 
 </body>

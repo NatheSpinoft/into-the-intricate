@@ -5,25 +5,30 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
-// Include your PDO connection
-include '../config/config.php';
+// Include PDO connection
+require_once '../config/config.php';
 
 $username = $_SESSION['username'];
 
 // Determine current week: Sunday → Saturday
 $today = date('Y-m-d');
-$dayOfWeek = date('w', strtotime($today)); // 0=Sunday
+$dayOfWeek = date('w', strtotime($today)); // 0 = Sunday
 $sunday = date('Y-m-d', strtotime("-{$dayOfWeek} days", strtotime($today)));
 $saturday = date('Y-m-d', strtotime("+6 days", strtotime($sunday)));
 
 // Fetch all timecards for this user in the current week
-$stmt = $pdo->prepare("
-    SELECT * FROM timecards 
-    WHERE username = ? 
-    AND DATE(created_at) BETWEEN ? AND ?
-");
-$stmt->execute([$username, $sunday, $saturday]);
-$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+try {
+    $stmt = $pdo->prepare("
+        SELECT * FROM timecards 
+        WHERE username = ? 
+        AND DATE(created_at) BETWEEN ? AND ?
+        ORDER BY FIELD(day, 'Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday')
+    ");
+    $stmt->execute([$username, $sunday, $saturday]);
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    die("Database query failed: " . $e->getMessage());
+}
 
 // Map entries by day for quick lookup
 $timecards = [];
@@ -66,7 +71,7 @@ $daysOfWeek = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Satu
         <!-- Sidebar -->
         <div class="sidenav">
             <ul>
-                <li><a href="timecard.php">Time</a></li>
+                <li><a href="timecard.php" class="active">Time</a></li>
                 <li><a href="../invoice/invoice.php">Invoices</a></li>
                 <li><a href="payables.php">Payables</a></li>
             </ul>
@@ -76,10 +81,16 @@ $daysOfWeek = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Satu
         <div class="main">
             <h1>Timecard</h1>
 
+            <!-- Inline Date + Company Fields -->
+            <div class="inline-fields">
+                <label>Date: <input type="date" name="entry_date" value="<?= htmlspecialchars($today) ?>"></label>
+                <label>Company: <input type="text" name="company_name" placeholder="Enter company name"></label>
+            </div>
+
             <!-- Form to add time entries -->
             <form class="time-entry-form" method="POST" action="add_timecard.php">
                 <label>Day:
-                    <select name="day">
+                    <select name="day" required>
                         <?php foreach($daysOfWeek as $dayOption): ?>
                         <option value="<?= $dayOption ?>"><?= $dayOption ?></option>
                         <?php endforeach; ?>
@@ -90,29 +101,27 @@ $daysOfWeek = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Satu
                 <button type="submit">Add Entry</button>
             </form>
 
-            <p><strong>Week starting: <?= $sunday ?></strong></p>
+            <p><strong>Week starting: <?= $sunday ?> — ending: <?= $saturday ?></strong></p>
 
             <!-- Timecard table -->
             <table>
                 <thead>
                     <tr>
                         <th>Day</th>
-                        <th>Date Started</th>
-                        <th>Date Ended</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
                         <th>Hours Worked</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($daysOfWeek as $day): 
                         $entry = $timecards[$day] ?? null;
-                        $date = $entry['created_at'] ?? '';
-                        $dateFormatted = $date ? date('Y-m-d', strtotime($date)) : '';
                     ?>
                         <tr>
-                            <td><?= $day ?></td>
-                            <td><?= $entry['start_time'] ?? '' ?></td>
-                            <td><?= $entry['end_time'] ?? '' ?></td>
-                            <td><?= $entry['hours'] ?? '' ?></td>
+                            <td><?= htmlspecialchars($day) ?></td>
+                            <td><?= htmlspecialchars($entry['start_time'] ?? '') ?></td>
+                            <td><?= htmlspecialchars($entry['end_time'] ?? '') ?></td>
+                            <td><?= htmlspecialchars($entry['hours'] ?? '') ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
