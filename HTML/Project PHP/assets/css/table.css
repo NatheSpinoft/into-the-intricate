@@ -1,0 +1,36 @@
+/* Modern table styling */
+.main table {
+    width: 100%;
+    border-collapse: separate; /* allow border-radius */
+    border-spacing: 0;
+    margin-top: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.main table th, .main table td {
+    padding: 12px 15px;
+    text-align: center;
+}
+
+.main table th {
+    background-color: #A52A2A;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.main table tbody tr {
+    background-color: #fdf6f0;
+    transition: background-color 0.2s;
+}
+
+.main table tbody tr:nth-child(even) {
+    background-color: #f6e8e0;
+}
+
+.main table tbody tr:hover {
+    background-color: #ffe6dc;
+}

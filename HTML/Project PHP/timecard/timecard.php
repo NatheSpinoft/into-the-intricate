@@ -41,7 +41,12 @@ $daysOfWeek = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Satu
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Timecard</title>
-    <link rel="stylesheet" href="../assets/css/tablecard.css">
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/header.css">
+    <link rel="stylesheet" href="../assets/css/layout.css">
+    <link rel="stylesheet" href="../assets/css/table.css">
+    <link rel="stylesheet" href="../assets/css/form.css">
+
 </head>
 <body>
     <!-- Header -->

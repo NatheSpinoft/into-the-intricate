@@ -1,0 +1,26 @@
+/* Time-entry form */
+.time-entry-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.time-entry-form input, .time-entry-form select {
+    padding: 4px;
+    background-color: #f5f0ed; /* off-white with a hint of warmth */
+    color: #333;               /* dark text for readability */
+}
+
+.time-entry-form button {
+    padding: 5px 10px;
+    background-color: #A52A2A;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.time-entry-form button:hover {
+    background-color: #8B1A1A;
+}
