@@ -23,8 +23,8 @@ if (!isset($_SESSION['username'])) {
             <h1>Welcome: <?php echo htmlspecialchars($_SESSION['username']); ?></h1>
         </div>
         <div class="button-group">
-            <a href="menu.php">HOME</a>
-            <a href="logout.php">LOG OUT</a>
+            <a href="../includes/menu.php">HOME</a>
+            <a href="../includes/logout.php">LOG OUT</a>
         </div>
     </div>
 </header>
