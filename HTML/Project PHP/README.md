@@ -22,6 +22,7 @@
 - [x] Support multiple invoice items with tax calculations  
 - [x] Display current week’s timecards dynamically  
 - [x] Improve CSS styling for forms and tables  
+- [x] Error checking
 - [ ] Add **Payables** module  
 - [ ] Add **Reconcile** module  
 - [ ] Test invoice and timecard end-to-end workflow  
