@@ -1,4 +1,4 @@
-/* Time-entry form */
+/* ---------------- Time-entry form ---------------- */
 .time-entry-form {
     display: flex;
     gap: 10px;
@@ -6,21 +6,186 @@
     margin-bottom: 15px;
 }
 
-.time-entry-form input, .time-entry-form select {
-    padding: 4px;
-    background-color: #f5f0ed; /* off-white with a hint of warmth */
-    color: #333;               /* dark text for readability */
+.time-entry-form input,
+.time-entry-form select {
+    padding: 4px 6px;
+    background-color: #f5f0ed; /* soft off-white */
+    color: #333;
+    border: 1px solid #c99;
+    border-radius: 4px;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+.time-entry-form input:focus,
+.time-entry-form select:focus {
+    border-color: #a52a2a;
+    box-shadow: 0 0 4px rgba(165,42,42,0.3);
+    outline: none;
 }
 
 .time-entry-form button {
-    padding: 5px 10px;
+    padding: 5px 12px;
     background-color: #A52A2A;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 .time-entry-form button:hover {
     background-color: #8B1A1A;
+    transform: translateY(-1px);
+}
+
+/* ---------------- Invoice Form ---------------- */
+.invoice-form,
+.invoice-form input,
+.invoice-form select,
+.invoice-form button {
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+/* Form container */
+.invoice-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background-color: #fdf6f0;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    max-width: 900px;
+    margin: auto;
+}
+
+/* Labels */
+.invoice-form label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    color: #4d1a1a;
+}
+
+/* Inputs & selects */
+.invoice-form input[type="text"],
+.invoice-form input[type="number"],
+.invoice-form input[type="date"],
+.invoice-form select {
+    padding: 6px 10px;
+    margin-top: 4px;
+    border: 1px solid #c99;
+    border-radius: 5px;
+    background-color: #f5f0ed;
+    color: #3a1f1f;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+.invoice-form input:focus,
+.invoice-form select:focus {
+    border-color: #a52a2a;
+    box-shadow: 0 0 4px rgba(165,42,42,0.3);
+    outline: none;
+}
+
+/* Tax dropdown */
+.invoice-form select[name="tax_type[]"] {
+    background-color: #f9f2f0;
+    border-color: #c99;
+    color: #3a1f1f;
+}
+
+/* Buttons */
+.invoice-form button {
+    padding: 8px 16px;
+    background-color: #A52A2A;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    margin-top: 10px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.invoice-form button:hover {
+    background-color: #8B1A1A;
+    transform: translateY(-1px);
+}
+
+/* Remove row button */
+.invoice-items .remove-row {
+    background-color: #d9534f;
+}
+
+.invoice-items .remove-row:hover {
+    background-color: #c12e2a;
+}
+
+/* Table styling */
+.invoice-items {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 20px 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.invoice-items th,
+.invoice-items td {
+    padding: 12px 10px;
+    text-align: center;
+}
+
+.invoice-items th {
+    background-color: #A52A2A;
+    color: white;
+    font-weight: 600;
+}
+
+.invoice-items tbody tr:nth-child(even) {
+    background-color: #f6e8e0;
+}
+
+.invoice-items tbody tr:hover {
+    background-color: #ffe6dc;
+}
+
+.invoice-items tfoot td {
+    background-color: #f2dede;
+    font-weight: bold;
+}
+
+.invoice-items .row-total {
+    text-align: right;
+    padding-right: 8px;
+}
+
+/* Additional items container */
+#additional-items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#additional-items hr {
+    border: none;
+    border-top: 1px solid #c99;
+    margin: 10px 0;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+    .invoice-form {
+        padding: 15px;
+    }
+    .invoice-form label {
+        font-size: 14px;
+    }
+    .invoice-form button {
+        font-size: 14px;
+    }
 }

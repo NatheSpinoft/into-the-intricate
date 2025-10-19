@@ -67,7 +67,7 @@ $daysOfWeek = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Satu
         <div class="sidenav">
             <ul>
                 <li><a href="timecard.php">Time</a></li>
-                <li><a href="invoices.php">Invoices</a></li>
+                <li><a href="../invoice/invoice.php">Invoices</a></li>
                 <li><a href="payables.php">Payables</a></li>
             </ul>
         </div>
