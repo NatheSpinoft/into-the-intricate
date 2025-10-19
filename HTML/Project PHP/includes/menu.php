@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['username'])) {
-    header("Location: index.php");
+    header("Location: ../index.php");
     exit();
 }
 ?>
@@ -11,7 +11,7 @@ if (!isset($_SESSION['username'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu: HOME PAGE</title>
-    <link rel="stylesheet" href="menu.css">
+    <link rel="stylesheet" href="../assets/css/menu.css">
 </head>
 <body>
     <header>
@@ -28,7 +28,7 @@ if (!isset($_SESSION['username'])) {
     <div class="container">
         <div class="sidenav">
             <ul>
-                <li><a href="timecard.php">Time</a></li>
+                <li><a href="../timecard/timecard.php">Time</a></li>
                 <li><a href="invoices.php">Invoices</a></li>
                 <li><a href="payables.php">Payables</a></li>
             </ul>

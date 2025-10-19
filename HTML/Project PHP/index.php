@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'config.php';
+require_once './config/config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($user && password_verify($password, $user['password'])) {
         $_SESSION['username'] = $username;
-        header("Location: menu.php");
+        header("Location: includes/menu.php");
         exit();
     } else {
         $error = "Invalid username or password.";
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="assets/css/index.css">
 </head>
 <body>
 <div class="login-container">

@@ -1,5 +1,5 @@
 # Ignore PHP config files
-config.php
+config/config.php
 
 # Ignore log files
 *.log

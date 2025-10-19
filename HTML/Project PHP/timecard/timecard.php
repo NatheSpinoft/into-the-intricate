@@ -1,12 +1,12 @@
 <?php
 session_start();
 if (!isset($_SESSION['username'])) {
-    header("Location: index.php");
+    header("Location: ../index.php");
     exit();
 }
 
 // Include your PDO connection
-include 'config.php';
+include '../config/config.php';
 
 $username = $_SESSION['username'];
 
@@ -41,7 +41,7 @@ $daysOfWeek = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Satu
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Timecard</title>
-    <link rel="stylesheet" href="tabmenu.css">
+    <link rel="stylesheet" href="../assets/css/tablecard.css">
 </head>
 <body>
     <!-- Header -->
@@ -51,8 +51,8 @@ $daysOfWeek = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Satu
                 <h1>Welcome: <?php echo htmlspecialchars($username); ?></h1>
             </div>
             <div class="button-group">
-                <a href="menu.php">HOME</a>
-                <a href="logout.php">LOG OUT</a>
+                <a href="../includes/menu.php">HOME</a>
+                <a href="../includes/logout.php">LOG OUT</a>
             </div>
         </div>
     </header>
