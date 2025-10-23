@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="blog.css">
 </head>
 <body>
+  <h2>Today is <?= date("Y/m/d") ?></h2>
   <h1>Welcome to My Site!</h1>
   <p>This is the default content when the website loads.</p>
 </body>

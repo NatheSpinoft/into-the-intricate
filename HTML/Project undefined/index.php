@@ -49,7 +49,7 @@ $gifUrl = fetchRandomProgrammingGif($config['giphy_api_key']);
     </div>
 
     <div class="column blog-content">
-        <iframe id="blogFrame" name="blogFrame" class="blog-frame" src="blogs/blog-home.html"></iframe>
+        <iframe id="blogFrame" name="blogFrame" class="blog-frame" src="blogs/blog-home.php"></iframe>
     </div>
 
     <div class="column project-category">

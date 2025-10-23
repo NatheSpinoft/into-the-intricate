@@ -38,6 +38,7 @@ if (!isset($_SESSION['username'])) {
             </ul>
         </div>
         <div class="main">
+            <H2> Today is <?= date("Y/m/d") ?> </H2> ; ?>
             <h1>Announcements</h1>
             <p>No new announcements at this time.</p>
         </div>
