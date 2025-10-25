@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Plotly Charts</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f4f4f4;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    #chart {
+      width: 80%;
+      max-width: 800px;
+      margin: 40px auto;
+    }
+    select {
+      display: block;
+      margin: 0 auto;
+      padding: 8px 12px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Interactive Plotly Charts</h1>
+
+  <select id="chartSelector">
+    <option value="line">Line Chart</option>
+    <option value="bar">Bar Chart</option>
+    <option value="pie">Pie Chart</option>
+  </select>
+
+  <div id="chart"></div>
+
+  <script>
+    // Line chart data
+    const lineData = [{
+      x: [1, 2, 3, 4, 5],
+      y: [10, 15, 13, 17, 22],
+      type: 'scatter',
+      mode: 'lines+markers',
+      name: 'Line Data',
+      line: { color: 'blue' }
+    }];
+
+    const lineLayout = {
+      title: 'Line Chart Example',
+      xaxis: { title: 'X Axis' },
+      yaxis: { title: 'Y Axis' }
+    };
+
+    // Bar chart data
+    const barData = [{
+      x: ['Apples', 'Bananas', 'Cherries', 'Dates', 'Elderberry'],
+      y: [12, 19, 10, 8, 15],
+      type: 'bar',
+      marker: { color: 'orange' }
+    }];
+
+    const barLayout = {
+      title: 'Bar Chart Example',
+      xaxis: { title: 'Fruits' },
+      yaxis: { title: 'Quantity' }
+    };
+
+    // Pie chart data
+    const pieData = [{
+      labels: ['Red', 'Blue', 'Green', 'Yellow', 'Purple'],
+      values: [19, 26, 15, 10, 30],
+      type: 'pie'
+    }];
+
+    const pieLayout = {
+      title: 'Pie Chart Example'
+    };
+
+    // Function to switch charts
+    function renderChart(type) {
+      if (type === 'line') {
+        Plotly.newPlot('chart', lineData, lineLayout);
+      } else if (type === 'bar') {
+        Plotly.newPlot('chart', barData, barLayout);
+      } else if (type === 'pie') {
+        Plotly.newPlot('chart', pieData, pieLayout);
+      }
+    }
+
+    // Initialize with line chart
+    renderChart('line');
+
+    // Handle dropdown change
+    document.getElementById('chartSelector').addEventListener('change', function() {
+      renderChart(this.value);
+    });
+  </script>
+</body>
+</html>

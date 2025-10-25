@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Plotly Example</title>
+  <!-- Include Plotly.js from CDN -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f4f4f4;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    #chart {
+      width: 80%;
+      max-width: 800px;
+      margin: 40px auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Interactive Plotly Chart Example</h1>
+  <div id="chart"></div>
+
+  <script>
+    // Sample data for a simple line chart
+    const trace1 = {
+      x: [1, 2, 3, 4, 5],
+      y: [10, 15, 13, 17, 22],
+      type: 'scatter', // scatter = line chart
+      mode: 'lines+markers',
+      name: 'Line Data',
+      line: { color: 'blue' }
+    };
+
+    const trace2 = {
+      x: [1, 2, 3, 4, 5],
+      y: [16, 5, 11, 9, 15],
+      type: 'scatter',
+      mode: 'lines+markers',
+      name: 'Second Line',
+      line: { color: 'red' }
+    };
+
+    const data = [trace1, trace2];
+
+    const layout = {
+      title: 'My First Plotly Chart',
+      xaxis: { title: 'X Axis' },
+      yaxis: { title: 'Y Axis' },
+      plot_bgcolor: '#fff',
+      paper_bgcolor: '#fff'
+    };
+
+    // Render the chart in the 'chart' div
+    Plotly.newPlot('chart', data, layout);
+  </script>
+</body>
+</html>
