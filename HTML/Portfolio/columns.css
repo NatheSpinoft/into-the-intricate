@@ -1,0 +1,108 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+.container {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr; /* flexible ratio 1:3:1 */
+    gap: 20px;                           /* space between items */
+    background-color: antiquewhite;
+    padding: 10px;                        /* optional padding */
+    box-sizing: border-box;               /* ensures padding doesn’t break layout */
+    align-items: stretch; /* makes all columns same height */
+    overflow-x:hidden;
+
+}
+
+.column{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 0 5px;
+}
+
+
+
+.column::before,
+.column::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: black;
+}
+
+.column a {
+    margin-left: 5px;
+    margin-top: 0px;
+}
+
+.column h2 {
+    padding: 0px;
+    margin-top:23px;
+    margin-bottom: 0px;
+    margin-left: 5px;
+}
+
+.project-category {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* space between cards */
+}
+
+.project-category h2 {
+    margin-bottom: 10px;
+}
+
+.project-card {
+    background-color: #f5f5f5;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+}
+
+.weather-column {
+    background-color: #f0f8ff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    margin: 10px 0;
+}
+.weather-column h3 {
+    margin-top: 0;
+}
+
+
+@media (max-width: 768px) {
+    .container {
+        display: block;       /* stack columns vertically */
+        padding: 10px;        /* optional */
+    }
+
+    .column {
+        width: 100%;          /* full width */
+        margin-bottom: 20px;  /* space between stacked columns */
+        position: relative;   /* reset if using ::before/::after borders */
+    }
+
+    .column::before,
+    .column::after {
+        display: none;        /* remove vertical border lines */
+    }
+
+    .blog-frame {
+        width: 100%;          /* iframe fills column */
+        height: auto;         /* height can adjust dynamically */
+    }
+}
+
+/* ---------------------------GIPHY ------------------------- */
+.giphy-gif {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 8px;
+}

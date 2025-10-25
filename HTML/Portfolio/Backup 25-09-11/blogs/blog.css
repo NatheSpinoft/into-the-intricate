@@ -1,0 +1,79 @@
+/* Style for iframe to fill the column neatly */
+.blog-content {
+    width: 100%;         /* fill the column */
+}
+.blog-frame {
+    width: 100%;         /* fill the parent div */
+    height: 100%;
+    border: none;
+
+}
+
+.blog-links ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.blog-links li {
+    margin: 0.5rem 0;
+}
+
+.blog-links a {
+    text-decoration: none;
+    color: #0066cc;
+}
+
+.blog-links a:hover {
+    text-decoration: underline;
+}
+
+.blog-links a {
+    color: #004080;
+    text-decoration: none;
+}
+
+.blog-links a:hover {
+    text-decoration: underline;
+}
+
+.blog-content {
+    grid-column: 2 / 4; /* spans columns 2 and 3 */
+}
+
+article {
+    max-width: 100%;   /* prevent article from overflowing horizontally */
+}
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        code {
+            background-color: #eee;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        pre {
+            background-color: #eee;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        section {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.05);
+        }
+
+        .social-media {
+            background-color: antiquewhite;
+        }
+        

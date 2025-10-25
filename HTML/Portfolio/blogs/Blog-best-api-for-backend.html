@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding APIs</title>
+    <link rel="stylesheet" href="./blog.css">
+</head>
+<body>
+    <h1>Understanding APIs</h1>
+
+    <section>
+        <h2>What is an API?</h2>
+            <time datetime="2025-09-06">September 6, 2025</time>
+        <p>
+            An API (Application Programming Interface) is a set of rules that allows different software applications to communicate with each other.
+            In a typical web application, the frontend (website or app) talks to a backend server via an API, and the backend talks to a database.
+        </p>
+    </section>
+
+    <section>
+        <h2>Common API Types</h2>
+        <h3>1. REST API</h3>
+        <p>
+            REST (Representational State Transfer) APIs use HTTP requests to access and manipulate resources. 
+            They are stateless, meaning each request is independent.
+        </p>
+        <p><strong>Example endpoint:</strong> <code>GET /users</code> to fetch a list of users.</p>
+
+        <h3>2. GraphQL API</h3>
+        <p>
+            GraphQL APIs use a single endpoint to fetch exactly the data needed. Clients can request multiple resources in one query.
+        </p>
+        <p><strong>Example:</strong> Fetch a user’s name and email with one query instead of multiple REST calls.</p>
+    </section>
+
+    <section>
+        <h2>Backend Communication with a Database</h2>
+        <p>
+            In a typical setup:
+        </p>
+        <ul>
+            <li>The frontend sends a request to the backend API.</li>
+            <li>The backend connects to a database (e.g., MySQL, PostgreSQL) to retrieve or store data.</li>
+            <li>The backend sends the response back to the frontend in a standard format like JSON.</li>
+        </ul>
+        <p>This separation ensures security, scalability, and maintainability.</p>
+
+        <h3>Example Backend Code (Python Flask + MySQL)</h3>
+        <pre>
+from flask import Flask, request, jsonify
+import mysql.connector
+
+app = Flask(__name__)
+db = mysql.connector.connect(
+    host="PC_B_IP",
+    user="youruser",
+    password="yourpass",
+    database="mydb"
+)
+
+@app.route("/users", methods=["GET"])
+def get_users():
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("SELECT id, username FROM users")
+    return jsonify(cursor.fetchall())
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
+        </pre>
+    </section>
+
+    <section>
+        <h2>Industry Best Practices</h2>
+        <ul>
+            <li>Use HTTPS for secure communication between frontend and API.</li>
+            <li>Never expose your database directly to the internet.</li>
+            <li>Use authentication (JWT, API keys) for secure access.</li>
+            <li>Separate concerns: backend handles logic, database stores data.</li>
+            <li>Consider caching and rate-limiting for performance and protection.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Conclusion</h2>
+        <p>
+            APIs are the backbone of modern web applications. Choosing the right API type and designing secure, scalable backend communication ensures your application is reliable and maintainable.
+        </p>
+    </section>
+</body>
+</html>

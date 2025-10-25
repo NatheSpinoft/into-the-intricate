@@ -1,0 +1,28 @@
+.social-media p {
+    margin: 0;
+    margin-left: 5px;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    display: block;
+}
+
+.group-apps {
+    display: flex;
+    gap: 5px;           /* spacing between icons */
+    margin: 0;           /* ignore parent margin */
+    width: max-content;  /* shrink to fit children */
+}
+
+.group-apps a {
+    display: block;      /* ensures gap applies correctly */
+}
+
+.group-apps a img {
+    width: 20px;       /* make icons a consistent size */
+    height: 20px;
+    display: block;
+}
+
+#left {
+    margin-left: 5px !important;
+}
