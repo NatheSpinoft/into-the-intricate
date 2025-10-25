@@ -1,5 +1,6 @@
 
             <h2>Blogs</h2>
+            
             <div class="project-card blog-links">
                 <ul>
                     <li><a href="blogs/blog-be-bored.html" target="blogFrame">The Hidden Value of Being Bored</a></li>

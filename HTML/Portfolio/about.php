@@ -17,26 +17,20 @@ $weather = getWeather("Ottawa,CA", $config);
   <title>The Fancy Title</title>
   
   <!-- Styles -->
-  <link rel="stylesheet" href="header.css">
-  <link rel="stylesheet" href="menu-selection.css">
-  <link rel="stylesheet" href="darkness.css">
-  <link rel="stylesheet" href="columns.css">
-  <link rel="stylesheet" href="social-media.css">
-  <link rel="stylesheet" href="blogs/blog.css">
-  <link rel="stylesheet" href="contact-page.css">
+  <link rel="stylesheet" href="assets/css/header.css">
+  <link rel="stylesheet" href="assets/css/menu-selection.css">
+  <link rel="stylesheet" href="assets/css/darkness.css">
+  <link rel="stylesheet" href="assets/css/columns.css">
+  <link rel="stylesheet" href="assets/css/social-media.css">
+  <link rel="stylesheet" href="assets/css/blogs/blog.css">
+  <link rel="stylesheet" href="assets/css/contact-page.css">
 
-  <style>
-    body {
-        margin: 0px;
-    }
 
-    
-  </style>
 </head>
 <body>
     <!-- Header -->
     <div class="header">
-        <img src="assets/android.svg" alt="Logo">
+        <img src="assets/icons/android.svg" alt="Logo">
         <h1>The Fancy Title</h1>
     </div>
 

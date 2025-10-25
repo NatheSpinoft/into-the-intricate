@@ -38,6 +38,8 @@
 
 .blog-content {
     grid-column: 2 / 4; /* spans columns 2 and 3 */
+    width: 100%;
+    min-height: 500;
 }
 
 article {

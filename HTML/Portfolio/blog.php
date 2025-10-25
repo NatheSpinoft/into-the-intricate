@@ -15,11 +15,11 @@ $weather = getWeather("Ottawa,CA", $config);
   <title>The Fancy Title</title>
   
   <!-- Styles -->
-  <link rel="stylesheet" href="header.css">
-  <link rel="stylesheet" href="menu-selection.css">
-  <link rel="stylesheet" href="darkness.css">
-  <link rel="stylesheet" href="columns.css">
-  <link rel="stylesheet" href="social-media.css">
+  <link rel="stylesheet" href="assets/css/header.css">
+  <link rel="stylesheet" href="assets/css/menu-selection.css">
+  <link rel="stylesheet" href="assets/css/darkness.css">
+  <link rel="stylesheet" href="assets/css/columns.css">
+  <link rel="stylesheet" href="assets/css/social-media.css">
   <link rel="stylesheet" href="blogs/blog.css">
 
   <style>
@@ -33,7 +33,7 @@ $weather = getWeather("Ottawa,CA", $config);
 <body>
     <!-- Header -->
     <div class="header">
-        <img src="assets/android.svg" alt="Logo">
+        <img src="assets/icons/android.svg" alt="Logo">
         <h1>The Fancy Title</h1>
     </div>
 
@@ -57,7 +57,7 @@ $weather = getWeather("Ottawa,CA", $config);
         </div>
         <!-- Blog Content Column -->
         <div class="column blog-content">
-            <iframe id="blogFrame" name="blogFrame" class="blog-frame" src="blogs/blog-home.html"></iframe>
+            <iframe id="blogFrame" name="blogFrame" class="blog-frame" src="blogs/blog-home.php"></iframe>
         </div>
 
         <!-- Weather Column -->

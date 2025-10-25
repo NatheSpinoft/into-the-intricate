@@ -18,17 +18,17 @@ $gifUrl = fetchRandomProgrammingGif($config['giphy_api_key']);
   <title>The Fancy Title</title>
   
   <!-- Styles -->
-  <link rel="stylesheet" href="header.css">
-  <link rel="stylesheet" href="menu-selection.css">
-  <link rel="stylesheet" href="darkness.css">
-  <link rel="stylesheet" href="columns.css">
-  <link rel="stylesheet" href="social-media.css">
+  <link rel="stylesheet" href="assets/css/header.css">
+  <link rel="stylesheet" href="assets/css/menu-selection.css">
+  <link rel="stylesheet" href="assets/css/darkness.css">
+  <link rel="stylesheet" href="assets/css/columns.css">
+  <link rel="stylesheet" href="assets/css/social-media.css">
   <link rel="stylesheet" href="blogs/blog.css">
   
 </head>
 <body>
   <div class="header">
-      <img src="assets/android.svg">
+      <img src="assets/icons/android.svg">
       <h1>The Fancy Title</h1>
   </div>
 

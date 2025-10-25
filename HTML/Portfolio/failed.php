@@ -7,12 +7,12 @@
   <title>The Fancy Title</title>
   
   <!-- Styles -->
-  <link rel="stylesheet" href="header.css">
-  <link rel="stylesheet" href="menu-selection.css">
-  <link rel="stylesheet" href="darkness.css">
-  <link rel="stylesheet" href="columns.css">
-  <link rel="stylesheet" href="social-media.css">
-  <link rel="stylesheet" href="blogs/blog.css">
+  <link rel="stylesheet" href="assets/css/header.css">
+  <link rel="stylesheet" href="assets/css/menu-selection.css">
+  <link rel="stylesheet" href="assets/css/darkness.css">
+  <link rel="stylesheet" href="assets/css/columns.css">
+  <link rel="stylesheet" href="assets/css/social-media.css">
+  <link rel="stylesheet" href="assets/css/blogs/blog.css">
   
 </head>
 <body>
