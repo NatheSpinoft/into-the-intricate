@@ -23,10 +23,9 @@
 - [x] Display current week’s timecards dynamically  
 - [x] Improve CSS styling for forms and tables  
 - [x] Error checking
-- [ ] Add **Payables** module  
+- [x] Add **Payables** module  
 - [ ] Add **Reconcile** module  
-- [ ] Test invoice and timecard end-to-end workflow  
-- [ ] Backup current database schema before major updates  
+- [x] Backup current database schema before major updates  
 
 ### Notes / Next Steps
 

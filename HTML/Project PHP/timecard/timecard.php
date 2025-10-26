@@ -73,7 +73,8 @@ $daysOfWeek = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Satu
             <ul>
                 <li><a href="timecard.php" class="active">Time</a></li>
                 <li><a href="../invoice/invoice.php">Invoices</a></li>
-                <li><a href="payables.php">Payables</a></li>
+                <li><a href="../invoice/payables.php">Payables</a></li>
+                <li><a href="../invoice/view_invoices.php">View All Invoices</a></li>
             </ul>
         </div>
 
