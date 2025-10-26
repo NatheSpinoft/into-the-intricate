@@ -10,13 +10,18 @@ require_once '../config/config.php';
 
 $username = $_SESSION['username'];
 
-// Determine current week: Sunday → Saturday
-$today = date('Y-m-d');
-$dayOfWeek = date('w', strtotime($today)); // 0 = Sunday
-$sunday = date('Y-m-d', strtotime("-{$dayOfWeek} days", strtotime($today)));
+// Get week offset from URL (0 = current week, -1 = last week, 1 = next week)
+$weekOffset = isset($_GET['week']) ? (int)$_GET['week'] : 0;
+
+// Calculate the reference date based on offset
+$referenceDate = date('Y-m-d', strtotime("+{$weekOffset} weeks"));
+
+// Determine week: Sunday → Saturday
+$dayOfWeek = date('w', strtotime($referenceDate)); // 0 = Sunday
+$sunday = date('Y-m-d', strtotime("-{$dayOfWeek} days", strtotime($referenceDate)));
 $saturday = date('Y-m-d', strtotime("+6 days", strtotime($sunday)));
 
-// Fetch all timecards for this user in the current week
+// Fetch all timecards for this user in the selected week
 try {
     $stmt = $pdo->prepare("
         SELECT * FROM timecards 
@@ -32,12 +37,18 @@ try {
 
 // Map entries by day for quick lookup
 $timecards = [];
+$totalHours = 0;
 foreach ($results as $row) {
     $timecards[$row['day']] = $row;
+    $totalHours += (float)$row['hours'];
 }
 
 // Days of the week
 $daysOfWeek = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+// Calculate previous and next week offsets
+$prevWeek = $weekOffset - 1;
+$nextWeek = $weekOffset + 1;
 ?>
 
 <!DOCTYPE html>
@@ -51,7 +62,9 @@ $daysOfWeek = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Satu
     <link rel="stylesheet" href="../assets/css/layout.css">
     <link rel="stylesheet" href="../assets/css/table.css">
     <link rel="stylesheet" href="../assets/css/form.css">
-
+    <style>
+       
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -82,13 +95,22 @@ $daysOfWeek = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Satu
         <div class="main">
             <h1>Timecard</h1>
 
-            <!-- Inline Date + Company Fields -->
-            <div class="inline-fields">
-                <label>Date: <input type="date" name="entry_date" value="<?= htmlspecialchars($today) ?>"></label>
-                <label>Company: <input type="text" name="company_name" placeholder="Enter company name"></label>
+            <!-- Week Navigation -->
+            <div class="week-navigation">
+                <a href="?week=<?= $prevWeek ?>">← Previous Week</a>
+                <div class="week-info">
+                    <span class="<?= $weekOffset === 0 ? 'current-week' : '' ?>">
+                        Week: <?= date('M d', strtotime($sunday)) ?> - <?= date('M d, Y', strtotime($saturday)) ?>
+                    </span>
+                    <?php if ($weekOffset === 0): ?>
+                        <span style="color: #7b2f2fa7; margin-left: 10px;">(Current Week)</span>
+                    <?php endif; ?>
+                </div>
+                <a href="?week=<?= $nextWeek ?>">Next Week →</a>
             </div>
 
-            <!-- Form to add time entries -->
+            <!-- Form to add time entries (only show for current week) -->
+            <?php if ($weekOffset === 0): ?>
             <form class="time-entry-form" method="POST" action="add_timecard.php">
                 <label>Day:
                     <select name="day" required>
@@ -101,8 +123,12 @@ $daysOfWeek = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Satu
                 <label>End Time: <input type="time" name="end_time" required></label>
                 <button type="submit">Add Entry</button>
             </form>
-
-            <p><strong>Week starting: <?= $sunday ?> — ending: <?= $saturday ?></strong></p>
+            <?php else: ?>
+            <p style="padding: 10px; background-color: #fff3cd; border-left: 4px solid #ffc107;">
+                ℹ️ You're viewing a <?= $weekOffset < 0 ? 'past' : 'future' ?> week. 
+                <a href="timecard.php">Go to current week</a> to add entries.
+            </p>
+            <?php endif; ?>
 
             <!-- Timecard table -->
             <table>
@@ -120,13 +146,25 @@ $daysOfWeek = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Satu
                     ?>
                         <tr>
                             <td><?= htmlspecialchars($day) ?></td>
-                            <td><?= htmlspecialchars($entry['start_time'] ?? '') ?></td>
-                            <td><?= htmlspecialchars($entry['end_time'] ?? '') ?></td>
-                            <td><?= htmlspecialchars($entry['hours'] ?? '') ?></td>
+                            <td><?= htmlspecialchars($entry['start_time'] ?? '-') ?></td>
+                            <td><?= htmlspecialchars($entry['end_time'] ?? '-') ?></td>
+                            <td><?= $entry ? number_format($entry['hours'], 2) : '-' ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" style="text-align: right; font-weight: bold;">Total Hours:</td>
+                        <td style="font-weight: bold;"><?= number_format($totalHours, 2) ?></td>
+                    </tr>
+                </tfoot>
             </table>
+
+            <?php if ($totalHours > 0): ?>
+            <div class="total-hours">
+                📊 Total hours for this week: <?= number_format($totalHours, 2) ?> hours
+            </div>
+            <?php endif; ?>
         </div>
     </div>
 </body>

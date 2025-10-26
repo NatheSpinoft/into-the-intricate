@@ -4,6 +4,9 @@ config/config.php
 # Ignore log files
 *.log
 
+# Ignore third-party libraries
+libs/
+
 # Ignore node_modules folder (if using Node)
 node_modules/
 
