@@ -34,11 +34,11 @@ if (!isset($_SESSION['username'])) {
             <ul>
                 <li><a href="../timecard/timecard.php">Time</a></li>
                 <li><a href="../invoice/invoice.php">Invoices</a></li>
-                <li><a href="payables.php">Payables</a></li>
+                <li><a href="../invoice/payables.php">Payables</a></li>
             </ul>
         </div>
         <div class="main">
-            <H2> Today is <?= date("Y/m/d") ?> </H2> ; ?>
+            <H2> Today is <?= date("Y/m/d") ?>  </H2>
             <h1>Announcements</h1>
             <p>No new announcements at this time.</p>
         </div>
