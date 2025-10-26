@@ -95,13 +95,22 @@ if (!isset($_SESSION['username'])) {
     <button type="button" onclick="addItem()">Add Another Item</button>
 
     <label>Payment Method:
-        <select name="payment_method" required>
+        <select name="payment_method" id="payment_method" required>
             <option value="">Select...</option>
             <option value="Cash">Cash</option>
             <option value="Credit Card">Credit Card</option>
             <option value="On Account">On Account</option>
         </select>
     </label>
+
+    <div id="card-digits-container" style="display:none;">
+    <label>Card Last 4 Digits:
+        <input type="text" name="card_last4" id="card_last4" 
+               pattern="[0-9]{4}" 
+               maxlength="4" 
+               placeholder="1234">
+    </label>
+    </div>
 
     <button type="submit">Save Invoice</button>
 </form>

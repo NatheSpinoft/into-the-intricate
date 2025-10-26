@@ -19,6 +19,14 @@ try {
         throw new Exception("Missing required invoice information.");
     }
 
+        // Validate card digits if payment method is Credit Card
+    if ($payment_method === 'Credit Card') {
+        $card_last4 = trim($_POST['card_last4'] ?? '');
+        if (strlen($card_last4) !== 4 || !ctype_digit($card_last4)) {
+            throw new Exception("Credit card must have exactly 4 digits.");
+        }
+    }
+    
     $descriptions = $_POST['description'] ?? [];
     $qtys = $_POST['qty'] ?? [];
     $prices = $_POST['price'] ?? [];

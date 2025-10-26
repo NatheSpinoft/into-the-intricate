@@ -1,3 +1,32 @@
+// Wait for DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Show/hide card digits input based on payment method
+    const paymentMethodSelect = document.getElementById('payment_method');
+    const cardContainer = document.getElementById('card-digits-container');
+    const cardInput = document.getElementById('card_last4');
+    
+    if (paymentMethodSelect && cardContainer && cardInput) {
+        paymentMethodSelect.addEventListener('change', function() {
+            if (this.value === 'Credit Card') {
+                cardContainer.style.display = 'block';
+                cardInput.required = true;
+            } else {
+                cardContainer.style.display = 'none';
+                cardInput.required = false;
+                cardInput.value = ''; // Clear the value
+            }
+        });
+
+        // Validate that only numbers are entered
+        cardInput.addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4);
+        });
+    }
+
+    // Your existing functions below...
+});
+
 function addItem() {
     const tableBody = document.getElementById('invoice-items').querySelector('tbody');
     const newRow = document.createElement('tr');
