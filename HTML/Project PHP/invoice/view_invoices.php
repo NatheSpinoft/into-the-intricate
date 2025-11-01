@@ -26,7 +26,7 @@ $invoices = $stmt->fetchAll();
     <link rel="stylesheet" href="../assets/css/header.css">
     <link rel="stylesheet" href="../assets/css/layout.css">
     <link rel="stylesheet" href="../assets/css/form.css">
-    <link rel="stylesheet" href="../assets/css/view-delete.css">
+    <link rel="stylesheet" href="../assets/css/view-invoice-delete.css">
     <style>
 
     </style>
@@ -51,6 +51,7 @@ $invoices = $stmt->fetchAll();
             <li><a href="invoice.php">Invoices</a></li>
             <li><a href="payables.php">Payables</a></li>
             <li><a href="view_invoices.php">View All Invoices</a></li>
+            <li><a href="view_payables.php">View All Payables</a></li>
             
         </ul>
     </div>
