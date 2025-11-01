@@ -26,36 +26,9 @@ $invoices = $stmt->fetchAll();
     <link rel="stylesheet" href="../assets/css/header.css">
     <link rel="stylesheet" href="../assets/css/layout.css">
     <link rel="stylesheet" href="../assets/css/form.css">
+    <link rel="stylesheet" href="../assets/css/view-delete.css">
     <style>
-        .invoice-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        .invoice-table th, .invoice-table td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-        .invoice-table th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-        }
-        .invoice-table tr:hover {
-            background-color: #f5f5f5;
-        }
-        .action-btn {
-            padding: 5px 10px;
-            margin: 0 5px;
-            text-decoration: none;
-            background-color: #4CAF50;
-            color: white;
-            border-radius: 3px;
-            font-size: 14px;
-        }
-        .action-btn:hover {
-            background-color: #45a049;
-        }
+
     </style>
 </head>
 <body>
@@ -86,6 +59,16 @@ $invoices = $stmt->fetchAll();
         <h1>Your Invoices</h1>
         <p><a href="invoice.php" style="color: #4CAF50;">+ Create New Invoice</a></p>
 
+        <?php if (isset($_SESSION['message'])): ?>
+            <div class="message <?php echo $_SESSION['message_type']; ?>">
+                <?php 
+                    echo htmlspecialchars($_SESSION['message']);
+                    unset($_SESSION['message']);
+                    unset($_SESSION['message_type']);
+                ?>
+            </div>
+        <?php endif; ?>
+
         <?php if (count($invoices) > 0): ?>
         <table class="invoice-table">
             <thead>
@@ -110,6 +93,7 @@ $invoices = $stmt->fetchAll();
                     <td>$<?php echo number_format($inv['grand_total'], 2); ?></td>
                     <td>
                         <a href="generate_pdf.php?id=<?php echo $inv['id']; ?>" class="action-btn" target="_blank">📄 PDF</a>
+                        <a href="delete_invoice.php?id=<?php echo $inv['id']; ?>" class="action-btn delete-btn" onclick="return confirm('Are you sure you want to delete this invoice? This action cannot be undone.');">🗑️ Delete</a>
                     </td>
                 </tr>
                 <?php endforeach; ?>
