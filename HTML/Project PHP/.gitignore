@@ -7,6 +7,15 @@ config/config.php
 # Ignore third-party libraries
 libs/
 
+# Database backups
+database_backups/
+Backup/database_backups/
+*.sql
+
+# Environment files
+.env
+.env.local
+
 # Ignore node_modules folder (if using Node)
 node_modules/
 
