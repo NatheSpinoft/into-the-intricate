@@ -23,7 +23,10 @@
 - [x] Display current week’s timecards dynamically  
 - [x] Improve CSS styling for forms and tables  
 - [x] Error checking
-- [x] Add **Payables** module  
+- [x] Add **Invoice** module 
+- [x] Add **Invoice** PDF and delete actions
+- [x] Add **Payables** module 
+- [x] Add **Payables** view and delete actions  
 - [ ] Add **Reconcile** module  
 - [x] Backup current database schema before major updates  
 
