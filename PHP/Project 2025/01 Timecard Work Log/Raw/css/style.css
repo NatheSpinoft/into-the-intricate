@@ -1,0 +1,103 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    margin: 0;
+    background-color: #ecf0f1;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 220px;
+    background-color: #2c3e50;
+    color: white;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.sidebar a.logout-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 12px 0;
+    margin-top: 30px;
+    background-color: #e74c3c; /* red for logout */
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.sidebar a.logout-btn:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+}
+
+/* Optional: make sidebar links more uniform */
+.sidebar a {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin: 8px 0;
+    padding: 10px 0;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: 0.3s;
+    color: white;
+}
+
+.sidebar a:hover {
+    opacity: 0.85;
+}
+.sidebar h2 {
+    margin: 0 0 20px 0;
+    font-size: 22px;
+}
+
+.main {
+    flex: 1;
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.main h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: #34495e;
+}
+
+.main p {
+    font-size: 16px;
+    color: #7f8c8d;
+}
+
+.button-container a {
+    display: inline-block;
+    padding: 12px 25px;
+    margin: 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.3s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.button-container a:hover {
+    opacity: 0.9;
+}
+
+.login-btn {
+    background-color: #3498db;
+    color: white;
+}
+
+.signup-btn {
+    background-color: #2ecc71;
+    color: white;
+}
