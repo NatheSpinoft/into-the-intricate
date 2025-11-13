@@ -1,0 +1,36 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* horizontal centering */
+    align-items: center;     /* vertical centering */
+    height: 100vh;           /* full viewport height */
+    margin: 0;               /* remove default body margin */
+    background-color: rgb(200, 197, 197);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    gap: 3px;
+    padding: 10px;
+    background-color: aquamarine;
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+
+p {
+    margin: 0px;
+}
+
+.display {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: 100px;
+    gap: 3px;
+    padding: 10px;
+    background-color: grey;
+    border-radius: 20px;
+}
+
