@@ -1,0 +1,58 @@
+body {
+    margin: 0;
+}
+
+.chirp-container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    display: flex;
+    flex-direction: column; /* stack thread and chirp box vertically */
+    align-items: center;    /* center horizontally */
+}
+
+.chirp-thread {
+    max-width: 420px;
+    width: 100%;
+    height: 55rem;
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* push chirp box to bottom */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+
+.chirp-content {
+    /* this will hold the messages and start from top */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto; /* scroll if too many messages */
+}
+
+.chirp-box {
+    display: flex;
+    justify-content: flex-end; /* button on the right */
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.chirp-box input[type="submit"] {
+    width: 100px;
+    padding: 5px;
+    border: 1px solid #132d98;
+    border-radius: 15px;
+}
+
+.chirp-box input[type="submit"]:hover {
+    background-color: #132d98;
+    color: white;
+    cursor: pointer;
+}
