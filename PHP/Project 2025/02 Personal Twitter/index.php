@@ -18,6 +18,9 @@
             <input type="password" id="password" name="password" required><br>
             <input type="submit" value="Login">
         </form>
+        <?php if (!empty($error)) : ?>
+        <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
+        <?php endif; ?>
         <p>Don't have an account? <a href="signup.php">Register here</a></p>
     </div>
     </div>
