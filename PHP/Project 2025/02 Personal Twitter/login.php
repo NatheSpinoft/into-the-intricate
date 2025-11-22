@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Login successful
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
-            header('Location: index.php'); // redirect to main page
+            header('Location: chirper.php'); // redirect to main page
             exit;
         } else {
             $error = "Invalid username or password";
