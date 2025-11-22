@@ -7,21 +7,16 @@
     <link rel="stylesheet" href="./assets/css/styles.css">
 </head>
 <body>
-    <div class="chirp-container">
-        <div class="chirp-thread">
-            <h2>Chirp Thread</h2>
-            <?php
-                // Include the file that fetches and displays chirps
-                //include 'fetch_chirps.php';
-            ?>
-        <div class="chirp-box">
-        <form action="post_chirp.php" method="POST">
-            <label for="chirp">What's on your mind?</label><br>
-            <textarea id="chirp" name="chirp" rows="4" cols="50" maxlength="280" required></textarea><br>
-            <input type="submit" value="Chirp">
+    <h1>Welcome to Mini Chirper</h1>
+    <div class="login-container">
+        <form action="login.php" method="POST">
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username" required><br>
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password" required><br>
+            <input type="submit" value="Login">
         </form>
-        </div>
-    </div>
+        <p>Don't have an account? <a href="register.php">Register here</a></p>
     
 </body>
 </html>
