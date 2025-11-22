@@ -1,0 +1,204 @@
+/* Menu Wrap Container */
+
+
+body {
+    background-color: bisque;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* full viewport height */
+}
+main {
+    flex: 1; /* takes up remaining space */
+}
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #000000 ;
+    padding: 10px 20px;
+    box-shadow: 5px 10px grey;
+
+}
+
+header H1{
+    color: rgb(204, 216, 228);
+    margin: 0;
+
+    
+}
+
+nav {
+    background-color: hsla(0, 10%, 64%, 0.453); /* semi-transparent black */
+    width: 110%;                                /* full width */
+    display: flex;
+    justify-content: center;                     /* center the ul */
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+
+nav ul li a{
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+    transition: background 0.4s;
+}
+
+nav ul li a:hover {
+    background-color: #585858;;
+}
+/* -----------------------------------------------MenuWrap-----------------*/
+.menu-wrap {
+    width: 75%;
+    height: auto;
+    margin: 0 auto;
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); 
+    gap: 29px;
+    
+
+}
+
+.menu-card{
+    margin-top: 20px;
+    width: 200px;
+    height: 330px;
+    background-color: rgb(201, 151, 16);
+    border-radius: 20px;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.menu-card img{
+    align-self: center;
+    margin-top: 10px;
+    border-radius: 20px;
+}
+
+.menu-card p{
+    margin:0;
+}
+
+.menu-info {
+    display: flex;
+    justify-content: space-between; /* span left, p right */
+    width: 90%;                    /* fill the card width */
+    padding: 0 10px;                /* optional spacing */
+    margin-top: 10px;
+    align-items: center;            /* vertically center if p is taller */
+}
+
+.menu-info span {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #333;
+}
+
+.menu-info p {
+    margin: 0;
+    font-size: 0.95em;
+    color: #555;
+}
+/* -----------------------------------------------MenuAccordion-----------------*/
+.text-selection{
+    display: flex;
+    flex-direction: column; /* stack elements vertically */
+    justify-content: center; /* vertical centering */
+    align-items: center;     /* horizontal centering */
+    min-height: 100vh;       /* make the container full viewport height */
+
+    gap: 10px;               /* optional: space between children */
+}
+  .menu-category {
+    width: 90%;
+    background: rgb(201, 151, 16);
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: background 0.3s;
+  }
+
+    .menu-category:hover {
+    background:  rgb(216, 184, 94);
+  }
+
+    .menu-items {
+    width: 90%;
+    display: none;
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+
+    .menu-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .menu-item:last-child {
+    border-bottom: none;
+  }
+
+  .item-name {
+    font-weight: bold;
+    color: #2c3e50;
+  }
+
+  .item-description {
+    font-size: 0.9em;
+    color: #555;
+  }
+
+  .item-price {
+    color: #27ae60;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+
+
+
+
+    /* Optional smooth slide effect */
+  .menu-items.open {
+    display: block;
+    animation: slideDown 0.3s ease;
+  }
+
+  @keyframes slideDown {
+    from {opacity: 0; transform: translateY(-10px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+
+/* -----------------------------------------------Footer-----------------*/
+
+.space {
+    height: 50px;
+    width:auto;
+}
+footer{
+    position: fixed;      /* keeps it on screen */
+    bottom: 0;            /* pin to bottom */
+    left: 0;
+    width: 100%;          /* full width */
+    background-color: #000;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    z-index: 1000;        /* stays above other content */
+}

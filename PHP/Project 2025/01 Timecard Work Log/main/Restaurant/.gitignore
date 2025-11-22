@@ -1,0 +1,23 @@
+# Ignore PHPMailer library
+PHPMailer/
+
+# Ignore local config and credentials
+config.local.php
+
+# Ignore log/debug files (PHPMailer, reservation logs, etc.)
+*.log
+mail_debug.log
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE/editor files
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Ignore compiled files (if any)
+*.class
+*.o
+*.exe

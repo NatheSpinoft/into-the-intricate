@@ -1,0 +1,74 @@
+/* Modern table styling */
+.main table {
+    width: 100%;
+    border-collapse: separate; /* allow border-radius */
+    border-spacing: 0;
+    margin-top: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.main table th, .main table td {
+    padding: 12px 15px;
+    text-align: center;
+}
+
+.main table th {
+    background-color: #A52A2A;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.main table tbody tr {
+    background-color: #fdf6f0;
+    transition: background-color 0.2s;
+}
+
+.main table tbody tr:nth-child(even) {
+    background-color: #f6e8e0;
+}
+
+.main table tbody tr:hover {
+    background-color: #ffe6dc;
+}
+
+ .week-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f6e8e0;
+            border-radius: 5px;
+        }
+        .week-navigation a {
+            padding: 8px 15px;
+            background-color: #A52A2A;
+            color: white;
+            text-decoration: none;
+            border-radius: 3px;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .week-navigation a:hover {
+            background-color: #7b2f2f;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0,0,0,0.25);
+        }
+        .week-info {
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .current-week {
+            color:  #7b2f2f;
+        }
+        .total-hours {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e8f5e9;
+            border-left: 4px solid #7b2f2f;
+            font-weight: bold;
+        }

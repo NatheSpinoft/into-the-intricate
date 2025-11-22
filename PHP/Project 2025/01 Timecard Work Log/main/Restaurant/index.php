@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Fancy Restaurant</title>
+    <link rel="stylesheet" href="index.css">
+        <link rel="stylesheet" href="imgwrap.css">
+</head>
+<body>
+    <header>
+        <h1>The Fancy Restaurant</h1>
+    <nav>
+        <ul>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="reserve.php">Reserve</a></li>
+
+        </ul>
+    </nav>
+        </header>
+
+    <main>
+        <div class="content">
+            <div class="images-left" height>
+                    <div class="menu-card">
+                        <img src="https://picsum.photos/id/23/3887/4889" alt="Dish 1">
+                        <span>Grilled Salmon</span><p></p>
+                    </div>
+                    <div class="menu-card">
+                        <img src="https://picsum.photos/id/102/4320/3240" alt="Dish 2">
+                        <span>Caprese Salad</span>
+                    </div>
+                    <div class="menu-card">
+                        <img src="https://picsum.photos/id/239/200/200" alt="Dish 3">
+                        <span>Margherita Pizza</span>
+                    </div>
+                    <div class="menu-card">
+                        <img src="https://picsum.photos/id/240/200/200" alt="Dish 4">
+                        <span>Chocolate Cake</span>
+                    </div>
+            </div>
+        <div class="text-right">
+            <h3>
+                Taste the beautiful country of Canada
+            </h3>
+            <p> 
+What is Lorem Ipsum?
+
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+</p>
+        </div>
+    </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 The Fancy Restaurant. All rights reserved.</p>
+    </footer>
+</body>
+</html>

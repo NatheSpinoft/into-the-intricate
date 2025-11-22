@@ -1,0 +1,28 @@
+# Ignore PHP config files
+config/config.php
+
+# Ignore log files
+*.log
+
+# Ignore third-party libraries
+libs/
+
+# Database backups
+database_backups/
+Backup/database_backups/
+*.sql
+
+# Environment files
+.env
+.env.local
+
+# Ignore node_modules folder (if using Node)
+node_modules/
+
+# Ignore compiled files
+*.exe
+*.dll
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
