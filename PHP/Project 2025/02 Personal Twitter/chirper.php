@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+// Redirect to login if not logged in
+if (!isset($_SESSION['user_id'])) {
+    header('Location: index.php');
+    exit;
+}
+
+$username = $_SESSION['username'] ?? 'User';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,21 +20,27 @@
     <link rel="icon" href="./assets/bird.png" type="image/png">
 </head>
 <body>
+    <header class="chirper-header">
+        <h1>Welcome, <?php echo htmlspecialchars($username); ?>!</h1>
+        <a href="logout.php" class="logout-btn">Logout</a>
+    </header>
+
     <div class="chirp-container">
         <div class="chirp-thread">
             <h2>Chirp Thread</h2>
             <?php
                 // Include the file that fetches and displays chirps
-                //include 'fetch_chirps.php';
+                // include 'fetch_chirps.php';
             ?>
+        </div>
+
         <div class="chirp-box">
-        <form action="post_chirp.php" method="POST">
-            <label for="chirp">What's on your mind?</label><br>
-            <textarea id="chirp" name="chirp" rows="4" cols="50" maxlength="280" required></textarea><br>
-            <input type="submit" value="Chirp">
-        </form>
+            <form action="post_chirp.php" method="POST">
+                <label for="chirp">What's on your mind?</label><br>
+                <textarea id="chirp" name="chirp" rows="4" cols="50" maxlength="280" required></textarea><br>
+                <input type="submit" value="Chirp">
+            </form>
         </div>
     </div>
-    
 </body>
 </html>
