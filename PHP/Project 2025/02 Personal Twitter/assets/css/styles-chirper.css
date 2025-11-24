@@ -19,7 +19,6 @@ body {
     color: white;
     text-decoration: none;
     border-radius: 4px;
-    float: right;
     margin-top: -20px; /* adjust depending on header layout */
     margin-right: 10px;
 }
