@@ -11,10 +11,13 @@ $chirps = $stmt->fetchAll(PDO::FETCH_ASSOC);
 if ($chirps) {
     foreach ($chirps as $row) {
         echo '<div class="chirp-box">';
-        echo '<strong>' . htmlspecialchars($row['username']) . ':</strong> ';
-        echo htmlspecialchars($row['chirp']);
-        echo '<br><small>' . $row['created_at'] . '</small>';
+        echo '  <div class="chirp-header">';
+        echo '    <span class="username">' . htmlspecialchars($row['username']) . '</span>';
+        echo '    <span class="chirp-timestamp">' . $row['created_at'] . '</span>';
+        echo '  </div>';
+        echo '  <div class="chirp-text">' . htmlspecialchars($row['chirp']) . '</div>';
         echo '</div>';
+
     }
 } else {
     echo '<div class="chirp-box">No chirps yet.</div>';
