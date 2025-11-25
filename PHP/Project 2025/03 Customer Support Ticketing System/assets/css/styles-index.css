@@ -7,7 +7,7 @@ body {
 
 /* Additional styles can be added below */
 .login-container {
-    width: 310px;
+    width: 305px;
     margin: 100px auto;
     padding: 25px;
     background: rgba(255, 255, 255, 0.95);
@@ -34,18 +34,22 @@ body {
 .login-container select {
     width: 310px;
     padding-top: 10px;
-    padding-bottom: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 6px;
+    font-size: 1rem;
+    line-height: 1.4; /* makes height consistent */
+    box-sizing: border-box; /* include padding & border in width/height */
+    height: 42px; /* optional: force exact height */
 }
 
 /* Dropdown specific tweaks (optional) */
 .login-container select {
-    appearance: none; /* removes default arrow in some browsers */
+    appearance: none; /* removes default arrow */
     background: #fff url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'><path fill='%23999' d='M7 10l5 5 5-5z'/></svg>") no-repeat right 10px center;
     background-size: 12px;
-}
+    padding-left: 12px;  /* <-- adds space on the left */
+    padding-right: 30px; /* keeps arrow clear on the right */
 
 
 .login-container button {
