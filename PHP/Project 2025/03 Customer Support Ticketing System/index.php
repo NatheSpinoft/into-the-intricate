@@ -11,6 +11,12 @@
     <h2>Login</h2>
 
     <form action="login.php" method="POST">
+        <label for="role">Login as:</label>
+    <select id="role" name="role" required>
+        <option value="" disabled selected>Select role</option>
+        <option value="customer">Customer</option>
+        <option value="employee">Employee</option>
+    </select>
         <label for="username">Username</label>
         <input type="text" id="username" name="username" required>
 

@@ -30,7 +30,8 @@ body {
     font-weight: 500;
 }
 
-.login-container input {
+.login-container input,
+.login-container select {
     width: 310px;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -39,7 +40,12 @@ body {
     border-radius: 6px;
 }
 
-
+/* Dropdown specific tweaks (optional) */
+.login-container select {
+    appearance: none; /* removes default arrow in some browsers */
+    background: #fff url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'><path fill='%23999' d='M7 10l5 5 5-5z'/></svg>") no-repeat right 10px center;
+    background-size: 12px;
+}
 
 
 .login-container button {
