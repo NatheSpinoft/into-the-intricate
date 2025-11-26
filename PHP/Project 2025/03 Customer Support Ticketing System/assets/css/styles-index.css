@@ -50,7 +50,7 @@ body {
     background-size: 12px;
     padding-left: 12px;  /* <-- adds space on the left */
     padding-right: 30px; /* keeps arrow clear on the right */
-
+}
 
 .login-container button {
     width: 100%;
