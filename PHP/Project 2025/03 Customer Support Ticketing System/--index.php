@@ -1,3 +1,8 @@
+<?php
+session_start();
+$error = $_SESSION['error'] ?? '';
+unset($_SESSION['error']); // Clear the error after retrieving it
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,11 +17,12 @@
 
     <form action="login.php" method="POST">
         <label for="role">Login as:</label>
-    <select id="role" name="role" required>
-        <option value="" disabled selected>Select role</option>
-        <option value="customer">Customer</option>
-        <option value="employee">Employee</option>
-    </select>
+        <select id="role" name="role" required>
+            <option value="" disabled selected>Select role</option>
+            <option value="customer">Customer</option>
+            <option value="employee">Employee</option>
+        </select>
+        
         <label for="username">Username</label>
         <input type="text" id="username" name="username" required>
 
@@ -24,6 +30,12 @@
         <input type="password" id="password" name="password" required>
 
         <button type="submit">Sign In</button>
+        
+        <!-- Display error message here -->
+        <?php if (!empty($error)): ?>
+            <p style="color:red; margin-top:10px;"><?php echo htmlspecialchars($error); ?></p>
+        <?php endif; ?>
+
         <p>Register <a href="signup-page.php">here</a></p>
     </form>
     </div>
