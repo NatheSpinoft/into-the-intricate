@@ -9,7 +9,7 @@
 <body>
     <header>
         <h1 id="header-title">Customer Support System</h1>
-        <button id="logout-button">Logout</button>
+        <button id="logout-button" onclick="window.location.href='logout.php'">Logout</button>
 
     </header>
     <nav>
