@@ -24,6 +24,7 @@
         <input type="password" id="password" name="password" required>
 
         <button type="submit">Sign In</button>
+        <p>Register <a href="signup-page.php">here</a></p>
     </form>
     </div>
 
