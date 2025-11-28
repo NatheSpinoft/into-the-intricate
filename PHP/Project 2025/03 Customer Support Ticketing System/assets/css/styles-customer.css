@@ -22,12 +22,16 @@ header {
     color: white;
     padding: 15px 20px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
 }
 
 #header-title {
     font-size: 1.6rem;
+}
+
+header form {
+    margin-left: auto;
+    display: flex;
 }
 
 #logout-button {
@@ -37,6 +41,7 @@ header {
     padding: 8px 15px;
     cursor: pointer;
     border-radius: 5px;
+    font-weight: bold;
 }
 
 #logout-button:hover {
@@ -86,6 +91,51 @@ main {
     overflow-y: auto;
 }
 
+main h2 {
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+/* Form styling */
+form {
+
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+input[type="text"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+textarea {
+    resize: vertical;
+}
+
+input[type="submit"] {
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #1abc9c;
+}
 /* Footer */
 footer {
     grid-column: 1 / 3;
