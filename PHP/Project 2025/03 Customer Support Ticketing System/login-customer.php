@@ -16,8 +16,9 @@ unset($_SESSION['success']);
 <body>
     <header>
         <h1 id="header-title">Customer Support System</h1>
-        <button id="logout-button" onclick="window.location.href='logout.php'">Logout</button>
-
+        <form action="logout.php" method="POST">
+            <button id="logout-button" type="submit">Logout</button>
+        </form>
     </header>
     <nav>
     <ul>
