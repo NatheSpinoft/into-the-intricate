@@ -16,7 +16,7 @@ unset($_SESSION['success']);
 <body>
     <header>
         <h1 id="header-title">Customer Support System</h1>
-        <form action="logout.php" method="POST">
+        <form action="./handlers/logout.php" method="POST">
             <button id="logout-button" type="submit">Logout</button>
         </form>
     </header>

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require './assets/src/config.php'; // PDO connection ($pdo)
+require '../assets/src/config.php'; // PDO connection ($pdo)
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $role = $_POST['role'] ?? '';
@@ -26,30 +26,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     // Redirect based on role
                     if ($user['category'] === 'customer') {
-                        header('Location: login-customer.php');
+                        header('Location: ../login-customer.php');
                     } else {
-                        header('Location: login-employee.php');
+                        header('Location: ../login-employee.php');
                     }
                     exit;
                 } else {
                     $_SESSION['error'] = 'Password does not match.';
-                    header('Location: --index.php');
+                    header('Location: ../--index.php');
                     exit;
                 }
             } else {
                 $_SESSION['error'] = 'No user found with that username and role.';
-                header('Location: --index.php');
+                header('Location: ../--index.php');
                 exit;
             }
 
         } catch (PDOException $e) {
             $_SESSION['error'] = 'Database error: ' . $e->getMessage();
-            header('Location: --index.php');
+            header('Location: ../--index.php');
             exit;
         }
     }
 } else {
-    header('Location: --index.php');
+    header('Location: ../--index.php');
     exit;
 }
 ?>

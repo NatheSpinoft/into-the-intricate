@@ -1,10 +1,10 @@
 <?php
 session_start();
-require './assets/src/config.php';
+require '../assets/src/config.php';
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
-    header('Location: index.php');
+    header('Location: ../--index.php');
     exit;
 }
 
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($serial_number) || empty($model) || empty($description) || 
         empty($location) || empty($purchase_date) || empty($warranty_expiry) || empty($status)) {
         $_SESSION['error'] = 'Please fill in all required fields.';
-        header('Location: login-customer.php');
+        header('Location: ../login-customer.php');
         exit;
     }
 
@@ -82,20 +82,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pdo->commit();
 
         $_SESSION['success'] = 'Ticket submitted successfully!';
-        header('Location: login-customer.php');
+        header('Location: ../login-customer.php');
         exit;
 
     } catch (PDOException $e) {
         // Rollback transaction on error
         $pdo->rollBack();
         $_SESSION['error'] = 'Database error: ' . $e->getMessage();
-        header('Location: login-customer.php');
+        header('Location: ../login-customer.php');
         exit;
     }
 
 } else {
     // If not POST request, redirect back
-    header('Location: login-customer.php');
+    header('Location: ../login-customer.php');
     exit;
 }
 ?>

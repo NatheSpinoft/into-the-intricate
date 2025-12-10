@@ -15,7 +15,7 @@ unset($_SESSION['error']); // Clear the error after retrieving it
     <div class="login-container">
     <h2>Login</h2>
 
-    <form action="login.php" method="POST">
+    <form action="handlers/login.php" method="POST">
         <label for="role">Login as:</label>
         <select id="role" name="role" required>
             <option value="" disabled selected>Select role</option>

@@ -10,7 +10,7 @@
     <div class="login-container">
         <h2>Sign Up</h2>
 
-        <form action="signup.php" method="POST">
+        <form action="handlers/signup.php" method="POST">
             <label for="role">Register as:</label>
             <select id="role" name="role" required>
                 <option value="" disabled selected>Select role</option>

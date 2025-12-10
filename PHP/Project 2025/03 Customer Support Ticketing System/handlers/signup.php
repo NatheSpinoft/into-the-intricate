@@ -1,6 +1,6 @@
 <?php
 session_start();
-require './assets/src/config.php'; // PDO connection ($pdo)
+require '../assets/src/config.php'; // PDO connection ($pdo)
 
 // Only process POST requests
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -54,10 +54,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Redirect based on role
         if ($role === 'customer') {
-            header('Location: login-customer.php');
+            header('Location: ../login-customer.php');
             exit;
         } else {
-            header('Location: login-employee.php');
+            header('Location: ../login-employee.php');
             exit;
         }
 
@@ -67,6 +67,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 } else {
     // Redirect if accessed directly
-    header('Location: signup-page.php');
+    header('Location: ../signup-page.php');
     exit;
 }
