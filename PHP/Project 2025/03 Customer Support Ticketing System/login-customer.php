@@ -26,7 +26,7 @@ $open_tickets = $pdo->prepare("SELECT COUNT(*) FROM printer_support WHERE user_i
 $open_tickets->execute(['user_id' => $user_id]);
 $open_tickets = $open_tickets->fetchColumn();
 
-$resolved_tickets = $pdo->prepare("SELECT COUNT(*) FROM printer_support WHERE user_id = :user_id AND status='resolved'");
+$resolved_tickets = $pdo->prepare("SELECT COUNT(*) FROM printer_support WHERE user_id = :user_id AND status='closed'");
 $resolved_tickets->execute(['user_id' => $user_id]);
 $resolved_tickets = $resolved_tickets->fetchColumn();
 
@@ -69,7 +69,7 @@ $tickets = $tickets_stmt->fetchAll(PDO::FETCH_ASSOC);
     <nav>
     <ul>
         <li><a href="login-customer.php" class="active">Dashboard</a></li>
-        <li><a href="#">My Tickets</a></li>
+        <li><a href="my-tickets-edit.php">My Tickets</a></li>
         <li><a href="submit-ticket.php">Submit Ticket</a></li>
         <li><a href="#">Account Settings</a></li>
     </ul>

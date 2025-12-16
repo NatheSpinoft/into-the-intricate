@@ -18,8 +18,8 @@
     <nav>
         <ul>
             <li><a href="login-customer.php">Dashboard</a></li>
-            <li><a href="#">My Tickets</a></li>
-            <li><a href="submit-ticket.php">Submit Ticket</a></li>
+            <li><a href="my-tickets-edit.php">My Tickets</a></li>
+            <li><a href="submit-ticket.php" class="active">Submit Ticket</a></li>
             <li><a href="#">Account Settings</a></li>
         </ul>
     </nav>
