@@ -17,9 +17,9 @@
 
     <nav>
         <ul>
-            <li><a href="#">Dashboard</a></li>
+            <li><a href="login-customer.php">Dashboard</a></li>
             <li><a href="#">My Tickets</a></li>
-            <li><a href="#">Submit Ticket</a></li>
+            <li><a href="submit-ticket.php">Submit Ticket</a></li>
             <li><a href="#">Account Settings</a></li>
         </ul>
     </nav>
