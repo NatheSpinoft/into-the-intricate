@@ -37,7 +37,7 @@ unset($_SESSION['success'], $_SESSION['error']);
 </head>
 <body>
 <header>
-    <h1 id="header-title">Customer Dashboard</h1>
+    <h1 id="header-title">Customer Tickets</h1>
     <form action="./handlers/logout.php" method="POST">
         <button id="logout-button" type="submit">Logout</button>
     </form>

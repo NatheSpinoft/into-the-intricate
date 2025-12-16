@@ -61,7 +61,7 @@ $tickets = $tickets_stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body>
     <header>
-        <h1 id="header-title">Customer Dashbaord</h1>
+        <h1 id="header-title">Customer Dashboard</h1>
         <form action="./handlers/logout.php" method="POST">
             <button id="logout-button" type="submit">Logout</button>
         </form>
