@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning with JS</title>
+</head>
+<style>
+    body {
+        background-color: aqua;
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        grid-template-rows: auto;
+        height: 150vh;
+        
+    }
+    .side-navigation {
+        display: block;
+        background-color: rgb(161, 161, 236);
+        
+    }
+    .side-navigation a {
+        padding: 16px;
+        padding-right:32px;
+        gap: 7px;
+        margin: 7px;
+    }
+    .main-navigation {
+        background-color: antiquewhite;
+        padding:12px;
+    }
+    .code-box {
+        max-height: auto;
+        min-height: 30px;
+        max-width: auto;
+        min-width: 200px;
+        background-color: rgb(161, 161, 236);
+        padding: 2px;
+        padding-left: 1px;
+    }
+</style>
+<body>
+    <nav class="side-navigation" aria-label="Main Sidebar Navigation">
+        <p></p>
+        <a href="#1a">What Javascript is</a>
+        <a href="#2a">Variables</a>
+        <a href="#">Operators</a>
+        <a href="#">Strings and Numbers</a>
+        <a href="#">Arrays</a>
+        <a href="#">Conditionals</a>
+        <a href="#">Loops</a>
+        <a href="#">Functions</a>
+        <a href="#">Objects</a>
+        <a href="#">DOM Basics</a>
+        <a href="#">Events</a>
+        <a href="#">DOM Creation</a>
+        <a href="#">JSON Fundamentals</a>
+        <a href="#">Fetch Basics</a>
+        <a href="#">Basic Error Handling</a>
+    </nav>
+    <main class="main-navigation">
+        <h3 id="1a">What Javascript is about</h3>
+        <p>Javascript is a language closer to human language than machine language and highly dynamic. The best way 
+            to express the language is to use the .js on the file. The code will be shown in the box below.</p>
+        <div class="code-box">
+            <pre><code>
+&lt;script&gt;
+&lt;tag&gt;text information&lt;/tag&gt;
+
+ &lt;/script&gt;
+            </code></pre>
+        </div>
+        <h3 id="2a">Variables</h3>
+        <p>Variables are labels and containers to store data. There are four ways for variables to store data.</p>
+        <p><strong>let- </strong> declared, but after its scope it has no value (undefined).</p>
+        <p><strong>const- </strong>declared, and it should not be changed.</p>
+        <div class="code-box">
+            <pre><code>
+&lt;p id="text"&gt; &lt;/p&gt;
+&lt;button onclick="getElementById('text')=_variable&gt; click me &lt;/button&gt;
+&lt;script&gt;
+
+let _variable = "hello world"
+ &lt;/script&gt;
+            </code></pre>
+        </div>
+    </main>
+    
+</body>
+</html>
