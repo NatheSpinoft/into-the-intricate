@@ -1,0 +1,33 @@
+{
+    "cards": [
+      {
+        "name": "Black Lotus",
+        "manaCost": "{0}",
+        "type": "Artifact",
+        "rarity": "Rare",
+        "text": "Tap, Sacrifice Black Lotus: Add three mana of any one color."
+      },
+      {
+        "name": "Lightning Bolt",
+        "manaCost": "{R}",
+        "type": "Instant",
+        "rarity": "Common",
+        "text": "Lightning Bolt deals 3 damage to any target."
+      },
+      {
+        "name": "Serra Angel",
+        "manaCost": "{3}{W}{W}",
+        "type": "Creature — Angel",
+        "rarity": "Uncommon",
+        "text": "Flying, vigilance"
+      },
+      {
+        "name": "Counterspell",
+        "manaCost": "{U}{U}",
+        "type": "Instant",
+        "rarity": "Uncommon",
+        "text": "Counter target spell."
+      }
+    ]
+  }
+  
