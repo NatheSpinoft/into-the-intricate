@@ -1,0 +1,36 @@
+body{
+    background-color: greenyellow;
+    margin: 0;
+    padding: 0;
+    padding-left: 8px;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 13px;
+}
+
+button {
+    padding:3px;
+}
+
+#btn-gradient {
+    padding:4px;
+    background: linear-gradient(135deg, blue, lightblue);
+    color: darkblue;
+    padding: 0.6rem 1.2 rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+#btn-gradient:hover {
+    background: linear-gradient(135deg, lightblue, blue);
+  }
+
+#btn-gradient:active {
+    transform: scale(0.97);
+  }
+  
