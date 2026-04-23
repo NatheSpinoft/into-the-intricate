@@ -36,7 +36,7 @@ if (!isset($_SESSION['username'])) {
                 <li><a href="../invoice/invoice.php">Invoices</a></li>
                 <li><a href="../invoice/payables.php">Payables</a></li>
                 <li><a href="../invoice/view_invoices.php">View All Invoices</a></li>
-                <li><a href="../invoice/view_payables.php">View All Invoices</a></li>
+                <li><a href="../invoice/view_payables.php">View All Payables</a></li>
             </ul>
         </div>
         <div class="main">
